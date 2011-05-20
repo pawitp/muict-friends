@@ -63,8 +63,8 @@ $doimg[7]="com.whatsapp_icon.png";
 $doname[7]="Whatsapp";
 $doex[7]="0809876543";
 
-
-if($data!="" and $datado!=""){
+$delete = $_POST["delete"] == "delete";
+if(($data!="" or $delete) and $datado!=""){
 $sql[1]="msn";
 $sql[2]="gtalk";
 $sql[3]="BB";
@@ -73,11 +73,14 @@ $sql[5]="skype";
 $sql[6]="mobile";
 $sql[7]="whatsapp";
 $dbnames=$sql[$datado];
-mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
 
-if($data=="NULL"){
-mysql_query("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
+if ($_POST["btnDelete"]) {
+    mysql_query("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
 }
+else {
+    mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
+}
+
 
 mysql_close($con);
 include 'connect.php';
@@ -141,7 +144,7 @@ a:active {
         <input type="submit" name="button" id="button" value="Submit" />
         </label>
         <br />
-        <span class="style2"> ถ้าต้องการลบที่เคยบันทึกไว้ ให้ใส่ NULL ในช่องด้านบน<br />
+        <input type="checkbox" name="delete" value="delete"><span class="style2">ติ๊กถ้าหากต้องการลบ<br />
         </span><span class="style3">Ex :      <? echo"$doex[$do]" ?>
         <input name="do" type="hidden" id="do" value="<? echo $do; ?>" />
         </span><br />
