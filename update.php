@@ -38,14 +38,17 @@ include 'log.php';
 $doimg[1]="msn-icon.png";
 $doname[1]="MSN";
 $doex[1]="muict@hotmal.com";
+$dovalidate[1]="email";
 
 $doimg[2]="gtalk-icon.png";
 $doname[2]="Google Talk";
 $doex[2]="muict@gmail.com";
+$dovalidate[2]="email";
 
 $doimg[3]="big_bb_Icon-120x120.jpg";
 $doname[3]="BB PIN";
 $doex[3]="21D0E58C";
+$dovalidate[3]="bbm";
 
 $doimg[4]="twitter.png";
 $doname[4]="TWITTER";
@@ -58,37 +61,62 @@ $doex[5]="muict";
 $doimg[6]="call_icon_110x102.jpg";
 $doname[6]="MOBILE NUMBER";
 $doex[6]="0809876543";
+$dovalidate[6]="phone";
 
 $doimg[7]="com.whatsapp_icon.png";
 $doname[7]="Whatsapp";
 $doex[7]="0809876543";
+$dovalidate[7]="phone";
 
 $delete = $_POST["delete"] == "delete";
-if(($data!="" or $delete) and $datado!=""){
-$sql[1]="msn";
-$sql[2]="gtalk";
-$sql[3]="BB";
-$sql[4]="twitter";
-$sql[5]="skype";
-$sql[6]="mobile";
-$sql[7]="whatsapp";
-$dbnames=$sql[$datado];
+if ($datado != "") {
+    // Validate
+    if ($data == "") {
+        $error = true;
+    }
+    else {
+        switch ($dovalidate[$datado]) {
+            case "email":
+                if (!filter_var($data, FILTER_VALIDATE_EMAIL)) {
+                    $error = true;
+                }
+                break;
+            case "bbm":
+                if (!preg_match("/^[0-9A-Fa-f]+$/", $data)) {
+                    $error = true;
+                }
+                break;
+            case "phone":
+                if (!preg_match("/^[0-9]+$/", $data)) {
+                    $error = true;
+                }
+                break;
+        }
+    }
+    
+    if (!$error || $delete) {
+        $sql[1]="msn";
+        $sql[2]="gtalk";
+        $sql[3]="BB";
+        $sql[4]="twitter";
+        $sql[5]="skype";
+        $sql[6]="mobile";
+        $sql[7]="whatsapp";
+        $dbnames=$sql[$datado];
 
-if ($_POST["btnDelete"]) {
-    mysql_query("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
+        if ($delete) {
+            mysql_query("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
+        }
+        else {
+            mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
+        }
+
+        include 'connect.php';
+        echo "UPDATE muict SET $dbnames = '$data' WHERE id = '$id'"; 
+        header('Location: loginc.php');
+        return;
+    }
 }
-else {
-    mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
-}
-
-
-mysql_close($con);
-include 'connect.php';
-echo "UPDATE muict SET $dbnames = '$data' WHERE id = '$id'"; 
-header('Location: loginc.php');
-return;
-}
-
 
 mysql_close($con);
 
@@ -148,6 +176,9 @@ a:active {
         </span><span class="style3">Ex :      <? echo"$doex[$do]" ?>
         <input name="do" type="hidden" id="do" value="<? echo $do; ?>" />
         </span><br />
+        <?php if ($error): ?>
+        <span style="color:red">กรุณากรอกข้อมูลให้ถูกต้อง</span>
+        <?php endif; ?>
       </form>
       </div></td>
   </tr>
