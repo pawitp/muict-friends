@@ -1,7 +1,5 @@
 <?php
 
-$id=$_POST["id"];
-$pass=$_POST["pass"];
 $sql=$_GET["queery"];
 $logas="QUEERYMODE";
 $loga=$sql;
@@ -12,7 +10,7 @@ if($_SESSION['id']!=""){
 $id=$_SESSION['id'];
 $pass=$_SESSION['password'];
 }
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password=sha1('$pass')");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
 
 if($row[email]==""){

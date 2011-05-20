@@ -1,16 +1,11 @@
 <?php
 
-$id=$_POST["id"];
-$pass=$_POST["pass"];
-
-
 include 'connect.php';
 
 if($_SESSION['id']!=""){
 $id=$_SESSION['id'];
-$pass=$_SESSION['password'];
 }
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password=sha1('$pass')");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
 
 if($row[email]==""){

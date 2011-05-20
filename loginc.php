@@ -18,12 +18,12 @@ $id=$_SESSION['id'];
 $pass=$_SESSION['password'];
 }
 
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password=sha1('$pass')");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password=substring(sha1('$pass'), 1, 20)");
 $row = mysql_fetch_array($result);
 
 if($row[email]==""){
 session_destroy();
-header('Location: login.php');
+//header('Location: login.php');
 return;
 }
 
