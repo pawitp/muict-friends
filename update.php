@@ -20,7 +20,6 @@ header('Location: login.php');
 return;
 }
 
-
 $logas="do";
 $loga="$do";
 $logbs="data";
@@ -30,43 +29,48 @@ $logb=$datado;
 $logb=$row[idstatus];
 include 'log.php';
 
-
-
-
-
 //data
 $doimg[1]="msn-icon.png";
 $doname[1]="MSN";
 $doex[1]="muict@hotmal.com";
 $dovalidate[1]="email";
+$sql[1]="msn";
 
 $doimg[2]="gtalk-icon.png";
 $doname[2]="Google Talk";
 $doex[2]="muict@gmail.com";
 $dovalidate[2]="email";
+$sql[2]="gtalk";
 
 $doimg[3]="big_bb_Icon-120x120.jpg";
 $doname[3]="BB PIN";
 $doex[3]="21D0E58C";
 $dovalidate[3]="bbm";
+$sql[3]="BB";
 
 $doimg[4]="twitter.png";
 $doname[4]="TWITTER";
 $doex[4]="muict [Twitter name only!]";
+$dovalidate[4]="username";
+$sql[4]="twitter";
 
 $doimg[5]="skype-icon.png";
 $doname[5]="SKYPE";
 $doex[5]="muict";
+$dovalidate[5]="username";
+$sql[5]="skype";
 
 $doimg[6]="call_icon_110x102.jpg";
 $doname[6]="MOBILE NUMBER";
 $doex[6]="0809876543";
 $dovalidate[6]="phone";
+$sql[6]="mobile";
 
 $doimg[7]="com.whatsapp_icon.png";
 $doname[7]="Whatsapp";
 $doex[7]="0809876543";
 $dovalidate[7]="phone";
+$sql[7]="whatsapp";
 
 $delete = $_POST["delete"] == "delete";
 if ($datado != "") {
@@ -86,6 +90,11 @@ if ($datado != "") {
                     $error = true;
                 }
                 break;
+            case "username":
+                if (!preg_match("/^[0-9A-Za-z\.\,\# ]+$/", $data)) {
+                    $error = true;
+                }
+                break;
             case "phone":
                 if (!preg_match("/^[0-9]+$/", $data)) {
                     $error = true;
@@ -95,13 +104,6 @@ if ($datado != "") {
     }
     
     if (!$error || $delete) {
-        $sql[1]="msn";
-        $sql[2]="gtalk";
-        $sql[3]="BB";
-        $sql[4]="twitter";
-        $sql[5]="skype";
-        $sql[6]="mobile";
-        $sql[7]="whatsapp";
         $dbnames=$sql[$datado];
 
         if ($delete) {
@@ -117,6 +119,12 @@ if ($datado != "") {
         return;
     }
 }
+
+// for display
+if ($data == "") {
+    $data = $row[$sql[$do]];
+}
+
 
 mysql_close($con);
 
@@ -166,7 +174,7 @@ a:active {
   <tr>
     <td><div align="center">
       <form id="form1" name="form1" method="post" action="update.php?do=<? echo $do; ?>">
-      <input name="data" type="text" id="data" />
+      <input name="data" type="text" id="data" value="<? echo $data; ?>"/>
       &nbsp; 
         <label>
         <input type="submit" name="button" id="button" value="Submit" />
