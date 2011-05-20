@@ -55,9 +55,9 @@ return;
 }
 
 if($row[password]!=""){
-$codess=$row[password]."muict9p";
-
 $code=md5($codess);
+mysql_query("UPDATE muict SET password_recovery_code='$code' WHERE id = '$id'");
+
 $data="<a href=http://www.daequilibrate.net/muict/cpass.php?id=".$id."&code=".$code.">http://www.daequilibrate.net/muict/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
 
 $MailTo = $email ;

@@ -4,7 +4,6 @@
 <?php
 include 'connect.php';
 $id=$_SESSION['id'];
-$pass=$_SESSION['password'];
 $do=$_GET["do"];
 
 $data=$_POST["data"];
@@ -12,7 +11,7 @@ $datado=$_POST["do"];
 
 
 
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password='$pass'");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
 
 if($row[email]==""){

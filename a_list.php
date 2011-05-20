@@ -3,9 +3,8 @@ include 'connect.php';
 
 if($_SESSION['id']!=""){
 $id=$_SESSION['id'];
-$pass=$_SESSION['password'];
 }
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and password='$pass' and admin=1");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id' and admin=1");
 //admin only!
 $row = mysql_fetch_array($result);
 

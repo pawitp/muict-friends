@@ -44,9 +44,7 @@ $logb=$id;
 include 'connect.php';
 $result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
-$scode=$row[password]."muict9p";
-//echo "$scode=$code";
-$scodemd=md5($scode);
+$scodemd = $row[password_recovery_code]
 //echo "pw= $row[password] codegen= $scodemd codeemail $code";
 if(md5($scode)==$code and $npass!=""){
 mysql_query("UPDATE muict SET password = '$npass' WHERE id = '$id'");

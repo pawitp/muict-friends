@@ -65,12 +65,12 @@ $id=$_SESSION['id'];
 
 if($_SESSION['step']==1){
 
-mysql_query("UPDATE muict SET password = '$pass' , idstatus=1 , nickname='$nickname' , email='$email' WHERE id = '$id'");
+$emailcode = md5(uniqid('', true));
+mysql_query("UPDATE muict SET password = sha1('$pass') , idstatus=1 , nickname='$nickname' , email='$email', activation_code='$emailcode' WHERE id = '$id'");
 mysql_close($con);
 
 
 //EMAIL
-$emailcode=md5($pass+"fuck");
 $emailcode.="&id=";
 $emailcode.=$_SESSION['id'];
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://www.daequilibrate.net/muict/emailadd.php?email=";
