@@ -108,9 +108,15 @@ mysql_close($con);
           <span class="style1">*E-mailเหมือนช่องด้านบนอีกครั้งเพื่อป้องกันข้อผิดพลาดในการกรอกข้อมู</span><span class="style2">ล</span></td>
       </tr>
       <tr>
-        <td bgcolor="#99CC66">ชื่อเล่น</td>
-        <td bgcolor="#99CC66"><label>
+        <td bgcolor="#CCFFFF">ชื่อเล่น (ไทย)</td>
+        <td bgcolor="#CCFFFF"><label>
           <input name="nickname" type="text" id="nickname" maxlength="20" />
+        </label></td>
+      </tr>
+      <tr>
+        <td bgcolor="#99CC66">Nickname (English)</td>
+        <td bgcolor="#99CC66"><label>
+          <input name="eng_nickname" type="text" id="eng_nickname" maxlength="20" />
         </label></td>
       </tr>
       </table>
