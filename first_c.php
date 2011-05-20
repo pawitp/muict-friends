@@ -62,8 +62,13 @@ include 'connect.php';
 if($logip!=$ipl){
 return;
 }
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and type='$type' and name='$name' and sname='$sname' and round='$round' and idstatus='0'");
+$result = mysql_query("SELECT * FROM muict WHERE id='$id' and type='$type' and name='$name' and sname='$sname' and round='$round' ");
 $row = mysql_fetch_array($result);
+
+if($row[idstatus]!=0){
+echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
+return;
+}
 
 if($row[id]==""){
 echo "ข้อมูลที่กรอกมาไม่ถูกต้อง  หากกรอกถูกต้องแล้ว โปรดติดต่อผู้ดูแลระบบผ่านทาง<a href='index.php'>หน้าแรก</a> <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
@@ -82,19 +87,19 @@ mysql_close($con);
     <table width="35%" border="0" bordercolor="#FF00FF">
       <tr>
         <td bgcolor="#CCFFFF">รหัสผ่าน</td>
-        <td bgcolor="#CCFFFF"><input type="password" name="pass" id="pass" />
+        <td bgcolor="#CCFFFF"><input name="pass" type="password" id="pass" maxlength="20" />
           <br />
           <span class="style3">[โปรดใส่ใจภาษาที่.ใช้พิมพ์ THAI / ENGLISH]</span></td>
       </tr>
       <tr>
         <td bgcolor="#99CC66">รหัสผ่านอีกครั้ง</td>
-        <td bgcolor="#99CC66"><input type="password" name="cpass" id="cpass" /></td>
+        <td bgcolor="#99CC66"><input name="cpass" type="password" id="cpass" maxlength="20" /></td>
       </tr>
       <tr>
         <td bgcolor="#CCFFFF">E-mail</td>
         <td bgcolor="#CCFFFF"><input type="text" name="email" id="email" />
           <br />
-        <span class="style1">*ใส่ E-mail ที่ใช้งานบ่อยที่สุด เพราะต้องยืนยัน E-mail</span></td>
+        <span class="style1">*ใส่ E-mail ที่ใช้งานบ่อยที่สุด เพราะต้องยืนยัน E-mail </span></td>
       </tr>
       <tr>
         <td bgcolor="#99CC66">E-mail</td>

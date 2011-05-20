@@ -48,6 +48,7 @@ if($pass!=$rpass or $email!=$remail or $pass=="" or $rpass=="" or $email=="" or 
 echo "ข้อมูลที่กรอกมาไม่เหมือนกัน  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
 $loogas="status";
 $loga="reject";
+include 'log.php';
 return;
 }
 

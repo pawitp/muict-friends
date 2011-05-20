@@ -15,6 +15,12 @@ return;
 }
 
 
+$ids=$_GET["id"];
+$logas="QUEERYID";
+$isadmin=$_SESSION['admin'];
+
+
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -58,8 +64,7 @@ return;
 }
 
 
-$ids=$_GET["id"];
-$logas="QUEERYID";
+
 $loga=$id;
 $result = mysql_query("SELECT * FROM muict WHERE id='$ids'");
 $row = mysql_fetch_array($result);
@@ -184,4 +189,12 @@ return;
 </body>
 </html><?php
 mysql_close($con);
+
+if($isadmin!=1){
+
+return;
+}
+
 ?>
+
+<meta http-equiv="refresh" content="2;url=http://www.daequilibrate.net/muict/a_frienddata.php?id=<? echo $ids; ?>/"> 

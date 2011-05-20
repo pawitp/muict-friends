@@ -50,7 +50,7 @@ $_SESSION['lastupdate']=$row[lastupdate];
 $_SESSION['img']=$row[img];
 $_SESSION['sec']=$row[sec];
 $_SESSION['admin']=$row[admin];
-
+$_SESSION['fbpic']=$row[fbpic];
 $secknow=0;  //ถ้ารู้SECกันแล้วแก้เป็น1
 if($_SESSION['sec']==0 and $secknow==1){
 	header('Location: updatesec.php');
@@ -225,8 +225,19 @@ echo "	      <tr>
         <td><a href="update.php?do=7"><img src="image/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
+      <?php
+	  $imgurl=$_SESSION['img'];
+	  $fbiurl=$_SESSION['fbpic'];
+	  
+	  ?>
         <td><div align="center"><img src="image/camera-icon.png" width="47" height="47" /></div></td>
-        <td><div align="left"><a href="upload_images/<? echo $_SESSION['img']; ?>" target="_blank"><? echo $_SESSION['img']; ?><br />  
+        <td><div align="left">รูปภาพ :&nbsp; <a href="<?php 		echo"upload_images/$imgurl" ; 		?>" target="_blank"><?php
+        echo $imgurl;
+		?></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href=<?php 		echo"$fbiurl" ; 		?> target="_blank"><?php
+        if($fbiurl!=""){
+		echo "FACEBOOK";
+		}
+		?></a><br />  
           <span class="style5">*การอัพโหลดรูปภาพจะช่วยให้เพื่อนจำได้ได้ง่ายขึ้น</span></a></div></td>
         <td><a href="upload.php"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>

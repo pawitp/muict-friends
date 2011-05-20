@@ -60,29 +60,29 @@ a:active {
 <hr><center><?php
 
 if($sql==11){
-	$sql="SELECT * FROM muict WHERE (sec=1) and (type=1) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=1) and (type=1) and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==12){
-	$sql="SELECT * FROM muict WHERE (sec=1) and (type=2) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=1) and (type=2) and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==13){
-	$sql="SELECT * FROM muict WHERE (sec=1) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=1) and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==21){
-	$sql="SELECT * FROM muict WHERE (sec=2)  and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=2)  and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==22){
-	$sql="SELECT * FROM muict WHERE (sec=2) and (type=1) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=2) and (type=1) and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==23){
-	$sql="SELECT * FROM muict WHERE (sec=2) and (type=2)and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=2) and (type=2)and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==31){
-	$sql="SELECT * FROM muict WHERE (sec=3)  and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=3)  and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==32){
-	$sql="SELECT * FROM muict WHERE (sec=3) and (type=1) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=3) and (type=1) and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==33){
-	$sql="SELECT * FROM muict WHERE (sec=3) and (type=2)and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+	$sql="SELECT * FROM muict WHERE (sec=3) and (type=2)and (idstatus=2 or idstatus=3)  order by lastupdate DESC"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 }else if($sql==41){
-	$sql="SELECT * FROM muict WHERE(idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc";
+	$sql="SELECT * FROM muict WHERE(idstatus=2 or idstatus=3)  order by lastupdate DESC";
 }else if($sql==42){
-	$sql="SELECT * FROM muict WHERE (type=1) and (idstatus=2 or idstatus=3) and (img IS NOT NULL) order by id asc";
+	$sql="SELECT * FROM muict WHERE (type=1) and (idstatus=2 or idstatus=3)  order by lastupdate DESC";
 }else if($sql==43){
-	$sql="SELECT * FROM muict WHERE (idstatus=2 or idstatus=3) and (img IS NOT NULL)and (type=2) order by id asc";
+	$sql="SELECT * FROM muict WHERE (idstatus=2 or idstatus=3) and (type=2) order by lastupdate DESC";
 }else if($sql==99){
 echo "<center><FONT size='30' color='RED'><b>ERROR! พบคนหน้าตาดีจำนวนมากเกินกว่าระบบจะรับได้ กรุณาลองใหม่ภายหลัง</b></FONT><br>ERROR CODE # 999 ต้องการความช่วยเหลือหรือติชม ติดต่อผู้ดูแลระบบ :D</center>";
 return;
@@ -93,11 +93,20 @@ return;
 $result = mysql_query($sql);
 $total=0;
 while ($row = mysql_fetch_array($result)){
-echo "<a href='frienddata.php?id=$row[id]' target=_blank><img src='upload_images/$row[img]' width='20%' ></a>&nbsp;&nbsp;&nbsp;";
+
+if($row[img]!=""){
+echo "<a href='frienddata.php?id=$row[id]' target=_blank><img src='upload_images/$row[img]' width='15%' ></a>&nbsp;&nbsp;&nbsp;";
 $total++;
-if($total%4==0){
-echo "<br>";
-} 
+}
+if($total%5==0){echo "<br>";} 
+if($row[fbpic]!=""){
+echo "<a href='frienddata.php?id=$row[id]' target=_blank><img src='$row[fbpic]' width='15%' ></a>&nbsp;&nbsp;&nbsp;";
+$total++;
+}
+if($total%5==0){echo "<br>";} 
+
+
+
 }
 
 ?></center>
