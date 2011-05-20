@@ -45,7 +45,7 @@ $logc=$email;
 include 'connect.php';
 $result = mysql_query("SELECT * FROM muict WHERE id='$id' and idstatus='1'");
 $row = mysql_fetch_array($result);
-if($row[activation_code])==$pass and $row[idstatus]==1){
+if($row[activation_code]==$pass and $row[idstatus]==1){
 mysql_query("UPDATE muict SET email = '$email' , idstatus=2 WHERE id = '$id'");
 
 }else{

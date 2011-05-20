@@ -44,16 +44,16 @@ $logb=$id;
 include 'connect.php';
 $result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
-$scodemd = $row[password_recovery_code]
+$scodemd = $row[password_recovery_code];
 //echo "pw= $row[password] codegen= $scodemd codeemail $code";
-if(md5($scode)==$code and $npass!=""){
-mysql_query("UPDATE muict SET password = '$npass' WHERE id = '$id'");
+if($scodemd==$code and $npass!=""){
+mysql_query("UPDATE muict SET password = sha1('$npass'), password_recovery_code = NULL WHERE id = '$id'");
 mysql_close($con);
 echo "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a>";
 return;
 }
 mysql_close($con);
-if(md5($scode)==$code){
+if($scodemd==$code){
 
 }else{
 echo "ERROR!";
@@ -66,7 +66,7 @@ session_destroy();
 <form id="form1" name="form1" method="get" action="">
   <strong>ป้อนรหัสผ่านใหม่</strong> 
   <label>
-  <input type="text" name="npass" id="npass" />
+  <input type="password" name="npass" id="npass" />
   </label>
   <label>
   <input type="submit" name="button" id="button" value="เปลี่ยนรหัสผ่าน" />

@@ -23,7 +23,7 @@ $row = mysql_fetch_array($result);
 
 if($row[email]==""){
 session_destroy();
-//header('Location: login.php');
+header('Location: login.php');
 return;
 }
 
@@ -32,7 +32,7 @@ $_SESSION['type']=$row[type];
 $_SESSION['name']=$row[name];
 $_SESSION['sname']=$row[sname];
 $_SESSION['round']=$row[round];
-$_SESSION['password']=$row[password];
+$_SESSION['password']=$pass;
 $_SESSION['nickname']=$row[nickname];
 $_SESSION['fbname']=$row[fbname];
 $_SESSION['fburl']=$row[fburl];
