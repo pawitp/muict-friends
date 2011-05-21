@@ -44,13 +44,22 @@ $logb=$email;
 $logcs="cemail";
 $logc=$remail;
 
+if ($pass!=$rpass or $email!=$remail or $pass=="" or $rpass=="" or $email=="" or $remail=="") {
+    $error = "ข้อมูลที่กรอกมาไม่เหมือนกัน";
+}
+elseif (!preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname)) {
+    $error = "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
+}
+elseif (!preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $eng_nickname)) {
+    $error = "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง";
+}
 
-if($pass!=$rpass or $email!=$remail or $pass=="" or $rpass=="" or $email=="" or $remail=="" or $nickname=="" or $eng_nickname == ""){
-echo "ข้อมูลที่กรอกมาไม่เหมือนกัน  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
-$loogas="status";
-$loga="reject";
-include 'log.php';
-return;
+if ($error) {
+    echo "$error  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a>";
+    $loogas="status";
+    $loga="reject";
+    include 'log.php';
+    return;
 }
 
 $loogas="status";
