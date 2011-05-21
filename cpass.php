@@ -34,7 +34,7 @@ a:active {
 
 $id=$_GET["id"];
 $code=$_GET["code"];
-$npass=$_GET["npass"];
+$npass=$_POST["npass"];
 $logas="code";
 $loga=$code;
 $logbs="id";
@@ -63,7 +63,7 @@ return;
 
 session_destroy();
 ?>
-<form id="form1" name="form1" method="get" action="">
+<form id="form1" name="form1" method="post" action="">
   <strong>ป้อนรหัสผ่านใหม่</strong> 
   <label>
   <input type="password" name="npass" id="npass" />
@@ -71,8 +71,6 @@ session_destroy();
   <label>
   <input type="submit" name="button" id="button" value="เปลี่ยนรหัสผ่าน" />
   </label>
-  <input name="id" type="hidden" id="id" value="<?  echo"$id"; ?>" />
-  <input name="code" type="hidden" id="code" value="<? echo"$code"; ?>" />
   <br />
 </form>
 </body>
