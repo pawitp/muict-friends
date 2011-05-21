@@ -62,20 +62,22 @@ a:active {
 
     $user = json_decode(file_get_contents($graph_url));
 
-	$fbname=$user->name;
-	$fblink=$user->link;
+	$fbname=mysql_real_escape_string($user->name);
+	$fblink=mysql_real_escape_string($user->link);
 	//echo $user->name;
 	//echo "<br>$fbname<hr>";
 	//echo $user->link;
 	//echo $user->email;
 	//echo "<br>$fblink<hr>";
-	$fbpic=$user->picture;
-	$fbemail=$user->email;
-	$fbid=$user->id;
-	$fbpic="http://graph.facebook.com/".$fbid."/picture?type=large";
+	$fbpic=mysql_real_escape_string($user->picture);
+	$fbemail=mysql_real_escape_string($user->email);
+	$fbid=mysql_real_escape_string($user->id);
+	$fbpic=mysql_real_escape_string("http://graph.facebook.com/".$fbid."/picture?type=large");
 	if($fblink!=""){
 	    mysql_query_log("UPDATE muict SET fbname = '$fbname' , fburl='$fblink',fbemail='$fbemail',fbpic='$fbpic',fbid='$fbid' WHERE id = '$id'");
 	}
+	
+	redirect("my.php");
 ?>
 
 </script> 
