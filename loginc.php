@@ -59,6 +59,12 @@ header('Location: updateabout.php');
 return;
 }
 
+// For late registrant who did not enter an English nickname
+if ($row[eng_nickname] == "") {
+    header("Location: updatenickname.php");
+    return;
+}
+
 $secknow=0;  //ถ้ารู้SECกันแล้วแก้เป็น1
 if($_SESSION['sec']==0 and $secknow==1){
 	header('Location: updatesec.php');
@@ -258,6 +264,6 @@ echo "	      <tr>
   </div>
 </form>
 <div align="center"><br />
-   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="#">แก้ไขชื่อเล่น</a>&nbsp; </div>
+   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="updatenickname.php">แก้ไขชื่อเล่น</a>&nbsp; </div>
 </body>
 </html>
