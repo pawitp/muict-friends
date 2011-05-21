@@ -113,8 +113,6 @@ if ($datado != "") {
             mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
         }
 
-        include 'connect.php';
-        echo "UPDATE muict SET $dbnames = '$data' WHERE id = '$id'"; 
         header('Location: loginc.php');
         return;
     }
