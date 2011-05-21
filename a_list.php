@@ -1,18 +1,6 @@
 <?php
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and admin=1");
-//admin only!
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
+require("bootstrap.php");
+require_admin_login();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -83,7 +71,7 @@ $img2="<center><img src='image/fail.png' width='27' height='27' /></center>";
 $count=0;
 $sql="SELECT * FROM muict where idstatus=1 or idstatus=2 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
 
-$result = mysql_query($sql);
+$result = mysql_query_log($sql);
 while ($row = mysql_fetch_array($result)){
 
   echo"<tr>";

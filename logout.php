@@ -1,10 +1,7 @@
 <?php
-
-session_start();
-
-
-include 'log.php';
+require("bootstrap.php");
+require_login();
 
 session_destroy();
-header('Location: login.php');
+redirect('login.php');
 ?>

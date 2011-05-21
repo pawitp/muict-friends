@@ -1,33 +1,21 @@
+<?php
+require("bootstrap.php");
+require_login();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<?php
-include 'connect.php';
+<?
 $id=$_SESSION['id'];
-$do=$_GET["do"];
+$do=intval($_GET["do"]);
 
 $data=$_POST["data"];
-$datado=$_POST["do"];
+$datado=intval($_POST["do"]);
 
 
 
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
+$result = mysql_query_log("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
-$logas="do";
-$loga="$do";
-$logbs="data";
-$logb=$data;
-$logbs="datado";
-$logb=$datado;
-$logb=$row[idstatus];
-include 'log.php';
 
 //data
 $doimg[1]="msn-icon.png";
@@ -81,7 +69,7 @@ if ($datado != "") {
     else {
         switch ($dovalidate[$datado]) {
             case "email":
-                if (!filter_var($data, FILTER_VALIDATE_EMAIL)) {
+                if (!verify_email($data)) {
                     $error = true;
                 }
                 break;
@@ -107,10 +95,11 @@ if ($datado != "") {
         $dbnames=$sql[$datado];
 
         if ($delete) {
-            mysql_query("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
+            mysql_query_log("UPDATE muict SET $dbnames = NULL WHERE id = '$id'");
         }
         else {
-            mysql_query("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
+            $data = mysql_real_escape_string($data);
+            mysql_query_log("UPDATE muict SET $dbnames = '$data' WHERE id = '$id'");
         }
 
         header('Location: loginc.php');

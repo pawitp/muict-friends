@@ -1,23 +1,6 @@
 <?php
-
-$logas="id";
-$loga=$id;
-$logbs="pass";
-$logb=$pass;
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-$pass=$_SESSION['password'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
+require("bootstrap.php");
+require_login();
 
 // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
 include 'class.upload.php' ;
@@ -54,7 +37,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
 
 		//echo" $image_name ";
-		mysql_query("UPDATE muict SET img = '$image_name' WHERE id = '$id'");
+		mysql_query_log("UPDATE muict SET img = '$image_name' WHERE id = '$id'");
 		$logas="img";
 		$loga=$image_name;
 		include 'log.php';

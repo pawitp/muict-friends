@@ -1,4 +1,6 @@
-
+<?php
+require("bootstrap.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,52 +34,38 @@ a:active {
 
 <body>
 <p><?php
-$pass=$_POST["pass"];
-$rpass=$_POST["cpass"];
-$email=$_POST["email"];
-$remail=$_POST["cemail"];
+$pass=mysql_real_escape_string($_POST["pass"]);
+$rpass=mysql_real_escape_string($_POST["cpass"]);
+$email=mysql_real_escape_string($_POST["email"]);
+$remail=mysql_real_escape_string($_POST["cemail"]);
 $nickname=$_POST["nickname"];
 $eng_nickname=$_POST["eng_nickname"];
 
-$logbs="email";
-$logb=$email;
-$logcs="cemail";
-$logc=$remail;
-
-if ($pass!=$rpass or $email!=$remail or $pass=="" or $rpass=="" or $email=="" or $remail=="") {
+if ($pass != $rpass or $email != $remail or $pass == "" or $rpass == "" or $email == "" or $remail == "") {
     $error = "ข้อมูลที่กรอกมาไม่เหมือนกัน";
 }
-elseif (!preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname)) {
+elseif (!verify_nickname($nickname)) {
     $error = "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
 }
-elseif (!preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $eng_nickname)) {
+elseif (!verify_engnickname($eng_nickname)) {
     $error = "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง";
 }
 
 if ($error) {
     echo "$error  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a>";
-    $loogas="status";
-    $loga="reject";
-    include 'log.php';
     return;
 }
 
-$loogas="status";
-$loga="pass";
-
-include 'connect.php';
-
-if($_SESSION['id']==""){
-
-return;
+if ($_SESSION['reg_id'] == "") {
+    return;
 }
 
-$id=$_SESSION['id'];
+$id = $_SESSION['reg_id'];
 
 if($_SESSION['step']==1){
 
-$emailcode = md5(uniqid('', true));
-mysql_query("UPDATE muict SET password = sha1('$pass') , idstatus=1 , nickname='$nickname' , eng_nickname='$eng_nickname', email='$email', activation_code='$emailcode' WHERE id = '$id'");
+$emailcode = generate_code();
+mysql_query_log("UPDATE muict SET password = sha1('$pass') , idstatus=1 , nickname='$nickname' , eng_nickname='$eng_nickname', email='$email', activation_code='$emailcode' WHERE id = '$id'");
 mysql_close($con);
 
 
@@ -127,8 +115,6 @@ return;
 
 
 session_destroy(); 
-
-echo "";
 }
 
 ?>

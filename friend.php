@@ -1,21 +1,8 @@
 <?php
+require("bootstrap.php");
+require_login();
 
-$sql=$_GET["queery"];
-$logas="QUEERYMODE";
-$loga=$sql;
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
+$sql=intval($_GET["query"]);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -58,8 +45,8 @@ a:active {
 <div align="center"><img src="image/pass.png" alt="" width="27" height="27" align="middle" />=ผ่านการตรวจสอบจากผู้ดูแลแล้ว&nbsp;&nbsp;&nbsp;&nbsp; <img src="image/onebit_36.png" alt="" width="27" height="27" align="middle" />=อยู่ระหว่างการตรวจสอบ <br />
   <strong>(กดที่เครื่องหมายในช่อง Status เพื่อดูข้อมูลเพื่อนได้)</strong><br />
 </div>
-<p align="center" class="style2"> <strong>จัดเรียงตาม :&nbsp;</strong>&nbsp;&nbsp; <a href="friend.php?queery=1">การอัพเดตล่าสุด</a>&nbsp;&nbsp; <a href="friend.php?queery=2">สมาชิกที่เคลื่อนไหวล่าสุดเฉพาะสมาชิกที่ผ่านการยืนยันแล้ว</a>&nbsp; &nbsp;<a href="friend.php?queery=3">สมาชิกที่ยืนยันแล้วเรียงตามรหัสนักศึกษา</a> <a href="friend.php?queery=4">สมาชิกทั้งหมดที่เคยเข้าสู่ระบบตามรหัสนักศึกษา</a><br />
-  <a href="friend.php?queery=5">สมาชิก SEC 1 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="friend.php?queery=6">สมาชิก SEC 2 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="friend.php?queery=7">สมาชิก SEC 3 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<strong><a href="friendimg.php">IMAGE MODE HISPEED INTERNET ONLY</a>!</strong></p>
+<p align="center" class="style2"> <strong>จัดเรียงตาม :&nbsp;</strong>&nbsp;&nbsp; <a href="friend.php?query=1">การอัพเดตล่าสุด</a>&nbsp;&nbsp; <a href="friend.php?query=2">สมาชิกที่เคลื่อนไหวล่าสุดเฉพาะสมาชิกที่ผ่านการยืนยันแล้ว</a>&nbsp; &nbsp;<a href="friend.php?query=3">สมาชิกที่ยืนยันแล้วเรียงตามรหัสนักศึกษา</a> <a href="friend.php?query=4">สมาชิกทั้งหมดที่เคยเข้าสู่ระบบตามรหัสนักศึกษา</a><br />
+  <a href="friend.php?query=5">สมาชิก SEC 1 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="friend.php?query=6">สมาชิก SEC 2 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="friend.php?query=7">สมาชิก SEC 3 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<strong><a href="friendimg.php">IMAGE MODE HISPEED INTERNET ONLY</a>!</strong></p>
 <table width="90%" border="1" align="center">
   <tr>
     <td><div align="center" class="style1">ID</div></td>
@@ -107,7 +94,7 @@ $sql=$sql6;
 }elseif($sql=="7"){
 $sql=$sql7;
 }
-$result = mysql_query($sql);
+$result = mysql_query_log($sql);
 while ($row = mysql_fetch_array($result)){
 
   echo"<tr>";

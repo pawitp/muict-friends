@@ -1,4 +1,52 @@
+<?php
+require("bootstrap.php");
 
+if (is_login()) {
+    redirect("my.php");
+}
+elseif ($_POST["button"]) {
+    // Process login
+    $id = intval($_POST["id"]);
+    $pass = mysql_real_escape_string($_POST["pass"]);
+    $result = mysql_query_log("SELECT id, idstatus, admin FROM muict WHERE id=$id and password=substring(sha1('$pass'), 1, 20)");
+    
+    if (mysql_num_rows($result) == 0) {
+        $error = '<span style="color:red"> ไม่พบรหัสนักศึกษาและรหัสผ่านนี้</span>';
+        l("LoginFailed", $id, "");
+    }
+    else {
+        $row = mysql_fetch_array($result);
+        if ($row['idstatus'] == 1) {
+            $_SESSION['remail_id'] = $id;
+            $error = "<img src=image/onebit_49.png  align=‘middle’ />
+
+            <span class=‘style3’>ยังไม่ได้ยืนยัน E-mail โปรดยืนยัน E-mail ก่อนใช้งานระบบ!!!  <a href='remail.php'>ส่ง E-mail ยืนยันอีกครั้ง</a></span></div>";
+        }
+    }
+    
+    if (!$error) {
+        // Finally, we're in
+        $_SESSION["id"] = $row["id"];
+        $_SESSION["admin"] = $row["admin"];
+        
+        if (empty($_SESSION["redirect"])) {
+            $redirect = "my.php";
+        }
+        else {
+            $redirect = $_SESSION["redirect"];
+            unset($_SESSION["redirect"]);
+        }
+        redirect($redirect);
+    }
+}
+
+if ($id) {
+    $hint_login = $id;
+}
+else {
+    $hint_login = "5488";
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -37,17 +85,7 @@ a:active {
 </style></head>
 
 <body>
-<div align="center">
-  <?php
-include 'connect.php';
-if($_SESSION['id']!="" and $_SESSION['password']!=""){
-header('Location: loginc.php');
-}
-mysql_close($con);
-
-?>
-</div>
-<form id="form1" name="form1" method="post" action="loginc.php">
+<form id="form1" name="form1" method="post" action="">
   <div align="center"><span class="style2">เข้าสู่ระบบเพื่อแก้ไขข้อมูล</span><br />
 &nbsp;  </div>
   <label></label>
@@ -55,7 +93,7 @@ mysql_close($con);
   <table width="20%" border="0" bordercolor="#000000">
     <tr>
       <td><strong>รหัสนักศึกษา</strong></td>
-        <td><input name="id" type="text" id="id" value="5488" /></td>
+        <td><input name="id" type="text" id="id" value="<?= $hint_login ?>" /></td>
       </tr>
     <tr>
       <td><strong>รหัสผ่าน</strong></td>
@@ -66,7 +104,7 @@ mysql_close($con);
   &nbsp;&nbsp; <span class="style3"><a href="forgot.php">ลืมรหัสผ่าน</a></span><br />
   <label></label>
   <br />
-  &nbsp;&nbsp;
+  <?= $error ?>
   </div>
   <label></label>
 </form>

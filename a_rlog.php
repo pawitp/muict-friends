@@ -1,27 +1,12 @@
 ﻿<?php
-
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and admin=1");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
-
+$disable_logging = true;
+require("bootstrap.php");
+require_admin_login();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUICT #9 : Friend system ADMIN CPL [ADMIN ONLY]</title>
 <style type="text/css">
@@ -49,34 +34,6 @@ a:active {
 </style></head>
 
 <body>
-
-<p>
-  <?php
-
-
-
-
-
-?>
-</p>
-<p>
-  <label></label>
-</p>
-<form id="form1" name="form1" method="post" action="">
-  <input name="log" type="text" id="log" value="<? 
-  $logfilename = date("Ymd"); 
-  echo "$logfilename";
-  
-  ?>" />
-</form>
-<p>&nbsp;</p>
-
-<?php
-$logview=$_POST["log"];
-if($logview==""){
-$logview=$logfilename;
-}
-?>
 <table width="80%" border="1">
   <tr>
     <td><div align="center"><strong>TIME</strong></div></td>
@@ -84,13 +41,32 @@ $logview=$logfilename;
     <td><div align="center"><strong>BROWSER</strong></div></td>
     <td><div align="center"><strong>FILE</strong></div></td>
     <td><div align="center"><strong>ID</strong></div></td>
-    <td><div align="center"><strong>NO</strong></div></td>
-    <td><div align="center"><strong>SP</strong></div></td>
-
+    <td><div align="center"><strong>TAG</strong></div></td>
+    <td><div align="center"><strong>DATA1</strong></div></td>
+    <td><div align="center"><strong>DATA2</strong></div></td>
   </tr>
 
 <?php
-readfile($logview);
-
+if (!$_GET["start"]) {
+    $start = 0;
+}
+else {
+    $start = $_GET["start"];
+}
+$perpage = 100;
+$result = mysql_query_log("SELECT * FROM muict_log ORDER BY time DESC LIMIT $start,$perpage");
+while ($row = mysql_fetch_array($result)):
 ?>
+    <tr>
+      <td><div align="center"><strong><?= $row['time'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['ip'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['user_agent'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['path'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['id'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['tag'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['data1'] ?></strong></div></td>
+      <td><div align="center"><strong><?= $row['data2'] ?></strong></div></td>
+    </tr>
+<? endwhile; ?>
 </table>
+<a href="?start=<?= $start + $perpage ?>">Older</a>

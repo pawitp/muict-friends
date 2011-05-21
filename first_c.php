@@ -1,4 +1,6 @@
-
+<?php
+require("bootstrap.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -43,43 +45,30 @@ a:active {
 
 <body>
 <p>
-  <?php
-$id=$_POST["id"];
-$type=$_POST["type"];
-$name=$_POST["name"];
-$sname=$_POST["sname"];
-$round=$_POST["round"];
-$ipl=$_POST["ip"];
 
+<?php
+$id = intval($_POST["id"]);
+$type = intval($_POST["type"]);
+$name = mysql_real_escape_string($_POST["name"]);
+$sname = mysql_real_escape_string($_POST["sname"]);
+$round = intval($_POST["round"]);
 
-$logas="id";
-$loga=$id;
-$logbs="name";
-$logb=$type." ".$name." ".$sname;
-$logcs="round";
-$logc=$round;
-include 'connect.php';
-if($logip!=$ipl){
-return;
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and type='$type' and name='$name' and sname='$sname' and round='$round' ");
+$result = mysql_query_log("SELECT * FROM muict WHERE id=$id and type=$type and name='$name' and sname='$sname' and round=$round");
 $row = mysql_fetch_array($result);
 
-if($row[idstatus]!=0){
-echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
-return;
+if ($row[idstatus] != 0) {
+    echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
+    return;
 }
 
-if($row[id]==""){
-echo "ข้อมูลที่กรอกมาไม่ถูกต้อง  หากกรอกถูกต้องแล้ว โปรดติดต่อผู้ดูแลระบบผ่านทาง<a href='index.php'>หน้าแรก</a> <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
-return;
-}else{
-echo "การตรวจสอบข้อมูลสมบูรณ์<hr>";
+if ($row[id] == "") {
+    echo "ข้อมูลที่กรอกมาไม่ถูกต้อง  หากกรอกถูกต้องแล้ว โปรดติดต่อผู้ดูแลระบบผ่านทาง<a href='index.php'>หน้าแรก</a> <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
+    return;
+} else {
+    echo "การตรวจสอบข้อมูลสมบูรณ์<hr>";
 }
 $_SESSION['step']=1;
-$_SESSION['id']=$id;
-
-mysql_close($con);
+$_SESSION['reg_id']=$id;
 ?>
   <strong>ขั้นตอนที่ 2 จาก 3</strong>  <strong>กำหนดรหัสผ่านสำหรับการแก้ไขข้อมูลในอนาคต&nbsp;</strong></p>
 <form id="form1" name="form1" method="post" action="updatepass.php">
@@ -135,7 +124,7 @@ mysql_close($con);
   </div>
   <label></label>
   <div align="center"><br />
-    <input name="code" type="hidden" id="code" value="<? $p=md5($row[id]); echo $p; ?>" />
+    <input name="code" type="hidden" id="code" value="<?= md5($row[id]); ?>" />
   </div>
   <label>
   <div align="center"></div>

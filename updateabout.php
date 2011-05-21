@@ -1,58 +1,33 @@
 <?php
+require("bootstrap.php");
+require_login();
 
-$logas="id";
-$loga=$id;
-$logbs="pass";
-$logb=$pass;
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-$pass=$_SESSION['password'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
+$id = $_SESSION['id'];
+$result = mysql_query_log("SELECT * FROM muict WHERE id=$id");
 $row = mysql_fetch_array($result);
 
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
-
-
-
-
-
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php
 
 $data=$_POST["data"];
-$day=$_POST["date"];
-$month=$_POST["month"];
-$year=$_POST["year"];
+$day=intval($_POST["date"]);
+$month=intval($_POST["month"]);
+$year=intval($_POST["year"]);
 
 if($data!="" and $day!="" and $month!="" and $year!=""){
 $data=str_replace( "\n","<br>", $data );
 
 $bd=$year."-".$month."-".$day;
 echo $bd;
-$logas="about";
-$loga=$data;
-$logbs="BIRTHDAY";
-$logb=$bd;
-include 'log.php';
 $ids=$_SESSION['id'];
-mysql_query("UPDATE muict SET about='$data' , BD='$bd' WHERE id = '$ids'");
+$data = mysql_real_escape_string($data);
+mysql_query_log("UPDATE muict SET about='$data' , BD='$bd' WHERE id = '$ids'");
 mysql_close($con);
-header('Location: loginc.php');
-return;
+redirect("my.php");
 }
-mysql_close($con);
 ?>
 
 

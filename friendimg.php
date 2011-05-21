@@ -1,23 +1,9 @@
 <?php
+require("bootstrap.php");
+require_login();
 
-$sql=$_GET["queery"];
-$logas="QUEERYMODE";
-$loga=$sql;
+$sql=intval($_GET["query"]);
 
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-$pass=$_SESSION['password'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -55,8 +41,8 @@ a:active {
 <body>
 <strong>วิธีการแสดงผล</strong>&nbsp;&nbsp;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<span class="style1"><a href="friendimg.php?queery=11">SEC1ทั้งหมด</a>   <a href="friendimg.php?queery=12">SEC1ชาย</a>   <a href="friendimg.php?queery=13">SEC1หญิง</a><a href="friendimg.php?queery=21">&nbsp;SEC2ทั้งหมด</a><a href="friendimg.php?queery=22"> SEC2ชาย</a>   <a href="friendimg.php?queery=23">SEC2หญิง</a>&nbsp;
-<a href="friendimg.php?queery=31">SEC3ทั้งหมด</a>   <a href="friendimg.php?queery=32">SEC3ชาย</a>   <a href="friendimg.php?queery=33">SEC3หญิง</a>&nbsp;	<a href="friendimg.php?queery=41">ทั้งหมด</a>&nbsp;	<a href="friendimg.php?queery=42">ชายทั้งหมด</a>&nbsp;	<a href="friendimg.php?queery=43">หญิงทั้งหมด</a>&nbsp;&nbsp;<a href="friendimg.php?queery=99">หน้าตาดีทั้งหมด</a>&nbsp;</span><br />
+<span class="style1"><a href="friendimg.php?query=11">SEC1ทั้งหมด</a>   <a href="friendimg.php?query=12">SEC1ชาย</a>   <a href="friendimg.php?query=13">SEC1หญิง</a><a href="friendimg.php?query=21">&nbsp;SEC2ทั้งหมด</a><a href="friendimg.php?query=22"> SEC2ชาย</a>   <a href="friendimg.php?query=23">SEC2หญิง</a>&nbsp;
+<a href="friendimg.php?query=31">SEC3ทั้งหมด</a>   <a href="friendimg.php?query=32">SEC3ชาย</a>   <a href="friendimg.php?query=33">SEC3หญิง</a>&nbsp;	<a href="friendimg.php?query=41">ทั้งหมด</a>&nbsp;	<a href="friendimg.php?query=42">ชายทั้งหมด</a>&nbsp;	<a href="friendimg.php?query=43">หญิงทั้งหมด</a>&nbsp;&nbsp;<a href="friendimg.php?query=99">หน้าตาดีทั้งหมด</a>&nbsp;</span><br />
 <hr><center><?php
 
 if($sql==11){
@@ -90,7 +76,7 @@ return;
 return;
 }
 
-$result = mysql_query($sql);
+$result = mysql_query_log($sql);
 $total=0;
 while ($row = mysql_fetch_array($result)){
 

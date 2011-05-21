@@ -1,24 +1,10 @@
 <?php
+require("bootstrap.php");
+require_login();
 
-$logas="id";
-$loga=$id;
-$logbs="pass";
-$logb=$pass;
-
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-    $id = $_SESSION['id'];
-}
-
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
+$id = $_SESSION["id"];
+$result = mysql_query_log("SELECT nickname, eng_nickname FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
-
-if($row[email]==""){
-    session_destroy();
-    header('Location: login.php');
-    return;
-}
 
 if (!$_POST['button']) {
     $nickname = $row["nickname"];
@@ -37,7 +23,7 @@ elseif (!preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $eng_nickname)) {
 }
 elseif ($_POST['button']) {
     // Update data
-    mysql_query("UPDATE muict SET nickname = '$nickname', eng_nickname = '$eng_nickname' WHERE id = $id");
+    mysql_query_log("UPDATE muict SET nickname = '$nickname', eng_nickname = '$eng_nickname' WHERE id = $id");
     mysql_close($con);
     
     header("Location: loginc.php");

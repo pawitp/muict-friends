@@ -1,4 +1,8 @@
+<?php
+require("bootstrap.php");
 
+$id = get_any_id();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,22 +37,10 @@ a:active {
 </style></head>
 
 <body>
-  <?php
+<?php
 
-
-
-$check=$_POST["name"];
-$data=$_POST["data"];
-$logas="ck (n/a is OK)";
-$loga=$check;
-$logbs="data";
-$logb=$data;
-
-include 'connect.php';
-mysql_close($con);
-
-if($check!=""){
-return;
+if ($check != "") {
+    return;
 }
 
 if($data!=""){
@@ -79,11 +71,12 @@ return;
 <form id="form1" name="form1" method="post" action="">
   <label>
   <div align="center">
-    <textarea name="data" cols="100" rows="10" wrap="virtual" id="data">รหัสนักศึกษา =
+    <textarea name="data" cols="100" rows="10" wrap="virtual" id="data">รหัสนักศึกษา = <?= $id ?>
+    
 พบความผิดปกติคือ / ไม่สามารถทำรายการในหน้า :
 
 
-วันที่ทำรายการ ประมาณเวลา : 
+วันที่ทำรายการ ประมาณเวลา : <?= date(DATE_RFC822) ?>
 
 วิธีการติดต่อกลับ ในกรณีต้องการข้อมูลเพิ่มเติม หรือ แจ้งผลการแก้ไขปัญหา
 E-mail : 

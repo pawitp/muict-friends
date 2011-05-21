@@ -1,25 +1,9 @@
 <?php
+require("bootstrap.php");
+require_login();
 
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
-
-$ids=$_GET["id"];
-$logas="QUEERYID";
+$ids=intval($_GET["id"]);
 $isadmin=$_SESSION['admin'];
-
-
 
 ?>
 
@@ -67,10 +51,7 @@ echo"<b><font color=red>ERROR! เฉพาะ ID ที่ผ่านการ
 return;
 }
 
-
-
-$loga=$id;
-$result = mysql_query("SELECT * FROM muict WHERE id='$ids'");
+$result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
 $row = mysql_fetch_array($result);
 $img2="<img src='image/fail.png' width='27' height='27' />";
 

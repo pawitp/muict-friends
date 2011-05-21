@@ -1,4 +1,6 @@
-
+<?php
+require("bootstrap.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -34,9 +36,13 @@ a:active {
 -->
 </style></head>
 <?php
-include 'connect.php';
-$id=$_SESSION['id'];
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
+
+$id=$_SESSION['remail_id'];
+
+if (empty($id)) {
+    die();
+}
+$result = mysql_query_log("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
 
 $email=$_SESSION['email'];

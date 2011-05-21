@@ -1,4 +1,35 @@
+<?php
+require("bootstrap.php");
 
+$id=intval($_GET["id"]);
+$code=$_GET["code"];
+$npass=mysql_real_escape_string($_POST["npass"]);
+
+$result = mysql_query_log("SELECT password_recovery_code FROM muict WHERE id=$id");
+$row = mysql_fetch_array($result);
+$scodemd = $row[password_recovery_code];
+
+if ($scodemd != $code || empty($scodemd)) {
+    $_SESSION["log_id"] = $id;
+    l("PasswordChangeCodeInvalid", "Input: $code", "DB: $scodemd");
+    $message = "Code เปลี่ยนรหัสผ่านไม่ถูกต้อง <a href='forgot.php'>กรุณาลองส่งอีเมลใหม่อีกครั้ง</a>";
+    $color = "red";
+    $quit = true;
+}
+elseif ($_POST["button"]) {
+    if ($npass == "") {
+        $message = "คุณต้องใส่รหัสผ่าน";
+        $color = "red";
+    }
+    else {
+        mysql_query_log("UPDATE muict SET password = sha1('$npass'), password_recovery_code = NULL WHERE id = '$id'");
+        $message = "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a>";
+        $color = "green";
+        $quit = true;   
+    }
+}
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -29,40 +60,8 @@ a:active {
 </style></head>
 
 <body>
-
-<?php
-
-$id=$_GET["id"];
-$code=$_GET["code"];
-$npass=$_POST["npass"];
-$logas="code";
-$loga=$code;
-$logbs="id";
-$logb=$id;
-//$logcs="new";
-//$logc=$npass;
-include 'connect.php';
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-$scodemd = $row[password_recovery_code];
-//echo "pw= $row[password] codegen= $scodemd codeemail $code";
-if($scodemd==$code and $npass!=""){
-mysql_query("UPDATE muict SET password = sha1('$npass'), password_recovery_code = NULL WHERE id = '$id'");
-mysql_close($con);
-echo "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a>";
-return;
-}
-mysql_close($con);
-if($scodemd==$code){
-
-}else{
-echo "ERROR!";
-session_destroy();
-return;
-}
-
-session_destroy();
-?>
+<div style="color:<?= $color ?>"><?= $message ?></div>
+<? if (!$quit): ?>
 <form id="form1" name="form1" method="post" action="">
   <strong>ป้อนรหัสผ่านใหม่</strong> 
   <label>
@@ -73,5 +72,6 @@ session_destroy();
   </label>
   <br />
 </form>
+<? endif; ?>
 </body>
 </html>

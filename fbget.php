@@ -1,4 +1,7 @@
-
+<?php
+require("bootstrap.php");
+require_login();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -33,23 +36,8 @@ a:active {
 <body>
 
 <?php 
-include 'connect.php';
 
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
-
-
-
+    $id=$_SESSION['id'];
 
     $app_id = 212049612146830;
     $app_secret = "f3ff111ae1ff42ee5a358e12203a92f2";
@@ -86,24 +74,8 @@ return;
 	$fbid=$user->id;
 	$fbpic="http://graph.facebook.com/".$fbid."/picture?type=large";
 	if($fblink!=""){
-	mysql_query("UPDATE muict SET fbname = '$fbname' , fburl='$fblink',fbemail='$fbemail',fbpic='$fbpic',fbid='$fbid' WHERE id = '$id'");
-
-	$logas="FB NAME"; //Í¸ÔºÒÂ loga
-$loga=$fbname;
-$logbs="FB URL";
-$logb=$fblink;
-$logcs="email";
-$logc=$fbemail;
-echo $fbpic;
-
-
+	    mysql_query_log("UPDATE muict SET fbname = '$fbname' , fburl='$fblink',fbemail='$fbemail',fbpic='$fbpic',fbid='$fbid' WHERE id = '$id'");
 	}
-	
-	mysql_close($con);
-include 'log.php';
-if($logb!=""){
-header('Location: loginc.php');
-}
 ?>
 
 </script> 

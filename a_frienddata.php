@@ -1,19 +1,30 @@
+
 <?php
+require("bootstrap.php");
+require_admin_login();
 
-include 'connect.php';
+$ids=$_GET["id"];
+$do=$_GET["do"];
 
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
+switch ($do) {
+    case 1:
+        //UPDATE to 3[2>3]
+        mysql_query_log("UPDATE muict SET idstatus=3 WHERE id = '$ids'");
+        break;
+    case 2:
+        mysql_query_log("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
+        //1>2
+        break;
+    case 3:
+        mysql_query_log("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
+        //3>2
+        break;
+    case 4:
+        $code = generate_code();
+        mysql_query_log("UPDATE muict SET password_recovery_code='$code' WHERE id = '$ids'");
+        $ref = "RESET PASS URL IS : http://www.daequilibrate.net/muict/cpass.php?id=".$ids."&code=".$code;
+        break;
 }
-$result = mysql_query("SELECT * FROM muict WHERE id='$id' and admin=1");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
-
 
 ?>
 
@@ -58,54 +69,22 @@ a:active {
     </label>
    &nbsp; 
    <label>
-   <input type="submit" name="button" id="button" value="Submit" />
+   <input type="submit" id="button" value="Submit" />
    </label>
   </form>
   <p>
     <?php
+    
+    // Not the best way but let it be for now
+    if (empty($ids)) {
+        return;
+    }
 
+    $result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
+    $row = mysql_fetch_array($result);
+    $img2="<img src='image/fail.png' width='27' height='27' />";
 
-
-
-
-$ids=$_GET["id"];
-$do=$_GET["do"];
-
-$logas="ID";
-$loga=$ids;
-$logbs="ACTION";
-$logb=$do;
-include 'log.php';
-
-if($do==1){
-//UPDATE to 3[2>3]
-mysql_query("UPDATE muict SET idstatus=3 WHERE id = '$ids'");
-}elseif($do==2){
-mysql_query("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
-//1>2
-}elseif($do==3){
-mysql_query("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
-//3>2
-}else if($do==4){
-$code = md5(uniqid('', true));
-mysql_query("UPDATE muict SET password_recovery_code='$code' WHERE id = '$ids'");
-
-
-$ref="RESET PASS URL IS : http://www.daequilibrate.net/muict/cpass.php?id=".$ids."&code=".$code;
-
-//GET URL
-}
-
-if($ids==""){
-return;
-}
-$logas="QUEERYID";
-$loga=$ids;
-$result = mysql_query("SELECT * FROM muict WHERE id='$ids'");
-$row = mysql_fetch_array($result);
-$img2="<img src='image/fail.png' width='27' height='27' />";
-
-?>
+    ?>
   </p>
   <table width="40%" border="1">
     <tr>
@@ -260,7 +239,6 @@ echo $idss;?>&do=4"><img src="image/friendster.png" width="60" height="60" align
   </table>
   <br />
   <?php
-mysql_close($con);
 
 $data=$_POST["data"];
 $email=$_POST["email"];
@@ -268,11 +246,6 @@ $email=$_POST["email"];
 
 $data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://www.daequilibrate.net/muict/help.php เพื่อแก้ปัญหาได้ ";
 if($email!="" and $data!=""){
-$logas="EMAILDATA";
-$loga=$data;
-$lodbs="EMAIL";
-$logb=$email;
-include 'log.php';
 echo "ส่ง E-MAIL ไปแล้ว!<hr>";
 $MailTo = $email ;
 $MailFrom = "no-reply@daequilibrate.net" ;
@@ -294,7 +267,7 @@ return;
 }
 ?>
 
-  <form id="form2" name="form2" method="post" action="a_frienddata.php?id=<? echo $id; ?>">
+  <form id="form2" name="form2" method="post" action="a_frienddata.php?id=<? echo $ids; ?>">
     <p>ส่ง E-mail ถึงคนนี้ [อย่าลืมระบุวิธีติดต่อกลับ]</p>
     <p>
       <label>

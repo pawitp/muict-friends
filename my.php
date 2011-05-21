@@ -1,0 +1,190 @@
+<?php
+
+require("bootstrap.php");
+require_login();
+
+$id = $_SESSION['id'];
+$result = mysql_query_log("SELECT * FROM muict WHERE id=$id");
+$row = mysql_fetch_array($result);
+
+$useabout = 1;
+if ($row[about]=="" and $useabout == 1) {
+    redirect('updateabout.php');
+}
+
+// For late registrant who did not enter an English nickname
+if ($row[eng_nickname] == "") {
+    redirect("updatenickname.php");
+}
+
+$secknow = 0;  //ถ้ารู้SECกันแล้วแก้เป็น1
+if ($_SESSION['sec'] == 0 and $secknow == 1){
+	redirect('updatesec.php');
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>MUICT #9 : Friend system</title>
+<style type="text/css">
+<!--
+body {
+	background-image: url(bg.png);
+}
+a:link {
+	color: #000000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000000;
+}
+a:hover {
+	text-decoration: underline;
+	color: #000000;
+}
+a:active {
+	text-decoration: none;
+	color: #000000;
+}
+.style1 {font-size: 18px}
+.style5 {
+	color: #FF0000;
+	font-size: 10px;
+}
+.style6 {
+	color: #003300;
+	font-weight: bold;
+}
+.style9 {font-size: 14px}
+.style10 {
+	font-size: 16;
+	font-weight: bold;
+}
+-->
+</style></head>
+
+<body>
+<div align="center">
+
+<form id="form1" name="form1" method="post" action="loginc.php">
+    <table width="65%" border="0">
+        <tr>
+          <td><div align="right">
+            <table width="100%" border="0">
+              <tr>
+                <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <? echo $_SESSION['nickname'];   ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
+                <?
+                
+                if($_SESSION['sec']==0){
+				echo "N/A";
+
+				} else {
+				echo $_SESSION['sec'];
+				}
+				
+                if($row[admin]==1){
+                echo "&nbsp;&nbsp; <a href='a_list.php' target=_blank><b>ADMIN CP</b></a>";
+                } 
+                ?> 
+               &nbsp;&nbsp; </span></span><a href="friend.php" target="_blank" class="style10">ดูข้อมูลเพื่อน</a></td>
+                <td><div align="right"><a href="logout.php"><strong>ออกจากระบบ</strong></a></div></td>
+              </tr>
+            </table>
+          </div></td>
+        </tr>
+        <tr>
+          <td> <table width="100%" border="0">
+<? if ($row['idstatus'] == 3): ?>
+    <tr>
+        <td width='9%'><div align='center'><img src='image/profile.png' width='48' height='48' /></div></td>
+        <td width='84%'><div align='center' class='style4'><font color='green'>ผ่านการยืนยัน ID จากผู้ดูแลระบบแล้ว</font></div></td>
+        <td width='7%'><img src='image/pass.png' width='48' height='48' /></td>
+     </tr>
+<? else: ?>
+	 <tr>
+        <td width='9%'><div align='center'><img src='image/profile.png' width='48' height='48' /></div></td>
+        <td width='84%'><div align='center' class='style4'><font color='red'>รอการยืนยัน ID จากผู้ดูแลระบบ <br />
+          <span class='style1'>เพิ่มข้อมูลเกี่ยวกับตัวคุณด้านล่าง เพื่อลดระยะเวลาการตรวจสอบ</font></span></div></td>
+        <td width='7%'><img src='image/onebit_49.png' width='48' height='48' /></td>
+      </tr>
+<? endif; ?>
+      <tr>
+        <td width="9%"><div align="center"><img src="image/email.png" alt="email" width="48" height="48" /></div></td>
+        <td width="84%"><div align="left">E-Mail : <? echo $row['email']; ?> </div></td>
+        <td width="7%"><img src="image/pass.png" width="48" height="48" /></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/msn-icon.png" alt="MSN [windows live messenger]" width="52" height="52" /></div></td>
+        <td><div align="left">MSN : <? echo $row['msn']; ?></div></td>
+        <td><a href="update.php?do=1"><img src="image/edit.png" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/gtalk-icon.png" alt="" width="55" height="55" /></div></td>
+        <td><div align="left">GTalk : <? echo $row['gtalk']; ?> </div></td>
+        <td><a href="update.php?do=2"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/big_bb_Icon-120x120.jpg" alt="" width="58" height="58" /></div></td>
+        <td><div align="left">BB PIN : <? echo $row['BB']; ?></div></td>
+        <td><a href="update.php?do=3"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/twitter.png" alt="twitter" width="60" height="60" /></div></td>
+        <td><div align="left">Twitter : <? echo $row['twitter']; ?></div></td>
+        <td><a href="update.php?do=4"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+
+      <tr>
+        <td><div align="center"><img src="image/facebook.png" alt="facebook" width="60" height="60" /></div></td>
+        <td><div align="left">Facebook : <? echo $row['fbname']; ?><br />
+            <span class="style5">*ขอความร่วมมือในการให้ข้อมูล&nbsp;Facebook เพื่อง่ายต่อการตรวจสอบว่าเป็นตัวจริงไม่ได้แอบอ้างมา</span></div></td>
+        <td><a href="fbget.php"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/skype-icon.png" alt="skype" width="59" height="56" /></div></td>
+        <td><div align="left">Skype : <? echo $row['skype']; ?></div></td>
+        <td><a href="update.php?do=5"><img src="image/edit.png" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/call_icon_110x102.jpg" alt="mobile" width="58" height="53" /></div></td>
+        <td><div align="left">Mobile : <? echo $row['mobile']; ?></div></td>
+        <td><a href="update.php?do=6"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+        <td><div align="center"><img src="image/com.whatsapp_icon.png" alt="whatsapp" width="58" height="58" /></div></td>
+        <td><div align="left">Whatsapp : 
+          <?= $row['whatsapp'] ?>
+        </div></td>
+        <td><a href="update.php?do=7"><img src="image/edit.png" width="48" height="48" /></a></td>
+      </tr>
+      <tr>
+      <?php
+	  $imgurl=$row['img'];
+	  $fbiurl=$row['fbpic'];
+	  ?>
+        <td><div align="center"><img src="image/camera-icon.png" width="47" height="47" /></div></td>
+        <td><div align="left">รูปภาพ :&nbsp; <a href="upload_images/<?= $imgurl ?>" target="_blank"><?= $imgurl ?></a>
+        &nbsp;&nbsp;&nbsp;&nbsp; <a href=<?= $fbiurl ?> target="_blank"><?php
+        if ($fbiurl != "") {
+		echo "FACEBOOK";
+		}
+		?></a><br />  
+          <span class="style5">*การอัพโหลดรูปภาพจะช่วยให้เพื่อนจำได้ได้ง่ายขึ้น</span></a></div></td>
+        <td><a href="upload.php"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+      </tr>
+    </table></td>
+        </tr>
+  </table>
+   
+      <div align="center"><span class="style6"><span class="style9"><img src="image/edit.png" alt="" width="20" height="20" align="bottom" /></span>กรอกทุกอันตามความเป็นจริง ถ้าไม่มี หรือ ไม่อยากให้ข้อมูลช่องไหน ไม่ต้องใส่นะ <span class="style9"><img src="image/edit.png" alt="" width="20" height="20" align="bottom" /></span><br />
+      แนะนำว่าให้ใส่ Facebook ทุกคน เพื่อง่ายในยืนยันว่าเป็นตัวจริง!<br />
+      </span><br />
+  </div>
+</form>
+<div align="center"><br />
+   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="updatenickname.php">แก้ไขชื่อเล่น</a>&nbsp; </div>
+</body>
+</html>

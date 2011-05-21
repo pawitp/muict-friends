@@ -1,7 +1,3 @@
-<?
-include 'connect.php';
-
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -88,7 +84,6 @@ a:active {
   <label></label>
   <div align="center"><br />
       <span class="style3">กรุณาตรวจสอบข้อมูลก่อนกดส่งข้อมูล&gt;&gt;</span>
-    <input name="ip" type="hidden" id="ip" value="<? echo $logip; ?>" />
     <input type="submit" name="button" id="button" value="ส่งข้อมูล" />
      <span class="style3">&lt;&lt;กรุณาตรวจสอบข้อมูลก่อนกดส่งข้อมูล</span><br />
   </div>

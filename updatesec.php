@@ -1,22 +1,6 @@
 <?php
-
-$id=$_POST["id"];
-$pass=$_POST["pass"];
-
-
-include 'connect.php';
-
-if($_SESSION['id']!=""){
-$id=$_SESSION['id'];
-}
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-
-if($row[email]==""){
-session_destroy();
-header('Location: login.php');
-return;
-}
+require("bootstrap.php");
+require_login();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -24,16 +8,10 @@ return;
 <head>
 <?php
 
-$sec=$_POST["sec"];
-
-if($sec!=""){
-$logas="id";
-$loga=$id;
-$logbs="sec";
-$logb=$sec;
-include 'log.php';
-mysql_query("UPDATE muict SET sec = '$sec' WHERE id = '$id'");
-header('Location: loginc.php');
+if ($_POST["sec"] != "") {
+$sec=intval($_POST["sec"]);
+mysql_query_log("UPDATE muict SET sec = '$sec' WHERE id = '$id'");
+redirect("my.php");
 }
 
 ?>
