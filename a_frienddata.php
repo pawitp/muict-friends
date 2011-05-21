@@ -46,6 +46,7 @@ a:active {
 	color: #000000;
 }
 .style3 {font-size: 12px}
+.style6 {font-size: 9px; color: #FFFFFF; }
 -->
 </style></head>
 
@@ -86,12 +87,10 @@ mysql_query("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
 mysql_query("UPDATE muict SET idstatus=2 WHERE id = '$ids'");
 //3>2
 }else if($do==4){
-$result = mysql_query("SELECT * FROM muict WHERE id='$ids'");
-$row = mysql_fetch_array($result);
+$code = md5(uniqid('', true));
+mysql_query("UPDATE muict SET password_recovery_code='$code' WHERE id = '$ids'");
 
-$codess=$row[password]."muict9p";
 
-$code=md5($codess);
 $ref="RESET PASS URL IS : http://www.daequilibrate.net/muict/cpass.php?id=".$ids."&code=".$code;
 
 //GET URL
@@ -209,7 +208,26 @@ $img2="<img src='image/fail.png' width='27' height='27' />";
             <?php   $thiss=$row[whatsapp]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
           </div></td>
         </tr>
-        
+                <tr>
+          <td height="21"><strong>About me</strong></td>
+          <td bgcolor="#FFFFFF"> <span class="style6">x</span><br />            
+            &nbsp;&nbsp; <?php
+		  $data=str_replace( "<br>","&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;", $row["about"] );
+          echo "$data";
+		  
+		  if($row[BD]!="0000-00-00"){
+		  list($year,$month,$day) = split("-",trim($row["BD"]));
+		  $year+=543;
+		  $day+=1;
+		  $day-=1;
+		  $month+=1;
+		  $month-=1;
+		  echo "<br><br>&nbsp;&nbsp;&nbsp;<b>วันเกิด : </b> $day / $month / $year";
+		  }
+		  ?>
+            <br />
+            <span class="style6">a</span><br /></td>
+        </tr>
       </table></td>
     </tr>
   </table>

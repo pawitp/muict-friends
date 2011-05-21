@@ -50,7 +50,7 @@ $sql[3]="BB";
 
 $doimg[4]="twitter.png";
 $doname[4]="TWITTER";
-$doex[4]="muict [Twitter name only!]";
+$doex[4]="muict [Twitter name only!]<br>If your URL is : http://twitter.com/#!/<b>DaEquilibrate</b><br>DaEquilibrate is Twitter name";
 $dovalidate[4]="username";
 $sql[4]="twitter";
 

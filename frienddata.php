@@ -52,6 +52,10 @@ a:active {
 	color: #000000;
 }
 .style2 {font-size: 12px}
+.style4 {
+	font-size: 9px;
+	color: #FFFFFF;
+}
 -->
 </style></head>
 
@@ -179,6 +183,25 @@ return;
           <td><div align="left">
             <?php   $thiss=$row[whatsapp]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
           </div></td>
+        </tr>
+        <tr>
+          <td height="21"><strong>About me</strong></td>
+          <td bgcolor="#FFFFFF"> <span class="style4">x</span><br />            &nbsp;&nbsp; <?php
+		  $data=str_replace( "<br>","&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;", $row["about"] );
+          echo "$data";
+		  
+		  if($row[BD]!="0000-00-00"){
+		  list($year,$month,$day) = split("-",trim($row["BD"]));
+		  $year+=543;
+		  $day+=1;
+		  $day-=1;
+		  $month+=1;
+		  $month-=1;
+		  echo "<br><br>&nbsp;&nbsp;&nbsp;<b>วันเกิด : </b> $day / $month / $year";
+		  }
+		  ?>
+            <br />
+            <span class="style4">a</span><br /></td>
         </tr>
         
       </table></td>

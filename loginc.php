@@ -51,6 +51,14 @@ $_SESSION['img']=$row[img];
 $_SESSION['sec']=$row[sec];
 $_SESSION['admin']=$row[admin];
 $_SESSION['fbpic']=$row[fbpic];
+
+$useabout=1;
+if($row[about]=="" and $useabout==1){
+
+header('Location: updateabout.php');
+return;
+}
+
 $secknow=0;  //ถ้ารู้SECกันแล้วแก้เป็น1
 if($_SESSION['sec']==0 and $secknow==1){
 	header('Location: updatesec.php');
@@ -107,10 +115,9 @@ a:active {
 	font-weight: bold;
 }
 .style9 {font-size: 14px}
-.style12 {
+.style10 {
+	font-size: 16;
 	font-weight: bold;
-	font-size: 10px;
-	color: #666666;
 }
 -->
 </style></head>
@@ -146,7 +153,7 @@ return;
                 echo "&nbsp;&nbsp; <a href='a_list.php' target=_blank><b>ADMIN CP</b></a>";
                 } 
                 ?> 
-               &nbsp;&nbsp;</span></span></td>
+               &nbsp;&nbsp; </span></span><a href="friend.php" target="_blank" class="style10">ดูข้อมูลเพื่อน</a></td>
                 <td><div align="right"><a href="logout.php"><strong>ออกจากระบบ</strong></a></div></td>
               </tr>
             </table>
@@ -251,6 +258,6 @@ echo "	      <tr>
   </div>
 </form>
 <div align="center"><br />
-   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a></div>
+   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="#">แก้ไขชื่อเล่น</a>&nbsp; </div>
 </body>
 </html>

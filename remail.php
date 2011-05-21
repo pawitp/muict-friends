@@ -35,14 +35,16 @@ a:active {
 </style></head>
 <?php
 include 'connect.php';
-
-$result = mysql_query("SELECT activation_code FROM muict WHERE id='$id'");
+$id=$_SESSION['id'];
+$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
 $row = mysql_fetch_array($result);
 
 $email=$_SESSION['email'];
-$emailcode=$row['activation_code'];
+$dbcode=$row['activation_code'];
+$emailcode=$dbcode;
 $emailcode.="&id=";
 $emailcode.=$_SESSION['id'];
+//echo $row['activation_code'];
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://www.daequilibrate.net/muict/emailadd.php?email=";
 
 $data.=$email;

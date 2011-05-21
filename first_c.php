@@ -84,37 +84,38 @@ mysql_close($con);
   <strong>ขั้นตอนที่ 2 จาก 3</strong>  <strong>กำหนดรหัสผ่านสำหรับการแก้ไขข้อมูลในอนาคต&nbsp;</strong></p>
 <form id="form1" name="form1" method="post" action="updatepass.php">
   <div align="center">
-    <table width="35%" border="0" bordercolor="#FF00FF">
+    <table width="40%" border="0" bordercolor="#FF00FF">
       <tr>
-        <td bgcolor="#CCFFFF">รหัสผ่าน</td>
-        <td bgcolor="#CCFFFF"><input name="pass" type="password" id="pass" maxlength="20" />
+        <td bgcolor="#99CC66"><strong>รหัสผ่าน</strong></td>
+        <td bgcolor="#99CC66"><input name="pass" type="password" id="pass" maxlength="20" />
           <br />
           <span class="style3">[โปรดใส่ใจภาษาที่.ใช้พิมพ์ THAI / ENGLISH]</span></td>
       </tr>
       <tr>
-        <td bgcolor="#99CC66">รหัสผ่านอีกครั้ง</td>
-        <td bgcolor="#99CC66"><input name="cpass" type="password" id="cpass" maxlength="20" /></td>
+        <td bgcolor="#99CC66"><strong>รหัสผ่านอีกครั้ง</strong></td>
+        <td bgcolor="#99CC66"><input name="cpass" type="password" id="cpass" maxlength="20" />
+        <br /></td>
       </tr>
       <tr>
-        <td bgcolor="#CCFFFF">E-mail</td>
+        <td bgcolor="#CCFFFF"><strong>E-mail</strong></td>
         <td bgcolor="#CCFFFF"><input type="text" name="email" id="email" />
           <br />
         <span class="style1">*ใส่ E-mail ที่ใช้งานบ่อยที่สุด เพราะต้องยืนยัน E-mail </span></td>
       </tr>
       <tr>
-        <td bgcolor="#99CC66">E-mail</td>
-        <td bgcolor="#99CC66"><input type="text" name="cemail" id="cemail" />
+        <td bgcolor="#CCFFFF"><strong>E-mail</strong></td>
+        <td bgcolor="#CCFFFF"><input type="text" name="cemail" id="cemail" />
           <br />
           <span class="style1">*E-mailเหมือนช่องด้านบนอีกครั้งเพื่อป้องกันข้อผิดพลาดในการกรอกข้อมู</span><span class="style2">ล</span></td>
       </tr>
       <tr>
-        <td bgcolor="#CCFFFF">ชื่อเล่น (ไทย)</td>
-        <td bgcolor="#CCFFFF"><label>
+        <td bgcolor="#99CC66"><strong>ชื่อเล่น (ไทย)</strong></td>
+        <td bgcolor="#99CC66"><label>
           <input name="nickname" type="text" id="nickname" maxlength="20" />
         </label></td>
       </tr>
       <tr>
-        <td bgcolor="#99CC66">Nickname (English)</td>
+        <td bgcolor="#99CC66"><strong>Nickname (English)</strong></td>
         <td bgcolor="#99CC66"><label>
           <input name="eng_nickname" type="text" id="eng_nickname" maxlength="20" />
         </label></td>
