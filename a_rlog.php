@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $disable_logging = true;
 require("bootstrap.php");
 require_admin_login();
