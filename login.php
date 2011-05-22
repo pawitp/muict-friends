@@ -18,7 +18,7 @@ elseif ($_POST["button"]) {
     $enc_db_pass = sha1($_SESSION['secret'] . $db_pass);
     $user_pass = substr(sha1($_POST['pass']), 0, 20);
     
-    if ($enc_db_pass == $_POST['enc_pass'] || $db_pass == $user_pass) {
+    if (($enc_db_pass == $_POST['enc_pass'] || $db_pass == $user_pass) && $row['idstatus'] > 0) {
         if ($row['idstatus'] == 1) {
             $_SESSION['remail_id'] = $id;
             $error = "<img src=image/onebit_49.png  align=‘middle’ />
