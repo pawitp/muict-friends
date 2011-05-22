@@ -40,30 +40,29 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
 		//echo" $image_name ";
 		mysql_query_log("UPDATE muict SET img = '$image_name' WHERE id = $id");
-		redirect('my.php');
-
-
         }// END if ( $upload_image->processed )
  
     }//END if ( $upload_image->uploaded )
+    else {
+        // delete image
+        $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");
+        $row = mysql_fetch_array($result);
+        if (!empty($row['img'])) {
+            if (!unlink('upload_images/' . $row['img'])) {
+                l("UnlinkedFailed", $row['img']);
+            }
+            mysql_query_log("UPDATE muict SET img = NULL WHERE id = $id");
+            
+        }
+    }
  
- 
+    redirect('my.php');
 }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<?php
-
-
-
-
-
-
-
-?>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUICT #9 : Friend system</title>
 <style type="text/css">
@@ -98,7 +97,7 @@ a:active {
 <body>
 <form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
   <p align="center"><img src="http://image.friends.muict9.net/camera-icon.png" width="172" height="172" /></p>
-  <p align="center"><span class="style1">เลือกรูปภาพที่จะอัพโหลด</span><br />
+  <p align="center"><span class="style1">เลือกรูปภาพที่จะอัพโหลด (กด Upload เฉยๆเพื่อลบ)</span><br />
     <br />
     <input name="image_name" type="file" id="image_name" size="40" />
   </p>
