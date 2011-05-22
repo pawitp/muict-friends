@@ -38,7 +38,6 @@ elseif ($_POST["button"]) {
         $_SESSION["admin"] = $row["admin"];
         
         if (empty($_SESSION["redirect"])) {
-			$_SESSION['remail_id'] = $id;
             $redirect = "my.php";
         }
         else {

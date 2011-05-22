@@ -41,32 +41,35 @@ a:active {
 -->
 </style></head>
 <?php
-include 'connect.php';
-$id=$_SESSION['remail_id'];
-$result = mysql_query("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
-if($id==""){
-header('Location: login.php');
-return;
+if (!empty($_SESSION['remail_id'])) {
+    $id = $_SESSION['remail_id'];
+}
+elseif (!empty($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+}
+else {
+    redirect("login.php");
 }
 
-$email=$row[email];
+$result = mysql_query_log("SELECT * FROM muict WHERE id='$id'");
+$row = mysql_fetch_array($result);
+
+$email = $row[email];
 
 //echo $row['activation_code'];
 
 $error=false;
-$newemail=mysql_real_escape_string($_POST["email"]);
-if (!filter_var($newemail, FILTER_VALIDATE_EMAIL)) {
-                    $error = true;
-   }
+$newemail=$_POST["email"];
+if (!verify_email($newemail)) {
+    $error = true;
+}
+$newemail = mysql_real_escape_string($newemail);
    
 if($newemail!="" and $error!=true and $newemail!=$_SESSION['email']){
 
 $emailcode = generate_code();
 
-mysql_query("UPDATE muict SET idstatus=1 ,email='$newemail', activation_code='$emailcode' WHERE id = '$id'");
-//echo"SQL UPDATE muict SET idstatus=1 ,email='$newemail', activation_code='$emailcode' WHERE id = '$id' <br>";
-mysql_close($con);
+mysql_query_log("UPDATE muict SET idstatus=1 ,email='$newemail', activation_code='$emailcode' WHERE id = '$id'");
 $emailcode.="&id=".$id;
 
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://www.daequilibrate.net/muict/emailadd.php?email=";
@@ -99,6 +102,7 @@ $Headers .= "X-Mailer: PHP mailer\r\n" ;
 if(mail($MailTo, $MailSubject , $MailMessage, $Headers, $MailFrom))
 {
 //echo "ส่งเรียบร้อยแล้ว กรุณาตรวจสอบ Inboxของท่าน" ; //ส่งเรียบร้อย
+session_destroy();
 }else{
 echo "Error โปรดลองใหม่ภายหลัง หรือ<a href='help.php'>ติดต่อผู้ดูแลระบบ</a>" ; //ไม่สามารถส่งเมล์ได้
 return;
@@ -113,9 +117,7 @@ $succ=1;
 
 
 if($newemail==$_SESSION['email'] and $newemail!=""){
-mysql_close($con);
-header('Location: loginc.php');
-return;
+redirect("my.php");
 }
 
 
