@@ -79,7 +79,7 @@ if ($datado != "") {
                 }
                 break;
             case "username":
-                if (!preg_match("/^[0-9A-Za-z\.\,\# ]+$/", $data)) {
+                if (!preg_match("/^[0-9A-Za-z\.\,\# _]+$/", $data)) {
                     $error = true;
                 }
                 break;

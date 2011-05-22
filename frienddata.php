@@ -45,10 +45,12 @@ a:active {
 
 <body><center><?php
 
+$result = mysql_query_log("SELECT idstatus FROM muict WHERE id=$ids");
+$row = mysql_fetch_array($result);
 
-if($row[idstatus]!=3){
-echo"<b><font color=red>ERROR! เฉพาะ ID ที่ผ่านการตรวจสอบแล้วเท่านั้นที่ดูข้อมูลเชิงลึกได้ </font></b><br> เพื่อเพิ่มความสะดวกในการตรวจสอบ โปรดให้ข้อมูลให้มากที่สุด เช่น Facebook หรือ อัพโหลดรูปภาพของท่าน<hr>";
-return;
+if ($row[idstatus] != 3){
+    echo"<b><font color=red>ERROR! เฉพาะ ID ที่ผ่านการตรวจสอบแล้วเท่านั้นที่ดูข้อมูลเชิงลึกได้ </font></b><br> เพื่อเพิ่มความสะดวกในการตรวจสอบ โปรดให้ข้อมูลให้มากที่สุด เช่น Facebook หรือ อัพโหลดรูปภาพของท่าน<hr>";
+    return;
 }
 
 $result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
@@ -56,9 +58,10 @@ $row = mysql_fetch_array($result);
 $img2="<img src='image/fail.png' width='27' height='27' />";
 
 
-if($row[idstatus]==0 or $row[idstatus]==1){
-echo "แหะๆ รู้นะ คิดอะไรอยูู่ อิอิอิอิ ;P ";
-return;
+if($row[idstatus] == 0 or $row[idstatus] == 1){
+    l("ViewUnverifiedUser", "", "");
+    echo "แหะๆ รู้นะ คิดอะไรอยูู่ อิอิอิอิ ;P ";
+    return;
 }
 
 ?>

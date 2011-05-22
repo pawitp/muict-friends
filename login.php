@@ -20,7 +20,8 @@ elseif ($_POST["button"]) {
             $_SESSION['remail_id'] = $id;
             $error = "<img src=image/onebit_49.png  align=‘middle’ />
 
-            <span class=‘style3’>ยังไม่ได้ยืนยัน E-mail โปรดยืนยัน E-mail ก่อนใช้งานระบบ!!!  <a href='remail.php'>ส่ง E-mail ยืนยันอีกครั้ง</a></span></div>";
+            <span class=‘style3’>ยังไม่ได้ยืนยัน E-mail โปรดยืนยัน E-mail ก่อนใช้งานระบบ!!!  <a href='remail.php'>ส่ง E-mail ยืนยันอีกครั้ง</a> หรือ <br />
+<a href='cemail.php'>เปลี่ยน E-mail ที่ใช้ยืนยัน</a></span></div>";
         }
     }
     
@@ -30,6 +31,7 @@ elseif ($_POST["button"]) {
         $_SESSION["admin"] = $row["admin"];
         
         if (empty($_SESSION["redirect"])) {
+			$_SESSION['remail_id'] = $id;
             $redirect = "my.php";
         }
         else {
