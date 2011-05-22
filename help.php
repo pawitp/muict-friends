@@ -45,7 +45,7 @@ if ($check != "") {
 
 if($data!=""){
 $MailTo = "boy25.pskpnza@gmail.com" ;
-$MailFrom = "no-reply@daequilibrate.net" ;
+$MailFrom = "no-reply@muict9.net" ;
 $MailSubject = "แจ้งปัญหาการใช้งานระบบ" ;
 $MailMessage = $data ;
 //echo"$MailTo $MailMessage ";

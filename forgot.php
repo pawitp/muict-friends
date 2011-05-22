@@ -21,11 +21,11 @@ if ($_POST["button"]) {
         $code = generate_code();
         mysql_query_log("UPDATE muict SET password_recovery_code='$code' WHERE id = $id");
         
-        $data="<a href=http://www.daequilibrate.net/muict/cpass.php?id=".$id."&code=".$code.">http://www.daequilibrate.net/muict/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
+        $data="<a href=http://friends.muict9.net/cpass.php?id=".$id."&code=".$code.">http://friends.muict9.net/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
         
         $MailTo = $email ;
-        $MailFrom = "no-reply@daequilibrate.net" ;
-        $MailSubject = "Link กำหนดรหัสผ่านใหม่ http://daequilibrate.net/muict" ;
+        $MailFrom = "no-reply@muict9.net" ;
+        $MailSubject = "Link กำหนดรหัสผ่านใหม่ friends.muict9.net" ;
         $MailMessage = $data ;
         //echo"$MailTo $MailMessage ";
         

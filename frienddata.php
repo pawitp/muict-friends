@@ -204,4 +204,4 @@ return;
 
 ?>
 
-<meta http-equiv="refresh" content="2;url=http://www.daequilibrate.net/muict/a_frienddata.php?id=<? echo $ids; ?>/"> 
+<meta http-equiv="refresh" content="2;url=http://friends.muict9.net/a_frienddata.php?id=<? echo $ids; ?>/"> 

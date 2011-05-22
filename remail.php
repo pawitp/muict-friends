@@ -51,12 +51,12 @@ $emailcode=$dbcode;
 $emailcode.="&id=";
 $emailcode.=$_SESSION['id'];
 //echo $row['activation_code'];
-$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://www.daequilibrate.net/muict/emailadd.php?email=";
+$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?email=";
 
 $data.=$email;
 $data.="&code=";
 $data.=$emailcode;
-$data.="'>http://www.daequilibrate.net/muict/emailadd.php?email=";
+$data.="'>http://friends.muict9.net/emailadd.php?email=";
 $data.=$email;
 $data.="&code=";
 $data.=$emailcode;
@@ -64,7 +64,7 @@ $data.="</a> <br>หากกดลิ้งค์ไม่ได้โปรด
 //echo $data;
 
 $MailTo = $email ;
-$MailFrom = "no-reply@daequilibrate.net" ;
+$MailFrom = "no-reply@muict9.net" ;
 $MailSubject = "กดลิ้งค์ใน E-mail นี้เพื่อยันยัน E-mailของท่าน " ;
 $MailMessage = $data ;
 //echo"$MailTo $MailMessage ";

@@ -22,7 +22,7 @@ switch ($do) {
     case 4:
         $code = generate_code();
         mysql_query_log("UPDATE muict SET password_recovery_code='$code' WHERE id = '$ids'");
-        $ref = "RESET PASS URL IS : http://www.daequilibrate.net/muict/cpass.php?id=".$ids."&code=".$code;
+        $ref = "RESET PASS URL IS : http://friends.muict9.net/cpass.php?id=".$ids."&code=".$code;
         break;
 }
 
@@ -244,11 +244,11 @@ $data=$_POST["data"];
 $email=$_POST["email"];
 
 
-$data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://www.daequilibrate.net/muict/help.php เพื่อแก้ปัญหาได้ ";
+$data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://friends.muict9.net/help.php เพื่อแก้ปัญหาได้ ";
 if($email!="" and $data!=""){
 echo "ส่ง E-MAIL ไปแล้ว!<hr>";
 $MailTo = $email ;
-$MailFrom = "no-reply@daequilibrate.net" ;
+$MailFrom = "no-reply@muict9.net" ;
 $MailSubject = "ข้อความจากผู้ดูแลระบบ" ;
 $MailMessage = $data ;
 //echo"$MailTo $MailMessage ";

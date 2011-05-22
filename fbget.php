@@ -41,7 +41,7 @@ a:active {
 
     $app_id = 212049612146830;
     $app_secret = "f3ff111ae1ff42ee5a358e12203a92f2";
-    $my_url = "http://www.daequilibrate.net/muict/fbget.php";
+    $my_url = "http://friends.muict9.net/fbget.php";
 
     $code = $_REQUEST["code"];
 
