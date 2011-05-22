@@ -22,12 +22,7 @@ if (get_magic_quotes_gpc()) {
 }
 
 // Connect to database
-$host="localhost";
-$user="daequili_buddy";
-$passwordsql="f3AsLTHS";
-$dbname="daequili_buddy";
-
-@include("localsettings.php");
+require("localsettings.php");
 
 $con = mysql_connect($host,$user,$passwordsql);
 if (!$con) { 
