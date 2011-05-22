@@ -1,14 +1,15 @@
 <?php
 require("bootstrap.php");
 
-if (empty($_SESSION["secret"])) {
-    $_SESSION["secret"] = generate_code();
-}
-
 if (is_login()) {
     redirect("my.php");
 }
 elseif ($_POST["button"]) {
+    if (empty($_SESSION['secret'])) {
+        l("NoLoginSecret", "", "");
+        die();
+    }
+    
     // Process login
     $id = intval($_POST["id"]);
     $result = mysql_query_log("SELECT id, password, idstatus, admin FROM muict WHERE id=$id");
@@ -54,6 +55,8 @@ if ($id) {
 else {
     $hint_login = "5488";
 }
+
+$_SESSION["secret"] = generate_code();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
