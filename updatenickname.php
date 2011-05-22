@@ -15,10 +15,10 @@ else {
     $eng_nickname = $_POST["eng_nickname"];    
 }
 
-if (!preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname)) {
+if (!verify_nickname($nickname)) {
     $error = "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
 }
-elseif (!preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $eng_nickname)) {
+elseif (!verify_engnickname($eng_nickname)) {
     $error = "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง";
 }
 elseif ($_POST['button']) {
