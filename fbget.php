@@ -39,8 +39,8 @@ a:active {
 
     $id=$_SESSION['id'];
 
-    $app_id = 212049612146830;
-    $app_secret = "f3ff111ae1ff42ee5a358e12203a92f2";
+    $app_id = "188058964579171";
+    $app_secret = "5287a74bc3b6fa1b8e6a23a7b9373c43";
     $my_url = "http://friends.muict9.net/fbget.php";
 
     $code = $_REQUEST["code"];
@@ -50,6 +50,7 @@ a:active {
             . $app_id . "&redirect_uri=" . urlencode($my_url);
 
         echo("<script> top.location.href='" . $dialog_url . "'</script>");
+        return;
     }
 
     $token_url = "https://graph.facebook.com/oauth/access_token?client_id="
