@@ -2,6 +2,8 @@
 require("bootstrap.php");
 require_login();
 
+$id = $_SESSION['id'];
+
 // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
 include 'class.upload.php' ;
  
@@ -30,19 +32,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
         // ถ้าหากว่าการจัดเก็บรูปภาพไม่มีปัญหา  เก็บชื่อภาพไว้ในตัวแปร เพื่อเอาไปเก็บในฐานข้อมูลต่อไป
         if ( $upload_image->processed ) {
  
-            $image_name =  $upload_image->file_dst_name ; // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name
+            $image_name =  mysql_real_escape_string($upload_image->file_dst_name); // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name
             $upload_image->clean(); // คืนค่าหน่วยความจำ
  
             // เก็บชื่อภาพลงฐานข้อมูล
 
 
 		//echo" $image_name ";
-		mysql_query_log("UPDATE muict SET img = '$image_name' WHERE id = '$id'");
-		$logas="img";
-		$loga=$image_name;
-		include 'log.php';
-		mysql_close($con);
-		header('Location: loginc.php');
+		mysql_query_log("UPDATE muict SET img = '$image_name' WHERE id = $id");
+		redirect('my.php');
 
 
         }// END if ( $upload_image->processed )
