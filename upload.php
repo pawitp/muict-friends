@@ -15,6 +15,15 @@ include 'class.upload.php' ;
 //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
  
+    // Delete old image
+    $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");
+    $row = mysql_fetch_array($result);
+    if (!empty($row['img'])) {
+        if (!unlink('upload_images/' . $row['img'])) {
+            l("UnlinkedFailed", $row['img']);
+        }
+    }
+ 
     // เริ่มต้นใช้งาน class.upload.php ด้วยการสร้าง instant จากคลาส
     $upload_image = new upload($_FILES['image_name']) ; // $_FILES['image_name'] ชื่อของช่องที่ให้เลือกไฟล์เพื่ออัปโหลด
  
@@ -44,18 +53,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
  
     }//END if ( $upload_image->uploaded )
     else {
-        // delete image
-        $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");
-        $row = mysql_fetch_array($result);
-        if (!empty($row['img'])) {
-            if (!unlink('upload_images/' . $row['img'])) {
-                l("UnlinkedFailed", $row['img']);
-            }
-            mysql_query_log("UPDATE muict SET img = NULL WHERE id = $id");
-            
-        }
+        mysql_query_log("UPDATE muict SET img = NULL WHERE id = $id");
     }
- 
+    
     redirect('my.php');
 }
 ?>
