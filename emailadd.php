@@ -24,7 +24,7 @@ if ($row[activation_code] == $pass and $row[idstatus] == 1) {
 <style type="text/css">
 <!--
 body {
-	background-image: url(bg.png);
+	background-image: url(image/bg.png);
 }
 a:link {
 	color: #000000;

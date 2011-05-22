@@ -11,7 +11,7 @@ require_admin_login();
 <style type="text/css">
 <!--
 body {
-	background-image: url(bg.png);
+	background-image: url(image/bg.png);
 }
 a:link {
 	color: #000000;
