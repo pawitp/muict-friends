@@ -34,11 +34,19 @@ function verify_email($email) {
 }
 
 function verify_nickname($nickname) {
-    return preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname);
+    $ret = preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname);
+    if (!$ret) {
+        l("NicknameFail", $nickname, "thai");
+    }
+    return $ret;
 }
 
 function verify_engnickname($name) {
-    return preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $name);
+    $ret = preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $name);
+    if (!$ret) {
+        l("NicknameFail", $name, "eng");
+    }
+    return $ret;
 }
 
 function get_any_id() {
@@ -79,4 +87,15 @@ function l($tag, $data1, $data2) {
     $data1 = mysql_real_escape_string($data1);
     $data2 = mysql_real_escape_string($data2);
     mysql_query("INSERT INTO muict_log (time, ip, user_agent, path, id, tag, data1, data2) VALUES (CURRENT_TIMESTAMP(), '$ip', '$user_agent', '$path', $id, '$tag', '$data1', '$data2')");
+}
+
+function fetch_page($url) {
+    $curl_handle=curl_init();
+    curl_setopt($curl_handle, CURLOPT_URL, $url);
+    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+    $query = curl_exec($curl_handle);
+    curl_close($curl_handle);
+    
+    return $query;
 }

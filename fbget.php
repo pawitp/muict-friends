@@ -57,11 +57,11 @@ a:active {
         . $app_id . "&redirect_uri=" . urlencode($my_url) . "&client_secret="
         . $app_secret . "&code=" . $code;
 
-    $access_token = file_get_contents($token_url);
+    $access_token = fetch_page($token_url);
 
     $graph_url = "https://graph.facebook.com/me?" . $access_token;
 
-    $user = json_decode(file_get_contents($graph_url));
+    $user = json_decode(fetch_page($graph_url));
 
 	$fbname=mysql_real_escape_string($user->name);
 	$fblink=mysql_real_escape_string($user->link);
@@ -76,9 +76,10 @@ a:active {
 	$fbpic=mysql_real_escape_string("http://graph.facebook.com/".$fbid."/picture?type=large");
 	if($fblink!=""){
 	    mysql_query_log("UPDATE muict SET fbname = '$fbname' , fburl='$fblink',fbemail='$fbemail',fbpic='$fbpic',fbid='$fbid' WHERE id = '$id'");
+		redirect("my.php");
 	}
 	
-	redirect("my.php");
+	
 ?>
 
 </script> 
