@@ -18,7 +18,7 @@ if ($row[eng_nickname] == "") {
 }
 
 $secknow = 0;  //ถ้ารู้SECกันแล้วแก้เป็น1
-if ($_SESSION['sec'] == 0 and $secknow == 1){
+if ($row['sec'] == 0 and $secknow == 1){
 	redirect('updatesec.php');
 }
 
@@ -78,11 +78,11 @@ a:active {
                 <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <? echo $_SESSION['nickname'];   ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
                 <?
                 
-                if($_SESSION['sec']==0){
+                if($row['sec']==0){
 				echo "N/A";
 
 				} else {
-				echo $_SESSION['sec'];
+				echo $row['sec'];
 				}
 				
                 if($row[admin]==1){

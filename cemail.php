@@ -65,7 +65,7 @@ if (!verify_email($newemail)) {
 }
 $newemail = mysql_real_escape_string($newemail);
    
-if($newemail!="" and $error!=true and $newemail!=$_SESSION['email']){
+if($newemail!="" and $error!=true and $newemail!=$row['email']){
 
 $emailcode = generate_code();
 
@@ -116,7 +116,7 @@ $succ=1;
 <?php
 
 
-if($newemail==$_SESSION['email'] and $newemail!=""){
+if($newemail==$row['email'] and $newemail!=""){
 redirect("my.php");
 }
 
