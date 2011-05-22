@@ -1,21 +1,23 @@
 <?php
 require("bootstrap.php");
 
+if (empty($_SESSION["secret"])) {
+    $_SESSION["secret"] = generate_code();
+}
+
 if (is_login()) {
     redirect("my.php");
 }
 elseif ($_POST["button"]) {
     // Process login
     $id = intval($_POST["id"]);
-    $pass = mysql_real_escape_string($_POST["pass"]);
-    $result = mysql_query_log("SELECT id, idstatus, admin FROM muict WHERE id=$id and password=substring(sha1('$pass'), 1, 20)");
+    $result = mysql_query_log("SELECT id, password, idstatus, admin FROM muict WHERE id=$id");
+    $row = mysql_fetch_array($result);
+    $db_pass = $row['password'];
+    $enc_db_pass = sha1($_SESSION['secret'] . $db_pass);
+    $user_pass = substr(sha1($_POST['pass']), 0, 20);
     
-    if (mysql_num_rows($result) == 0) {
-        $error = '<span style="color:red"> ไม่พบรหัสนักศึกษาและรหัสผ่านนี้</span>';
-        l("LoginFailed", $id, "");
-    }
-    else {
-        $row = mysql_fetch_array($result);
+    if ($enc_db_pass == $_POST['enc_pass'] || $db_pass == $user_pass) {
         if ($row['idstatus'] == 1) {
             $_SESSION['remail_id'] = $id;
             $error = "<img src=image/onebit_49.png  align=‘middle’ />
@@ -23,6 +25,10 @@ elseif ($_POST["button"]) {
             <span class=‘style3’>ยังไม่ได้ยืนยัน E-mail โปรดยืนยัน E-mail ก่อนใช้งานระบบ!!!  <a href='remail.php'>ส่ง E-mail ยืนยันอีกครั้ง</a> หรือ <br />
 <a href='cemail.php'>เปลี่ยน E-mail ที่ใช้ยืนยัน</a></span></div>";
         }
+    }
+    else {
+        $error = '<span style="color:red"> ไม่พบรหัสนักศึกษาและรหัสผ่านนี้</span>';
+        l("LoginFailed", $id, "");
     }
     
     if (!$error) {
@@ -54,6 +60,15 @@ else {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUICT #9 : Friend system</title>
+<script type="text/javascript" src="javascript/sha1.js"></script>
+<script type="text/javascript"><!--
+function encrypted_login() {
+    var pass = document.getElementById('pass').value;
+    var enc_pass = hex_sha1('<?= $_SESSION['secret'] ?>' + hex_sha1(pass).substring(0, 20));
+    document.getElementById('pass').value = '';
+    document.getElementById('enc_pass').value = enc_pass;
+}
+--></script>
 <style type="text/css">
 <!--
 body {
@@ -87,7 +102,7 @@ a:active {
 </style></head>
 
 <body>
-<form id="form1" name="form1" method="post" action="">
+<form id="form1" name="form1" method="post" action="" onsubmit="encrypted_login(); return true;">
   <div align="center"><span class="style2">เข้าสู่ระบบเพื่อแก้ไขข้อมูล</span><br />
 &nbsp;  </div>
   <label></label>
@@ -102,6 +117,7 @@ a:active {
         <td><input type="password" name="pass" id="pass" /></td>
       </tr>
   </table>
+  <input type="hidden" name="enc_pass" id="enc_pass" value="" />
   <input type="submit" name="button" id="button" value="เข้าสู่ระบบ" />
   &nbsp;&nbsp; <span class="style3"><a href="forgot.php">ลืมรหัสผ่าน</a></span><br />
   <label></label>
