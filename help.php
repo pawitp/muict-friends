@@ -95,7 +95,8 @@ E-mail :
   </div>
   </label>
 </form>
-<p>&nbsp; </p>
+<p>นอกจากนี้ยังสามารถติดต่อทาง facebook ได้ที่ <a href="http://www.facebook.com/DaEquilibrate" target="_blank">http://www.facebook.com/DaEquilibrate</a> หรือ <a href="http://www.facebook.com/pawitp" target="_blank">http://www.facebook.com/pawitp</a><br />
+</p>
 </body>
 
 </html>
