@@ -56,7 +56,7 @@ $round = intval($_POST["round"]);
 $result = mysql_query_log("SELECT * FROM muict WHERE id=$id and type=$type and name='$name' and sname='$sname' and round=$round");
 $row = mysql_fetch_array($result);
 
-if ($row[idstatus] != 0) {
+if ($row[idstatus] >0) {
     echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
     return;
 }
@@ -65,7 +65,11 @@ if ($row[id] == "") {
     echo "ข้อมูลที่กรอกมาไม่ถูกต้อง  หากกรอกถูกต้องแล้ว โปรดติดต่อผู้ดูแลระบบผ่านทาง<a href='index.php'>หน้าแรก</a> <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
     return;
 } else {
-    echo "การตรวจสอบข้อมูลสมบูรณ์<hr>";
+    echo "การตรวจสอบข้อมูลสมบูรณ์";
+	if($row[idstatus]==-1){
+	echo " และ ขอบคุณที่กลับมาใช้ระบบเราอีกครั้ง ";
+	}
+	echo"<hr>";
 }
 $_SESSION['step']=1;
 $_SESSION['reg_id']=$id;

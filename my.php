@@ -185,6 +185,6 @@ a:active {
   </div>
 </form>
 <div align="center"><br />
-   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="updatenickname.php">แก้ไขชื่อเล่น </a>&nbsp;<a href="cemail.php">เปลี่ยน E-mail</a>&nbsp;&nbsp; <a href="#">การปิดID</a></div>
+   <a href="friend.php" target="_blank"> ดูข้อมูลเพื่อน</a>&nbsp; &nbsp;&nbsp;<a href="forgot.php">เปลี่ยนรหัสผ่าน</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="help.php">ติดต่อผู้ดูแล</a>&nbsp; <a href="updateabout.php">แก้ไขข้อความแนะนำตัวและวันเกิด</a>&nbsp; <a href="updatenickname.php">แก้ไขชื่อเล่น </a>&nbsp;<a href="cemail.php">เปลี่ยน E-mail</a>&nbsp;&nbsp; <a href="deleteac.php">การปิดID</a></div>
 </body>
 </html>

@@ -71,7 +71,7 @@ mysql_close($con);
 
 //EMAIL
 $emailcode.="&id=";
-$emailcode.=$_SESSION['id'];
+$emailcode.=$id;
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://www.daequilibrate.net/muict/emailadd.php?email=";
 
 $data.=$email;
