@@ -122,7 +122,7 @@ mysql_close($con);
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -155,7 +155,7 @@ a:active {
 <body>
 <table width="40%" border="0" align="center">
   <tr>
-    <td><div align="center"><img src="image/<? echo"$doimg[$do]"; ?>" width="60" height="60" /><br />
+    <td><div align="center"><img src="http://image.friends.muict9.net/<? echo"$doimg[$do]"; ?>" width="60" height="60" /><br />
           <span class="style1"><? echo"$doname[$do]" ?></span></div></td>
   </tr>
   <tr>
@@ -178,7 +178,7 @@ a:active {
       </div></td>
   </tr>
   <tr>
-    <td><div align="center"><a href="loginc.php"><img src="image/onebit_33.png" width="48" height="48" /></a></div></td>
+    <td><div align="center"><a href="loginc.php"><img src="http://image.friends.muict9.net/onebit_33.png" width="48" height="48" /></a></div></td>
   </tr>
 </table>
 </body>

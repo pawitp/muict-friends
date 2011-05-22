@@ -17,7 +17,7 @@ $isadmin=$_SESSION['admin'];
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -55,7 +55,7 @@ if ($row[idstatus] != 3){
 
 $result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
 $row = mysql_fetch_array($result);
-$img2="<img src='image/fail.png' width='27' height='27' />";
+$img2="<img src='http://image.friends.muict9.net/fail.png' width='27' height='27' />";
 
 
 if($row[idstatus] == 0 or $row[idstatus] == 1){

@@ -32,7 +32,7 @@ if($passcheck!=""){
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -75,7 +75,7 @@ a:active {
   หลังจากคุณยกเลิกบัญชีแล้ว คุณสามารถกลับเข้าสู่ระบบได้ โดยการเข้าสู่ระบบตรวจสอบบุคคลใหม่</span><br />
   <span class="style3">การยกเลิกบัญชีครั้งนี้ ส่งผลให้บัญชีนี้ปิดกั้นการมองเห็นจากสาธารณะ</span><br />
   <br />
-  <a href="my.php"><img src="image/fail.png" width="49" height="43" /></a><br />
+  <a href="my.php"><img src="http://image.friends.muict9.net/fail.png" width="49" height="43" /></a><br />
   </div>
 </form>
 

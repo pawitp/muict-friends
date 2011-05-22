@@ -74,7 +74,7 @@ function encrypted_login() {
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;

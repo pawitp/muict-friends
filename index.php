@@ -6,7 +6,7 @@
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 .style1 {
 	font-size: 10px;

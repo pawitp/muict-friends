@@ -9,7 +9,7 @@ require("bootstrap.php");
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -139,7 +139,7 @@ echo "<center><font size='3' color='red'><b>กรุณากรอก E-mail �
   <br />
   <span class="style6">หมายเหตุ E-mail นี้ต้องสามารถยืนยัน E-mail ได้</span>
   <br />
-  <a href="my.php"><img src="image/fail.png" width="48" height="48" /></a><br />
+  <a href="my.php"><img src="http://image.friends.muict9.net/fail.png" width="48" height="48" /></a><br />
   </center>
 </form>
 <?php

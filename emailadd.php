@@ -24,7 +24,7 @@ if ($row[activation_code] == $pass and $row[idstatus] == 1) {
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -51,7 +51,7 @@ a:active {
 <? if ($error): ?>
 <?= $error ?>
 <? else: ?>
-<img src="image/pass.png" width="37" height="39" /> ยืนยัน E-mail สมบูรณ์ &nbsp; <a href="index.php">กลับไปหน้าแรก
+<img src="http://image.friends.muict9.net/pass.png" width="37" height="39" /> ยืนยัน E-mail สมบูรณ์ &nbsp; <a href="index.php">กลับไปหน้าแรก
 </a>
 <? endif; ?>
 </body>

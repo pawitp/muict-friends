@@ -15,7 +15,7 @@ $sql=intval($_GET["query"]);
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -42,7 +42,7 @@ a:active {
 </style></head>
 
 <body>
-<div align="center"><img src="image/pass.png" alt="" width="27" height="27" align="middle" />=ผ่านการตรวจสอบจากผู้ดูแลแล้ว&nbsp;&nbsp;&nbsp;&nbsp; <img src="image/onebit_36.png" alt="" width="27" height="27" align="middle" />=อยู่ระหว่างการตรวจสอบ <br />
+<div align="center"><img src="http://image.friends.muict9.net/pass.png" alt="" width="27" height="27" align="middle" />=ผ่านการตรวจสอบจากผู้ดูแลแล้ว&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://image.friends.muict9.net/onebit_36.png" alt="" width="27" height="27" align="middle" />=อยู่ระหว่างการตรวจสอบ <br />
   <strong>(กดที่เครื่องหมายในช่อง Status เพื่อดูข้อมูลเพื่อนได้)</strong><br />
 </div>
 <p align="center" class="style2"> <strong>จัดเรียงตาม :&nbsp;</strong>&nbsp;&nbsp; <a href="friend.php?query=1">การอัพเดตล่าสุด</a>&nbsp;&nbsp; <a href="friend.php?query=2">สมาชิกที่เคลื่อนไหวล่าสุดเฉพาะสมาชิกที่ผ่านการยืนยันแล้ว</a>&nbsp; &nbsp;<a href="friend.php?query=3">สมาชิกที่ยืนยันแล้วเรียงตามรหัสนักศึกษา</a> <a href="friend.php?query=4">สมาชิกทั้งหมดที่เคยเข้าสู่ระบบตามรหัสนักศึกษา</a><br />
@@ -66,8 +66,8 @@ a:active {
     
   </tr>
 <?php
-$img1="<center><img src='image/pass.png' width='27' height='27' /></center>";
-$img2="<center><img src='image/fail.png' width='27' height='27' /></center>";
+$img1="<center><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' /></center>";
+$img2="<center><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' /></center>";
 $count=0;
 $sql1="SELECT * FROM muict where idstatus=2 or idstatus=3 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
 $sql2="SELECT * FROM muict WHERE idstatus='3' order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด ของสมาชิกที่ผ่านแล้ว
@@ -186,9 +186,9 @@ while ($row = mysql_fetch_array($result)){
   
   
   if($row[idstatus]==2){
-  echo"<td bgcolor='#CC9900'><div align='center'><a href='frienddata.php?id=$row[id]'target=_blank><img src='image/onebit_36.png' width='27' height='27' /></a></div></td>";
+  echo"<td bgcolor='#CC9900'><div align='center'><a href='frienddata.php?id=$row[id]'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
   }else if($row[idstatus]==3){
-  echo"<td bgcolor='#003300'><div align='center'><a href='frienddata.php?id=$row[id]' target=_blank><img src='image/pass.png' width='27' height='27' align='middle' /></a></div></td>";
+  echo"<td bgcolor='#003300'><div align='center'><a href='frienddata.php?id=$row[id]' target=_blank><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' align='middle' /></a></div></td>";
   }
   
   echo"</tr>";

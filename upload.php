@@ -69,7 +69,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -97,7 +97,7 @@ a:active {
 
 <body>
 <form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
-  <p align="center"><img src="image/camera-icon.png" width="172" height="172" /></p>
+  <p align="center"><img src="http://image.friends.muict9.net/camera-icon.png" width="172" height="172" /></p>
   <p align="center"><span class="style1">เลือกรูปภาพที่จะอัพโหลด</span><br />
     <br />
     <input name="image_name" type="file" id="image_name" size="40" />

@@ -36,7 +36,7 @@ redirect("my.php");
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -180,7 +180,7 @@ a:active {
             <input type="submit" name="button" id="button" value="ส่งข้อมูล" />
            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  <a href="updateabout.php" class="style10">คืนค่าดั้งเดิม</a></div>
         </td>
-        <td><div align="center"><a href="loginc.php"><img src="image/fail.png" width="27" height="27" align="middle" /></a></div></td>
+        <td><div align="center"><a href="loginc.php"><img src="http://image.friends.muict9.net/fail.png" width="27" height="27" align="middle" /></a></div></td>
       </tr>
     </table>
   </form>

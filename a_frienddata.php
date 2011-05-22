@@ -38,7 +38,7 @@ switch ($do) {
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -82,7 +82,7 @@ a:active {
 
     $result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
     $row = mysql_fetch_array($result);
-    $img2="<img src='image/fail.png' width='27' height='27' />";
+    $img2="<img src='http://image.friends.muict9.net/fail.png' width='27' height='27' />";
 
     ?>
   </p>
@@ -218,12 +218,12 @@ a:active {
       <td width="50%"><div align="center"> <?php
 
 if($row[idstatus]==1){
-echo "<a href='a_frienddata.php?id=$ids&do=3'><img src='image/onebit_24.png' alt='emailcon' width='48' height='48' align='middle' />ยืนยันE-mailให้</a></div></td>
+echo "<a href='a_frienddata.php?id=$ids&do=3'><img src='http://image.friends.muict9.net/onebit_24.png' alt='emailcon' width='48' height='48' align='middle' />ยืนยันE-mailให้</a></div></td>
 ";
 }else if($row[idstatus]==2){
-echo "<a href='a_frienddata.php?id=$ids&do=1'><img src='image/onebit_36.png' alt='checkpass' width='48' height='48' align='middle' />ยืนยันผู้ใช้นี้ ผ่าน!</a><font color='red' size='2'><b><br>สถานะ : ยังไม่ผ่านการยืนยัน</font></b>";
+echo "<a href='a_frienddata.php?id=$ids&do=1'><img src='http://image.friends.muict9.net/onebit_36.png' alt='checkpass' width='48' height='48' align='middle' />ยืนยันผู้ใช้นี้ ผ่าน!</a><font color='red' size='2'><b><br>สถานะ : ยังไม่ผ่านการยืนยัน</font></b>";
 }else if($row[idstatus]==3){
-echo "<a href='a_frienddata.php?id=$row[id]&do=2'>	  <img src='image/onebit_36.png' alt='unpass' width='48' height='48' align='middle' />ยกเลิกสถานะผ่าน</a><font color='green' size='2'><b><br>สถานะ : ผ่านการยืนยันแล้ว</font></b>";
+echo "<a href='a_frienddata.php?id=$row[id]&do=2'>	  <img src='http://image.friends.muict9.net/onebit_36.png' alt='unpass' width='48' height='48' align='middle' />ยกเลิกสถานะผ่าน</a><font color='green' size='2'><b><br>สถานะ : ผ่านการยืนยันแล้ว</font></b>";
 }
 
 
@@ -232,7 +232,7 @@ echo "<a href='a_frienddata.php?id=$row[id]&do=2'>	  <img src='image/onebit_36.p
 
 ?></div></td><td width='50%'><a href="a_frienddata.php?id=<?php 
 $idss=$row[id];
-echo $idss;?>&do=4"><img src="image/friendster.png" width="60" height="60" align="middle" /> <strong>RESET PASS!</strong></a>
+echo $idss;?>&do=4"><img src="http://image.friends.muict9.net/friendster.png" width="60" height="60" align="middle" /> <strong>RESET PASS!</strong></a>
         </div>
       </a></td>
     </tr>

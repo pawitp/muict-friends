@@ -9,7 +9,7 @@ require("bootstrap.php");
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -119,7 +119,7 @@ session_destroy();
 
 ?>
   <strong>ขั้นตอนที่ 3 จาก 3</strong><strong> สร้างบัญชีผู้ใช้ และ ยืนยัน E-mail เพื่อใช้ในการกู้คืนรหัสผ่าน </strong></p>
-<p>  <img src="image/pass.png" width="28" height="35" /><strong><span class="style3">ระบบบันทึกข้อมูลแล้วสามารถเข้าสู่ระบบได้ทันที</span></strong> <span class="style4">และอย่าลืมไปยืนยันโดยการคลิกลิ้งค์ภายใน E-mail</span> <? echo"$email"; ?>  <a href='logout.php'>กลับสู่หน้าแรก</a>
+<p>  <img src="http://image.friends.muict9.net/pass.png" width="28" height="35" /><strong><span class="style3">ระบบบันทึกข้อมูลแล้วสามารถเข้าสู่ระบบได้ทันที</span></strong> <span class="style4">และอย่าลืมไปยืนยันโดยการคลิกลิ้งค์ภายใน E-mail</span> <? echo"$email"; ?>  <a href='logout.php'>กลับสู่หน้าแรก</a>
 </p>
 </body>
 </html>

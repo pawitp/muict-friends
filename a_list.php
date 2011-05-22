@@ -13,7 +13,7 @@ require_admin_login();
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -43,7 +43,7 @@ a:active {
 <body>
 <p align="right"><span class="style4"><a href="a_frienddata.php" target="_blank">เมนูจัดการผู้ใช้รายบุคคล</a></span></p>
 <p><span class="style2"><br />
-  100 USER ที่ยังไม่ผ่านการตรวจสอบ 100 คน ล่าสุดอัพเดต</span> [<img src='image/onebit_36.png' width='27' height='27' /> = รอแอดมินตรวจสอบ  <img src='image/fail.png' width='27' height='27' />=ยังไม่ยืนยันE-mail]<br />
+  100 USER ที่ยังไม่ผ่านการตรวจสอบ 100 คน ล่าสุดอัพเดต</span> [<img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /> = รอแอดมินตรวจสอบ  <img src='http://image.friends.muict9.net/fail.png' width='27' height='27' />=ยังไม่ยืนยันE-mail]<br />
   
 </p>
 <table width="90%" border="1" align="center">
@@ -66,8 +66,8 @@ a:active {
     
   </tr>
 <?php
-$img1="<center><img src='image/pass.png' width='27' height='27' /></center>";
-$img2="<center><img src='image/fail.png' width='27' height='27' /></center>";
+$img1="<center><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' /></center>";
+$img2="<center><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' /></center>";
 $count=0;
 $sql="SELECT * FROM muict where idstatus=1 or idstatus=2 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
 
@@ -165,9 +165,9 @@ while ($row = mysql_fetch_array($result)){
   
   
   if($row[idstatus]==2){
-  echo"<td bgcolor='#CC9900'><div align='center'><a href='a_frienddata.php?id=$row[id]'target=_blank><img src='image/onebit_36.png' width='27' height='27' /></a></div></td>";
+  echo"<td bgcolor='#CC9900'><div align='center'><a href='a_frienddata.php?id=$row[id]'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
   }else if($row[idstatus]==1){
-  echo"<td bgcolor='red'><div align='center'><a href='a_frienddata.php?id=$row[id]' target=_blank><img src='image/fail.png' width='27' height='27' align='middle' /></a></div></td>";
+  echo"<td bgcolor='red'><div align='center'><a href='a_frienddata.php?id=$row[id]' target=_blank><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' align='middle' /></a></div></td>";
   }
   
   echo"</tr>";

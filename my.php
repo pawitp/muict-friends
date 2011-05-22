@@ -31,7 +31,7 @@ if ($row['sec'] == 0 and $secknow == 1){
 <style type="text/css">
 <!--
 body {
-	background-image: url(image/bg.png);
+	background-image: url(image/http://image.friends.muict9.net/bg.png);
 }
 a:link {
 	color: #000000;
@@ -99,73 +99,73 @@ a:active {
           <td> <table width="100%" border="0">
 <? if ($row['idstatus'] == 3): ?>
     <tr>
-        <td width='9%'><div align='center'><img src='image/profile.png' width='48' height='48' /></div></td>
+        <td width='9%'><div align='center'><img src='http://image.friends.muict9.net/profile.png' width='48' height='48' /></div></td>
         <td width='84%'><div align='center' class='style4'><font color='green'>ผ่านการยืนยัน ID จากผู้ดูแลระบบแล้ว</font></div></td>
-        <td width='7%'><img src='image/pass.png' width='48' height='48' /></td>
+        <td width='7%'><img src='http://image.friends.muict9.net/pass.png' width='48' height='48' /></td>
      </tr>
 <? else: ?>
 	 <tr>
-        <td width='9%'><div align='center'><img src='image/profile.png' width='48' height='48' /></div></td>
+        <td width='9%'><div align='center'><img src='http://image.friends.muict9.net/profile.png' width='48' height='48' /></div></td>
         <td width='84%'><div align='center' class='style4'><font color='red'>รอการยืนยัน ID จากผู้ดูแลระบบ <br />
           <span class='style1'>เพิ่มข้อมูลเกี่ยวกับตัวคุณด้านล่าง เพื่อลดระยะเวลาการตรวจสอบ</font></span></div></td>
-        <td width='7%'><img src='image/onebit_49.png' width='48' height='48' /></td>
+        <td width='7%'><img src='http://image.friends.muict9.net/onebit_49.png' width='48' height='48' /></td>
       </tr>
 <? endif; ?>
       <tr>
-        <td width="9%"><div align="center"><img src="image/email.png" alt="email" width="48" height="48" /></div></td>
+        <td width="9%"><div align="center"><img src="http://image.friends.muict9.net/email.png" alt="email" width="48" height="48" /></div></td>
         <td width="84%"><div align="left">E-Mail : <? echo $row['email']; ?> </div></td>
-        <td width="7%"><img src="image/pass.png" width="48" height="48" /></td>
+        <td width="7%"><img src="http://image.friends.muict9.net/pass.png" width="48" height="48" /></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/msn-icon.png" alt="MSN [windows live messenger]" width="52" height="52" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/msn-icon.png" alt="MSN [windows live messenger]" width="52" height="52" /></div></td>
         <td><div align="left">MSN : <? echo $row['msn']; ?></div></td>
-        <td><a href="update.php?do=1"><img src="image/edit.png" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=1"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/gtalk-icon.png" alt="" width="55" height="55" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/gtalk-icon.png" alt="" width="55" height="55" /></div></td>
         <td><div align="left">GTalk : <? echo $row['gtalk']; ?> </div></td>
-        <td><a href="update.php?do=2"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=2"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/big_bb_Icon-120x120.jpg" alt="" width="58" height="58" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/big_bb_Icon-120x120.jpg" alt="" width="58" height="58" /></div></td>
         <td><div align="left">BB PIN : <? echo $row['BB']; ?></div></td>
-        <td><a href="update.php?do=3"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=3"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/twitter.png" alt="twitter" width="60" height="60" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/twitter.png" alt="twitter" width="60" height="60" /></div></td>
         <td><div align="left">Twitter : <? echo $row['twitter']; ?></div></td>
-        <td><a href="update.php?do=4"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=4"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
 
       <tr>
-        <td><div align="center"><img src="image/facebook.png" alt="facebook" width="60" height="60" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/facebook.png" alt="facebook" width="60" height="60" /></div></td>
         <td><div align="left">Facebook : <? echo $row['fbname']; ?><br />
             <span class="style5">*ขอความร่วมมือในการให้ข้อมูล&nbsp;Facebook เพื่อง่ายต่อการตรวจสอบว่าเป็นตัวจริงไม่ได้แอบอ้างมา</span></div></td>
-        <td><a href="fbget.php"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="fbget.php"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/skype-icon.png" alt="skype" width="59" height="56" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/skype-icon.png" alt="skype" width="59" height="56" /></div></td>
         <td><div align="left">Skype : <? echo $row['skype']; ?></div></td>
-        <td><a href="update.php?do=5"><img src="image/edit.png" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=5"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/call_icon_110x102.jpg" alt="mobile" width="58" height="53" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/call_icon_110x102.jpg" alt="mobile" width="58" height="53" /></div></td>
         <td><div align="left">Mobile : <? echo $row['mobile']; ?></div></td>
-        <td><a href="update.php?do=6"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=6"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
-        <td><div align="center"><img src="image/com.whatsapp_icon.png" alt="whatsapp" width="58" height="58" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/com.whatsapp_icon.png" alt="whatsapp" width="58" height="58" /></div></td>
         <td><div align="left">Whatsapp : 
           <?= $row['whatsapp'] ?>
         </div></td>
-        <td><a href="update.php?do=7"><img src="image/edit.png" width="48" height="48" /></a></td>
+        <td><a href="update.php?do=7"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
       <?php
 	  $imgurl=$row['img'];
 	  $fbiurl=$row['fbpic'];
 	  ?>
-        <td><div align="center"><img src="image/camera-icon.png" width="47" height="47" /></div></td>
+        <td><div align="center"><img src="http://image.friends.muict9.net/camera-icon.png" width="47" height="47" /></div></td>
         <td><div align="left">รูปภาพ :&nbsp; <a href="upload_images/<?= $imgurl ?>" target="_blank"><?= $imgurl ?></a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a href=<?= $fbiurl ?> target="_blank"><?php
         if ($fbiurl != "") {
@@ -173,13 +173,13 @@ a:active {
 		}
 		?></a><br />  
           <span class="style5">*การอัพโหลดรูปภาพจะช่วยให้เพื่อนจำได้ได้ง่ายขึ้น</span></a></div></td>
-        <td><a href="upload.php"><img src="image/edit.png" alt="" width="48" height="48" /></a></td>
+        <td><a href="upload.php"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
     </table></td>
         </tr>
   </table>
    
-      <div align="center"><span class="style6"><span class="style9"><img src="image/edit.png" alt="" width="20" height="20" align="bottom" /></span>กรอกทุกอันตามความเป็นจริง ถ้าไม่มี หรือ ไม่อยากให้ข้อมูลช่องไหน ไม่ต้องใส่นะ <span class="style9"><img src="image/edit.png" alt="" width="20" height="20" align="bottom" /></span><br />
+      <div align="center"><span class="style6"><span class="style9"><img src="http://image.friends.muict9.net/edit.png" alt="" width="20" height="20" align="bottom" /></span>กรอกทุกอันตามความเป็นจริง ถ้าไม่มี หรือ ไม่อยากให้ข้อมูลช่องไหน ไม่ต้องใส่นะ <span class="style9"><img src="http://image.friends.muict9.net/edit.png" alt="" width="20" height="20" align="bottom" /></span><br />
       แนะนำว่าให้ใส่ Facebook ทุกคน เพื่อง่ายในยืนยันว่าเป็นตัวจริง!<br />
       </span><br />
   </div>
