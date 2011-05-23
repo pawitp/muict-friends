@@ -30,13 +30,17 @@ function generate_code() {
 }
 
 function verify_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
+    $ret = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if (!$ret) {
+        l("VerifyFail", $email, "email");
+    }
+    return $ret;
 }
 
 function verify_nickname($nickname) {
     $ret = preg_match("/^[0-9ก-๙ \(\)\[\]เ]+$/", $nickname); // for some reason เ isn't included
     if (!$ret) {
-        l("NicknameFail", $nickname, "thai");
+        l("VerifyFail", $nickname, "nickname_thai");
     }
     return $ret;
 }
@@ -44,7 +48,7 @@ function verify_nickname($nickname) {
 function verify_engnickname($name) {
     $ret = preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $name);
     if (!$ret) {
-        l("NicknameFail", $name, "eng");
+        l("VerifyFail", $name, "nickname_eng");
     }
     return $ret;
 }

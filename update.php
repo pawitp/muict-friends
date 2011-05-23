@@ -76,16 +76,19 @@ if ($datado != "") {
             case "bbm":
                 if (!preg_match("/^[0-9A-Fa-f]+$/", $data)) {
                     $error = true;
+                    l("VerifyFail", $data, $doname[$datado]);
                 }
                 break;
             case "username":
                 if (!preg_match("/^[0-9A-Za-z\.\,\# _]+$/", $data)) {
                     $error = true;
+                    l("VerifyFail", $data, $doname[$datado]);
                 }
                 break;
             case "phone":
                 if (!preg_match("/^[0-9]+$/", $data)) {
                     $error = true;
+                    l("VerifyFail", $data, $doname[$datado]);
                 }
                 break;
         }
