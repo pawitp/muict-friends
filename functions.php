@@ -34,7 +34,7 @@ function verify_email($email) {
 }
 
 function verify_nickname($nickname) {
-    $ret = preg_match("/^[0-9ก-๙ \(\)\[\]]+$/", $nickname);
+    $ret = preg_match("/^[0-9ก-๙ \(\)\[\]เ]+$/", $nickname); // for some reason เ isn't included
     if (!$ret) {
         l("NicknameFail", $nickname, "thai");
     }
