@@ -104,6 +104,9 @@ a:active {
   <p align="center">
     <input type="submit" value="Upload" />
     <input type="hidden" name="MM_insert" value="form1" />
+    <br />
+    <br />
+    <a href="my.php"><img src="http://image.friends.muict9.net/onebit_33.png" width="48" height="48" /></a><br />
   </p>
 </form>
 </body>
