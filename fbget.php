@@ -43,13 +43,19 @@ a:active {
     $code = $_REQUEST["code"];
 
     if(empty($code)) {
-        $dialog_url = "http://www.facebook.com/dialog/oauth?&scope=email&picture&client_id=" 
-            . $fb_app_id . "&redirect_uri=" . urlencode($my_url);
+        $_SESSION['fbstate'] = generate_code();
+        $dialog_url = "http://www.facebook.com/dialog/oauth?scope=email&client_id=" 
+            . $fb_app_id . "&redirect_uri=" . urlencode($my_url) . "&state=" . $_SESSION['fbstate'];
 
         echo("<script> top.location.href='" . $dialog_url . "'</script>");
         return;
     }
 
+    if ($_SESSION['fbstate'] != $_GET["state"]) {
+        l("InvalidFbState", "Session: " . $_SESSION['fbstate'], "Get: " . $_GET["state"]);
+        die("Invalid state");
+    }
+    
     $token_url = "https://graph.facebook.com/oauth/access_token?client_id="
         . $fb_app_id . "&redirect_uri=" . urlencode($my_url) . "&client_secret="
         . $fb_app_secret . "&code=" . $code;
