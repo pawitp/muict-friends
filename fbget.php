@@ -38,24 +38,21 @@ a:active {
 <?php 
 
     $id=$_SESSION['id'];
-
-    $app_id = "188058964579171";
-    $app_secret = "5287a74bc3b6fa1b8e6a23a7b9373c43";
     $my_url = "http://friends.muict9.net/fbget.php";
 
     $code = $_REQUEST["code"];
 
     if(empty($code)) {
         $dialog_url = "http://www.facebook.com/dialog/oauth?&scope=email&picture&client_id=" 
-            . $app_id . "&redirect_uri=" . urlencode($my_url);
+            . $fb_app_id . "&redirect_uri=" . urlencode($my_url);
 
         echo("<script> top.location.href='" . $dialog_url . "'</script>");
         return;
     }
 
     $token_url = "https://graph.facebook.com/oauth/access_token?client_id="
-        . $app_id . "&redirect_uri=" . urlencode($my_url) . "&client_secret="
-        . $app_secret . "&code=" . $code;
+        . $fb_app_id . "&redirect_uri=" . urlencode($my_url) . "&client_secret="
+        . $fb_app_secret . "&code=" . $code;
 
     $access_token = fetch_page($token_url);
 
