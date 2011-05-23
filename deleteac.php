@@ -12,6 +12,7 @@ if($passcheck!=""){
 		$sql="UPDATE muict SET email=null , password=null , idstatus=-1 WHERE id = '$id'";
 		mysql_query_log($sql);
 		echo "บัญชีของคุณถูกยกเลิกเรียบร้อยแล้ว<hr>";
+		l("DeleteAc", '', '');
 		session_destroy();
 		return;
 		
