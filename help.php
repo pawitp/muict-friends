@@ -2,8 +2,6 @@
 require("bootstrap.php");
 
 $id = get_any_id();
-$date = new DateTime();
-$date->setTimezone(new DateTimeZone('Asia/Bangkok'));
 $data = $_POST['data'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -81,7 +79,7 @@ return;
 พบความผิดปกติคือ / ไม่สามารถทำรายการในหน้า :
 
 
-วันที่ทำรายการ ประมาณเวลา : <?= $date->format(DateTime::RFC2822) ?>
+วันที่ทำรายการ ประมาณเวลา : <?= convert_timezone("now") ?>
 
 วิธีการติดต่อกลับ ในกรณีต้องการข้อมูลเพิ่มเติม หรือ แจ้งผลการแก้ไขปัญหา
 E-mail : 

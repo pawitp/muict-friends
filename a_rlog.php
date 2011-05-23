@@ -60,7 +60,7 @@ $result = mysql_query_log("SELECT * FROM muict_log $where ORDER BY time DESC LIM
 while ($row = mysql_fetch_array($result)):
 ?>
     <tr>
-      <td><div align="center"><strong><?= $row['time'] ?></strong></div></td>
+      <td><div align="center"><strong><?= convert_timezone($row['time']) ?></strong></div></td>
       <td><div align="center"><strong><?= $row['ip'] ?></strong></div></td>
       <td><div align="center"><strong><?= $row['user_agent'] ?></strong></div></td>
       <td><div align="center"><strong><?= $row['path'] ?></strong></div></td>

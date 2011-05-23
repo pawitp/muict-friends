@@ -75,7 +75,7 @@ $result = mysql_query_log($sql);
 while ($row = mysql_fetch_array($result)){
 
   echo"<tr>";
-  echo"<td><center>$row[lastupdate]</center></td>";
+  echo"<td><center>" . convert_timezone($row[lastupdate]) . "</center></td>";
   echo"<td><center>$row[id]</center></td>";
   if($row[type]==1){
   $rtype="นาย";

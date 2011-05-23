@@ -99,3 +99,9 @@ function fetch_page($url) {
     
     return $query;
 }
+
+function convert_timezone($input, $format = "Y-m-d h:i:s") {
+    $date = new DateTime($input);
+    $date->setTimezone(new DateTimeZone('Asia/Bangkok'));
+    return $date->format($format);
+}
