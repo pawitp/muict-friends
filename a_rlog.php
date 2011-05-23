@@ -53,7 +53,10 @@ else {
     $start = $_GET["start"];
 }
 $perpage = 100;
-$result = mysql_query_log("SELECT * FROM muict_log ORDER BY time DESC LIMIT $start,$perpage");
+if ($_GET["nopageview"] == 1) {
+    $where = "WHERE tag != 'PageView'";
+}
+$result = mysql_query_log("SELECT * FROM muict_log $where ORDER BY time DESC LIMIT $start,$perpage");
 while ($row = mysql_fetch_array($result)):
 ?>
     <tr>
@@ -69,3 +72,4 @@ while ($row = mysql_fetch_array($result)):
 <? endwhile; ?>
 </table>
 <a href="?start=<?= $start + $perpage ?>">Older</a>
+<a href="?nopageview=1">Not pageview</a>

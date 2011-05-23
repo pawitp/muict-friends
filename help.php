@@ -4,6 +4,7 @@ require("bootstrap.php");
 $id = get_any_id();
 $date = new DateTime();
 $date->setTimezone(new DateTimeZone('Asia/Bangkok'));
+$data = $_POST['data'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -47,6 +48,7 @@ if ($check != "") {
 
 if($data!=""){
 $MailTo = "boy25.pskpnza@gmail.com" ;
+$MailTo2 = "p.pawit@gmail.com";
 $MailFrom = "no-reply@muict9.net" ;
 $MailSubject = "แจ้งปัญหาการใช้งานระบบ" ;
 $MailMessage = $data ;
@@ -61,6 +63,7 @@ $Headers .= "Reply-to: ".$MailFrom." <".$MailFrom.">\r\n" ;
 $Headers .= "X-Priority: 3\r\n" ;
 $Headers .= "X-Mailer: PHP mailer\r\n" ;
 mail($MailTo, $MailSubject , $MailMessage, $Headers, $MailFrom);
+mail($MailTo2, $MailSubject , $MailMessage, $Headers, $MailFrom);
 
 echo "ได้รับข้อมููลเรียบร้อยแล้ว โปรดรอการติดต่อกลับ";
 return;
