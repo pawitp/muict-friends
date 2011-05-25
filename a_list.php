@@ -1,6 +1,21 @@
 <?php
 require("bootstrap.php");
 require_admin_login();
+
+$res = mysql_query_log("SELECT idstatus, COUNT(*) as count FROM muict GROUP BY idstatus");
+$total = 0;
+$users = array();
+while ($row = mysql_fetch_array($res)) {
+    $total += $row['count'];
+    $users[$row['idstatus']] = $row['count'];
+}
+
+for ($i = -1; $i < 4; $i++) {
+    if (empty($users[$i])) {
+        $users[$i] = 0;
+    }
+}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -42,6 +57,7 @@ a:active {
 
 <body>
 <p align="right"><span class="style4"><a href="a_frienddata.php" target="_blank">เมนูจัดการผู้ใช้รายบุคคล</a></span></p>
+
 <p><span class="style2"><br />
   100 USER ที่ยังไม่ผ่านการตรวจสอบ 100 คน ล่าสุดอัพเดต</span> [<img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /> = รอแอดมินตรวจสอบ  <img src='http://image.friends.muict9.net/fail.png' width='27' height='27' />=ยังไม่ยืนยันE-mail]<br />
   
@@ -175,10 +191,18 @@ while ($row = mysql_fetch_array($result)){
 
 $count++;
 }//END LOOP
-
-
-
-
 ?>
-</table></body>
+</table>
+
+
+<div style="text-align:center">
+<strong>ผู้ใช้ทั้งหมด:</strong> <?= $total ?> 
+<strong>ไม่ได้ลงทะเบียน:</strong> <?= $users[0] ?> 
+<strong>ไม่ผ่านการยืนยันอีเมล:</strong> <?= $users[1] ?> 
+<strong>ไม่ผ่านการยืนยันแอดมิน:</strong> <?= $users[2] ?> 
+<strong>ผ่านการยืนยันแอดมิน:</strong> <?= $users[3] ?> 
+<strong>ยกเลิกบัญชี:</strong> <?= $users[-1] ?> 
+</div>
+
+</body>
 </html>
