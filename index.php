@@ -47,7 +47,8 @@ a:active {
 <body>
 <p align="center" class="style3">ยินดีต้อนรับ  MUICT # 9 สู่ระบบรวบรวมข้อมูลรายบุคคล</p>
 <p align="center"><span class="style2"><a href="first.php">กรอกข้อมูลครั้งแรก</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="login.php">เคยกรอกข้อมูลครั้งแรกแล้วเข้าสู่ระบบ!</a></span></p>
-<p align="center">&nbsp;</p>
+<p align="center"><iframe width="560" height="349" src="http://www.youtube.com/embed/Po1_sMcGKKA?rel=0" frameborder="0" allowfullscreen></iframe></p>
+
 <p align="left" class="style1"><strong>ข้อตกลงในการใช้งานข้อมูล</strong><br />
 -เพื่อนจะต้องช่วยกันรักษาข้อมูลให้ใช้กันเฉพาะกลุ่ม ไม่ให้หลุดไปสู่สังคมภายนอก เพราะไม่สามารถรับประกันผลที่ตามมาได้<br />
 -เพื่อนๆจะต้องกรอกข้อมูลตามจริง ถ้าไม่อยากให้ข้อมูลใด ให้ว่างไว้<br />
