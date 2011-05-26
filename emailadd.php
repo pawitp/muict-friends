@@ -3,16 +3,21 @@ require("bootstrap.php");
 
 $id=intval($_GET["id"]);
 $pass=$_GET["code"];
-$email=mysql_real_escape_string($_GET["email"]);
 
-$result = mysql_query_log("SELECT activation_code, idstatus FROM muict WHERE id=$id and idstatus=1");
-$row = mysql_fetch_array($result);
-if ($row[activation_code] == $pass and $row[idstatus] == 1) {
-    mysql_query_log("UPDATE muict SET email = '$email' , idstatus=2 WHERE id = '$id'");
-} else {
+try {
+    $user = new User($id, 'idstatus, activation_code');
+    if ($user->getIdStatus() == 1 && $user->verifyActivationCode($pass)) {
+        $user->setIdStatus(2);
+        $user->save();
+    }
+    else {
+        throw new InvalidUserIdException();
+    }
+}
+catch (InvalidUserIdException $e) {
     $error = "ERROR โปรดติดต่อผู้ดูแลระบบ <a href='index.php'>หน้าแรก</a> ";
     $_SESSION["log_id"] = $id;
-    l("ActivationFailed", "Input: $pass", "Database: $row[activation_code]");
+    l("ActivationFailed", "Input: $pass", ($user == null) ? "invalid id" : "Database: " . $user->getActivationCode());
 }
 
 ?>

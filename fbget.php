@@ -35,10 +35,9 @@ a:active {
 
 <body>
 
-<?php 
-
+<?php
     $id=$_SESSION['id'];
-    $my_url = "http://friends.muict9.net/fbget.php";
+    $my_url = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"];
 
     $code = $_REQUEST["code"];
 
@@ -64,26 +63,18 @@ a:active {
 
     $graph_url = "https://graph.facebook.com/me?" . $access_token;
 
-    $user = json_decode(fetch_page($graph_url));
-
-	$fbname=mysql_real_escape_string($user->name);
-	$fblink=mysql_real_escape_string($user->link);
-	//echo $user->name;
-	//echo "<br>$fbname<hr>";
-	//echo $user->link;
-	//echo $user->email;
-	//echo "<br>$fblink<hr>";
-	$fbpic=mysql_real_escape_string($user->picture);
-	$fbemail=mysql_real_escape_string($user->email);
-	$fbid=mysql_real_escape_string($user->id);
-	$fbpic=mysql_real_escape_string("http://graph.facebook.com/".$fbid."/picture?type=large");
-	if($fblink!=""){
-	    mysql_query_log("UPDATE muict SET fbname = '$fbname' , fburl='$fblink',fbemail='$fbemail',fbpic='$fbpic',fbid='$fbid' WHERE id = '$id'");
+    $userfb = json_decode(fetch_page($graph_url));
+    
+	if ($userfb->link != "") {
+        $user = new User($_SESSION["id"]);
+        $user->setFacebookName($userfb->name);
+        $user->setFacebookUrl($userfb->link);
+        $user->setFacebookEmail($userfb->email);
+        $user->setFacebookImageUrl("http://graph.facebook.com/".$userfb->id."/picture?type=large");
+        $user->setFacebookId($userfb->id);
+        $user->save();
 		redirect("my.php");
 	}
-	
-	
 ?>
 
-</script> 
 </body>

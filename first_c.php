@@ -49,28 +49,34 @@ a:active {
 <?php
 $id = intval($_POST["id"]);
 $type = intval($_POST["type"]);
-$name = mysql_real_escape_string($_POST["name"]);
-$sname = mysql_real_escape_string($_POST["sname"]);
+$name = $_POST["name"];
+$sname = $_POST["sname"];
 $round = intval($_POST["round"]);
 
-$result = mysql_query_log("SELECT * FROM muict WHERE id=$id and type=$type and name='$name' and sname='$sname' and round=$round");
-$row = mysql_fetch_array($result);
+try {
+    $user = new User($id, 'type, name, sname, round, idstatus');
 
-if ($row[idstatus] >0) {
-    echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
-    return;
+    if ($user->getNamePrefix() == $type && $user->getThaiFirstName() == $name && $user->getThaiLastName() == $sname && $user->getRound() == $round) {
+        if ($user->getIdStatus() > 0) {
+            echo "เคยผ่านขั้นตอนการตรวจสอบแล้ว สามารถเข้าระบบได้ทันที ! <a href='index.php'>หน้าแรก</a> ";
+            return;
+        }
+
+        echo "การตรวจสอบข้อมูลสมบูรณ์";
+        if ($user->getIdStatus() == -1) {
+            echo " และ ขอบคุณที่กลับมาใช้ระบบเราอีกครั้ง ";
+        }
+        echo"<hr>";
+    }
+    else {
+        throw new InvalidUserIdException();
+    }
 }
-
-if ($row[id] == "") {
+catch (InvalidUserIdException $e) {
     echo "ข้อมูลที่กรอกมาไม่ถูกต้อง  หากกรอกถูกต้องแล้ว โปรดติดต่อผู้ดูแลระบบผ่านทาง<a href='index.php'>หน้าแรก</a> <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a> ";
     return;
-} else {
-    echo "การตรวจสอบข้อมูลสมบูรณ์";
-	if($row[idstatus]==-1){
-	echo " และ ขอบคุณที่กลับมาใช้ระบบเราอีกครั้ง ";
-	}
-	echo"<hr>";
 }
+
 $_SESSION['step']=1;
 $_SESSION['reg_id']=$id;
 ?>
@@ -117,25 +123,6 @@ $_SESSION['reg_id']=$id;
     <br />
     <input type="submit" name="button" id="button" value="ส่งข้อมูล" />
 &nbsp;  </div>
-  <label></label>
-  <div align="center"><br />
-&nbsp;  </div>
-  <label></label>
-  <div align="center"><br />
-  </div>
-  <label></label>
-  <div align="center"><br />
-  </div>
-  <label></label>
-  <div align="center"><br />
-    <input name="code" type="hidden" id="code" value="<?= md5($row[id]); ?>" />
-  </div>
-  <label>
-  <div align="center"></div>
-  </label>
-  <div align="center"><br />
-    <br />
-  </div>
 </form>
 <p>&nbsp;</p>
 </body>

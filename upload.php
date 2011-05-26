@@ -14,13 +14,14 @@ include 'class.upload.php' ;
 //  ถ้าหากหน้านี้ถูกเรียก เพราะการ submit form  
 //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
- 
+    $user = new User($id);
+
     // Delete old image
     $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");
     $row = mysql_fetch_array($result);
     if (!empty($row['img'])) {
         if (!unlink('upload_images/' . $row['img'])) {
-            l("UnlinkedFailed", $row['img']);
+            l("UnlinkedFailed", $row['img'], "");
         }
     }
  
@@ -41,21 +42,22 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
         // ถ้าหากว่าการจัดเก็บรูปภาพไม่มีปัญหา  เก็บชื่อภาพไว้ในตัวแปร เพื่อเอาไปเก็บในฐานข้อมูลต่อไป
         if ( $upload_image->processed ) {
  
-            $image_name =  mysql_real_escape_string($upload_image->file_dst_name); // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name
+            $image_name = $upload_image->file_dst_name; // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name
             $upload_image->clean(); // คืนค่าหน่วยความจำ
  
             // เก็บชื่อภาพลงฐานข้อมูล
 
 
 		//echo" $image_name ";
-		mysql_query_log("UPDATE muict SET img = '$image_name' WHERE id = $id");
+            $user->setImageUrl($image_name);
         }// END if ( $upload_image->processed )
  
     }//END if ( $upload_image->uploaded )
     else {
-        mysql_query_log("UPDATE muict SET img = NULL WHERE id = $id");
+        $user->setImageUrl(null);
     }
-    
+
+    $user->save();
     redirect('my.php');
 }
 ?>

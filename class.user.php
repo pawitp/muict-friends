@@ -32,9 +32,9 @@ class User {
     private $dirty = array();
     private $values = array();
     
-    public function __construct($id, $preload = '') {
+    public function __construct($id, $preload = 'id') {
         $this->values["id"] = intval($id);
-        $this->loadProperties(empty($preload) ? "id" : $preload);
+        $this->loadProperties($preload);
     }
     
     public function __destruct() {
@@ -51,6 +51,10 @@ class User {
     }
     
     // 1 = นาย, 2 = นางสาว
+    public function getNamePrefix() {
+        return $this->getProperty("type");
+    }
+
     public function setNamePrefix($value) {
         if ($value == 1 || $value == 2) {
             $this->setProperty("type", $value);
@@ -59,7 +63,7 @@ class User {
             throw new ValidationException("คำนำหน้าชื่อ", "type", $value);
         }
     }
-    
+
     public function getThaiNamePrefix() {
         return ($this->getProperty("type") == 1) ? "นาย" : "นางสาว";
     }
@@ -93,7 +97,11 @@ class User {
         $this->throwIfFalse(preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $value), "ชื่อเล่นภาษาอังกฤษ", "eng_nickname", $value);
         $this->setProperty("eng_nickname", $value);
     }
-    
+
+    public function getRound() {
+        return $this->getProperty("round");
+    }
+
     public function getAbout() {
         return $this->getProperty("about");
     }
@@ -276,7 +284,11 @@ class User {
     public function getImageUrl() {
         return $this->getProperty("img");
     }
-    
+
+    public function setImageUrl($value) {
+        $this->setProperty("img", $value);
+    }
+
     public function isAdmin() {
         return $this->getProperty("admin") > 0;
     }
@@ -293,7 +305,11 @@ class User {
     public function getBirthday() {
         return $this->getProperty("BD");
     }
-    
+
+    public function setBirthday($value) {
+        return $this->setProperty("BD", $value);
+    }
+
     public function verifyPassword($password) {
         $encpass = substr(sha1($password), 0, 20);
         return $encpass == $this->getProperty("password");
@@ -355,6 +371,11 @@ class User {
         $this->setProperty("email", null);
         $this->setProperty("password", null);
         $this->setProperty("idstatus", -1);
+    }
+
+    // Reset dirty, does not reset values
+    public function discard() {
+        $this->dirty = array();
     }
 
     public function save() {

@@ -3,8 +3,7 @@ require("bootstrap.php");
 require_login();
 
 $id = $_SESSION['id'];
-$result = mysql_query_log("SELECT * FROM muict WHERE id=$id");
-$row = mysql_fetch_array($result);
+$user = new User($id, "about, bd");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,9 +22,9 @@ $data=str_replace( "\n","<br>", $data );
 $bd=$year."-".$month."-".$day;
 echo $bd;
 $ids=$_SESSION['id'];
-$data = mysql_real_escape_string($data);
-mysql_query_log("UPDATE muict SET about='$data' , BD='$bd' WHERE id = '$ids'");
-mysql_close($con);
+$user->setAbout($data);
+$user->setBirthday($bd);
+$user->save();
 redirect("my.php");
 }
 ?>
@@ -81,7 +80,7 @@ a:active {
         <td bgcolor="#99FFFF">
           <textarea name="data" id="data" cols="100%" rows="10"><?php
 		  
-		  $data=str_replace( "<br>","\n", $row["about"] );
+		  $data=str_replace( "<br>","\n", $user->getAbout() );
              echo $data;
 			 if($data==""){
 			 echo "  ";
@@ -100,7 +99,7 @@ a:active {
           <div align="center"><strong>วันเกิด วันที่ :</strong>
             <?php 
 		
-		list($year,$month,$day) = split("-",trim($row["BD"]));
+		list($year,$month,$day) = split("-",trim($user->getBirthday()));
 		//echo "Y=$year M=$month D=$day";
 		 ?>
             <select name="date" id="date">

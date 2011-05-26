@@ -42,28 +42,22 @@ $id=$_SESSION['remail_id'];
 if (empty($id)) {
     die();
 }
-$result = mysql_query_log("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
 
-$email=$_SESSION['email'];
+$user = new User($id, 'email, activation_code');
+
 $dbcode=$row['activation_code'];
 $emailcode=$dbcode;
 $emailcode.="&id=";
 $emailcode.=$_SESSION['id'];
 //echo $row['activation_code'];
-$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?email=";
-
-$data.=$email;
-$data.="&code=";
+$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
-$data.="'>http://friends.muict9.net/emailadd.php?email=";
-$data.=$email;
-$data.="&code=";
+$data.="'>http://friends.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
 $data.="</a> <br>หากกดลิ้งค์ไม่ได้โปรด Copy ไปวางในแถบ address ของท่าน<br><br>หากE-mail นี้ถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดแจ้งที่ boy25.pskpnza@gmail.com";
 //echo $data;
 
-$MailTo = $email ;
+$MailTo = $user->getEmail();
 $MailFrom = "no-reply@muict9.net" ;
 $MailSubject = "กดลิ้งค์ใน E-mail นี้เพื่อยันยัน E-mailของท่าน " ;
 $MailMessage = $data ;
@@ -89,7 +83,7 @@ return;
 ?>
 <body>
 <div align="center"><span class="style4"><span class="style5">ระบบได้ส่ง E-mail ไปยัง 
-  <?   echo $_SESSION['email']; ?>
+  <?   echo $user->getEmail(); ?>
 &nbsp; เรียบร้อยแล้ว</span> <br />
   </span><br />
   <span class="style2">หากท่านไม่ได้รับ E-mail <a href="help.php">ขอความช่วยเหลือจากผู้ดูแลระบบ

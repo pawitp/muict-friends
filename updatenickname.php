@@ -2,35 +2,28 @@
 require("bootstrap.php");
 require_login();
 
-$id = $_SESSION["id"];
-$result = mysql_query_log("SELECT nickname, eng_nickname FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
+$user = new User($_SESSION["id"]);
 
 if (!$_POST['button']) {
-    $nickname = $row["nickname"];
-    $eng_nickname = $row["eng_nickname"];
+    $nickname = $user->getThaiNickname();
+    $eng_nickname = $user->getEngNickname();
 }
 else {
     $nickname = $_POST["nickname"];
-    $eng_nickname = $_POST["eng_nickname"];    
-}
+    $eng_nickname = $_POST["eng_nickname"];
 
-if (!verify_nickname($nickname)) {
-    $error = "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
-}
-elseif (!verify_engnickname($eng_nickname)) {
-    $error = "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง";
-}
-elseif ($_POST['button']) {
-    // Update data
-    mysql_query_log("UPDATE muict SET nickname = '$nickname', eng_nickname = '$eng_nickname' WHERE id = $id");
-    mysql_close($con);
-    
-    header("Location: loginc.php");
-    return;
-}
+    try {
+        $user->setThaiNickname($nickname);
+        $user->setEngNickname($eng_nickname);
+        $user->save();
 
-mysql_close($con);
+        redirect("my.php");
+    }
+    catch (ValidationException $e) {
+        $error = ($e->getType() == "eng_nickname") ? "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง" : "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
+        $user->discard();
+    }
+}
 
 ?>
 

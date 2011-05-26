@@ -34,52 +34,56 @@ a:active {
 
 <body>
 <p><?php
-$pass=mysql_real_escape_string($_POST["pass"]);
-$rpass=mysql_real_escape_string($_POST["cpass"]);
-$email=mysql_real_escape_string($_POST["email"]);
-$remail=mysql_real_escape_string($_POST["cemail"]);
-$nickname=$_POST["nickname"];
-$eng_nickname=$_POST["eng_nickname"];
-
-if ($pass != $rpass or $email != $remail or $pass == "" or $rpass == "" or $email == "" or $remail == "") {
-    $error = "ข้อมูลที่กรอกมาไม่เหมือนกัน";
-}
-elseif (!verify_nickname($nickname)) {
-    $error = "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
-}
-elseif (!verify_engnickname($eng_nickname)) {
-    $error = "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง";
-}
-
-if ($error) {
-    echo "$error  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a>";
-    return;
-}
 
 if ($_SESSION['reg_id'] == "") {
     return;
 }
 
+$pass=$_POST["pass"];
+$rpass=$_POST["cpass"];
+$email=$_POST["email"];
+$remail=$_POST["cemail"];
+$nickname=$_POST["nickname"];
+$eng_nickname=$_POST["eng_nickname"];
+
+$user = new User($_SESSION["reg_id"]);
+
+try {
+    $user->setThaiNickname($nickname);
+    $user->setEngNickname($eng_nickname);
+}
+catch (ValidationException $e) {
+    $error = ($e->getType() == "eng_nickname") ? "กรุณากรอกชื่อเล่นภาษาอังกฤษให้ถูกต้อง" : "กรุณากรอกชื่อเล่นภาษาไทยให้ถูกต้อง";
+}
+
+if ($pass != $rpass or $email != $remail or $pass == "" or $rpass == "" or $email == "" or $remail == "") {
+    $error = "ข้อมูลที่กรอกมาไม่เหมือนกัน";
+}
+    
+if ($error) {
+    $user->discard();
+    echo "$error  <a href='javascript: history.go(-1)'>กลับไปแก้ไข</a>";
+    return;
+}
+
+
 $id = $_SESSION['reg_id'];
 
 if($_SESSION['step']==1){
 
-$emailcode = generate_code();
-mysql_query_log("UPDATE muict SET password = sha1('$pass') , idstatus=1 , nickname='$nickname' , eng_nickname='$eng_nickname', email='$email', activation_code='$emailcode' WHERE id = '$id'");
-mysql_close($con);
+$user->setPassword($pass);
+$user->setEmail($email);
+$user->setIdStatus(1);
+$emailcode = $user->generateActivationCode();
+$user->save();
 
 
 //EMAIL
 $emailcode.="&id=";
 $emailcode.=$id;
-$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?email=";
-
-$data.=$email;
-$data.="&code=";
+$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
-$data.="'>http://friends.muict9.net/emailadd.php?email=";
-$data.=$email;
-$data.="&code=";
+$data.="'>http://friends.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
 $data.="</a> <br>หากกดลิ้งค์ไม่ได้โปรด Copy ไปวางในแถบ address ของท่าน<br><br>หากE-mail นี้ถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดแจ้งที่ boy25.pskpnza@gmail.com";
 //echo $data;
