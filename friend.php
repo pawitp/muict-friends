@@ -69,16 +69,16 @@ a:active {
 $img1="<center><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' /></center>";
 $img2="<center><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' /></center>";
 $count=0;
-$sql1="SELECT * FROM muict where idstatus=2 or idstatus=3 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
-$sql2="SELECT * FROM muict WHERE idstatus='3' order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด ของสมาชิกที่ผ่านแล้ว
-$sql3="SELECT * FROM muict WHERE idstatus='3' order by id asc"; //สมาชิกที่ยืนยันแล้วเรียงตามเลข
-$sql4="SELECT * FROM muict WHERE idstatus=2 or idstatus=3 order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql5="SELECT * FROM muict WHERE (sec=1) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql6="SELECT * FROM muict WHERE (sec=2) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql7="SELECT * FROM muict WHERE (sec=3) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+$sql1="WHERE idstatus=2 or idstatus=3 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
+$sql2="WHERE idstatus='3' order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด ของสมาชิกที่ผ่านแล้ว
+$sql3="WHERE idstatus='3' order by id asc"; //สมาชิกที่ยืนยันแล้วเรียงตามเลข
+$sql4="WHERE idstatus=2 or idstatus=3 order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+$sql5="WHERE (sec=1) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+$sql6="WHERE (sec=2) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
+$sql7="WHERE (sec=3) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
 
 if($sql==""){
-$sql="SELECT * FROM muict where idstatus=3 order by lastupdate DESC LIMIT 0 , 10";
+$sql="WHERE idstatus=3 order by lastupdate DESC LIMIT 0 , 10";
 }elseif($sql=="1"){
 $sql=$sql1;
 }elseif($sql=="2"){
@@ -94,26 +94,15 @@ $sql=$sql6;
 }elseif($sql=="7"){
 $sql=$sql7;
 }
-$result = mysql_query_log($sql);
-while ($row = mysql_fetch_array($result)){
-
+$users = User::query($sql);
+foreach ($users as $user) {
   echo"<tr>";
-  echo"<td><center>$row[id]</center></td>";
-  if($row[type]==1){
-  $rtype="นาย";
-  }else{
-  $rtype="นางสาว";
-  }
-  echo"<td><center>$rtype $row[name] $row[sname]</center></td>";
-  echo"<td><center>$row[nickname]</center></td>";
-  if($row[sec]==0){
-  $rsec="N/A";
-  }else{
-  $rsec=$row[sec];
-  }
-  echo"<td><center>$rsec</center></td>";
+  echo"<td><center>" . $user->getId() . "</center></td>";
+  echo"<td><center>" . $user->getThaiFullName() . "</center></td>";
+  echo"<td><center>" . $user->getThaiNickname() . "</center></td>";
+  echo"<td><center>" . $user->getSec() . "</center></td>";
   
-  if($row[fbname]!=""){
+   if($user->getFacebookName()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -121,22 +110,14 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
 
 
-  if($row[BB]!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-  
-  if($row[twitter]!=""){
+  if($user->getBBM()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
   echo"<td>$pr</td>";
 
-
-  if($row[gtalk]!=""){
+  if($user->getTwitter()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -144,39 +125,46 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
 
 
-
-  if($row[skype]!=""){
+  if($user->getGTalk()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
   echo"<td>$pr</td>";
 
-  if($row[msn]!=""){
+  if($user->getSkype()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
   echo"<td>$pr</td>";
 
-  if($row[mobile]!=""){
+  if($user->getMSN()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
-  echo"<td>$pr</td>";;
+  echo"<td>$pr</td>";
 
-	$rwhat=$row[whatsapp];
+  if($user->getMobile()!=""){
+  $pr=$img1;
+  }else{
+  $pr=$img2;
+  }
+  echo"<td>$pr</td>";
+
+
+	$rwhat=$user->getWhatsApp();
   if($rwhat!="" and $rwhat!="0" and $rwhat!=0){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
-  
+
   echo"<td>$pr</td>";
-  
-  
-  if($row[img]!=""){
+
+
+  if($user->getImageUrl()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -185,10 +173,10 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
   
   
-  if($row[idstatus]==2){
-  echo"<td bgcolor='#CC9900'><div align='center'><a href='frienddata.php?id=$row[id]'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
-  }else if($row[idstatus]==3){
-  echo"<td bgcolor='#003300'><div align='center'><a href='frienddata.php?id=$row[id]' target=_blank><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' align='middle' /></a></div></td>";
+  if($user->getIdStatus()==2){
+  echo"<td bgcolor='#CC9900'><div align='center'><a href='frienddata.php?id=" . $user->getId() . "'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
+  }else if($user->getIdStatus()==3){
+  echo"<td bgcolor='#003300'><div align='center'><a href='frienddata.php?id=" . $user->getId() . "' target=_blank><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' align='middle' /></a></div></td>";
   }
   
   echo"</tr>";

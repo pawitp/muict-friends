@@ -4,15 +4,15 @@ require_admin_login();
 
 $res = mysql_query_log("SELECT idstatus, COUNT(*) as count FROM muict GROUP BY idstatus");
 $total = 0;
-$users = array();
+$stat = array();
 while ($row = mysql_fetch_array($res)) {
     $total += $row['count'];
-    $users[$row['idstatus']] = $row['count'];
+    $stat[$row['idstatus']] = $row['count'];
 }
 
 for ($i = -1; $i < 4; $i++) {
-    if (empty($users[$i])) {
-        $users[$i] = 0;
+    if (empty($stat[$i])) {
+        $stat[$i] = 0;
     }
 }
 
@@ -85,29 +85,16 @@ a:active {
 $img1="<center><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' /></center>";
 $img2="<center><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' /></center>";
 $count=0;
-$sql="SELECT * FROM muict where idstatus=1 or idstatus=2 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
-
-$result = mysql_query_log($sql);
-while ($row = mysql_fetch_array($result)){
-
+$users = User::query("WHERE idstatus = 1 OR idstatus = 2 ORDER BY lastupdate DESC LIMIT 0, 100");
+foreach ($users as $user) {
   echo"<tr>";
-  echo"<td><center>" . convert_timezone($row[lastupdate]) . "</center></td>";
-  echo"<td><center>$row[id]</center></td>";
-  if($row[type]==1){
-  $rtype="นาย";
-  }else{
-  $rtype="นางสาว";
-  }
-  echo"<td><center>$rtype $row[name] $row[sname]</center></td>";
-  echo"<td><center>$row[nickname]</center></td>";
-  if($row[sec]==0){
-  $rsec="N/A";
-  }else{
-  $rsec=$row[sec];
-  }
-  echo"<td><center>$rsec</center></td>";
+  echo"<td><center>" . convert_timezone($user->getLastUpdate()) . "</center></td>";
+  echo"<td><center>" . $user->getId() . "</center></td>";
+  echo"<td><center>" . $user->getThaiFullName() . "</center></td>";
+  echo"<td><center>" . $user->getThaiNickname() . "</center></td>";
+  echo"<td><center>" . $user->getSec() . "</center></td>";
   
-  if($row[fbname]!=""){
+  if($user->getFacebookName()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -115,14 +102,14 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
 
 
-  if($row[BB]!=""){
+  if($user->getBBM()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
   }
   echo"<td>$pr</td>";
   
-  if($row[twitter]!=""){
+  if($user->getTwitter()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -130,7 +117,28 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
 
 
-  if($row[gtalk]!=""){
+  if($user->getGTalk()!=""){
+  $pr=$img1;
+  }else{
+  $pr=$img2;
+  }
+  echo"<td>$pr</td>";
+
+  if($user->getSkype()!=""){
+  $pr=$img1;
+  }else{
+  $pr=$img2;
+  }
+  echo"<td>$pr</td>";
+
+  if($user->getMSN()!=""){
+  $pr=$img1;
+  }else{
+  $pr=$img2;
+  }
+  echo"<td>$pr</td>";
+
+  if($user->getMobile()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -138,30 +146,7 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
 
 
-
-  if($row[skype]!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($row[msn]!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($row[mobile]!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";;
-
-
-	$rwhat=$row[whatsapp];
+	$rwhat=$user->getWhatsApp();
   if($rwhat!="" and $rwhat!="0" and $rwhat!=0){
   $pr=$img1;
   }else{
@@ -171,7 +156,7 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
   
   
-  if($row[img]!=""){
+  if($user->getImageUrl()!=""){
   $pr=$img1;
   }else{
   $pr=$img2;
@@ -180,10 +165,10 @@ while ($row = mysql_fetch_array($result)){
   echo"<td>$pr</td>";
   
   
-  if($row[idstatus]==2){
-  echo"<td bgcolor='#CC9900'><div align='center'><a href='a_frienddata.php?id=$row[id]'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
-  }else if($row[idstatus]==1){
-  echo"<td bgcolor='red'><div align='center'><a href='a_frienddata.php?id=$row[id]' target=_blank><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' align='middle' /></a></div></td>";
+  if($user->getIdStatus()==2){
+  echo"<td bgcolor='#CC9900'><div align='center'><a href='a_frienddata.php?id=" . $user->getId() . "'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
+  }else if($user->getIdStatus()==1){
+  echo"<td bgcolor='red'><div align='center'><a href='a_frienddata.php?id=" . $user->getId() . "' target=_blank><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' align='middle' /></a></div></td>";
   }
   
   echo"</tr>";
@@ -197,11 +182,11 @@ $count++;
 
 <div style="text-align:center">
 <strong>ผู้ใช้ทั้งหมด:</strong> <?= $total ?> 
-<strong>ไม่ได้ลงทะเบียน:</strong> <?= $users[0] ?> 
-<strong>ไม่ผ่านการยืนยันอีเมล:</strong> <?= $users[1] ?> 
-<strong>ไม่ผ่านการยืนยันแอดมิน:</strong> <?= $users[2] ?> 
-<strong>ผ่านการยืนยันแอดมิน:</strong> <?= $users[3] ?> 
-<strong>ยกเลิกบัญชี:</strong> <?= $users[-1] ?> 
+<strong>ไม่ได้ลงทะเบียน:</strong> <?= $stat[0] ?>
+<strong>ไม่ผ่านการยืนยันอีเมล:</strong> <?= $stat[1] ?>
+<strong>ไม่ผ่านการยืนยันแอดมิน:</strong> <?= $stat[2] ?>
+<strong>ผ่านการยืนยันแอดมิน:</strong> <?= $stat[3] ?>
+<strong>ยกเลิกบัญชี:</strong> <?= $stat[-1] ?>
 </div>
 
 </body>

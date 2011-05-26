@@ -42,6 +42,23 @@ class User {
         return $user;
     }
 
+    /**
+     * @return User[]
+     */
+    public static function query($query, $preload = '*') {
+        $users = array();
+        $res = mysql_query_log("SELECT $preload FROM muict $query");
+        while ($row = mysql_fetch_assoc($res)) {
+            $user = new User();
+            foreach ($row as $key => $value) {
+                $user->values[$key] = $value;
+            }
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
     public function __destruct() {
         if (!empty($this->dirty)) {
             $list = implode(", ", array_keys($this->dirty));
@@ -313,6 +330,10 @@ class User {
 
     public function setBirthday($value) {
         return $this->setProperty("BD", $value);
+    }
+
+    public function getLastUpdate() {
+        return $this->getProperty("lastupdate");
     }
 
     public function verifyPassword($password) {
