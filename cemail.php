@@ -64,14 +64,16 @@ $email = $user->getEmail();
 
 $error=false;
 $newemail=$_POST["email"];
-if (!verify_email($newemail)) {
+try {
+    $user->setEmail($newemail);
+}
+catch (ValidationException $e) {
     $error = true;
 }
    
 if($newemail!="" and $error!=true and $newemail!=$email){
 
 $emailcode = $user->generateActivationCode();
-$user->setEmail($newemail);
 $user->setIdStatus(1);
 $user->save();
 $emailcode.="&id=".$id;
