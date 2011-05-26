@@ -7,7 +7,7 @@ $do=intval($_GET["do"]);
 
 $data=$_POST["data"];
 
-$user = new User($id);
+$user = User::fromId($id);
 
 //data
 $doimg[1]="msn-icon.png";

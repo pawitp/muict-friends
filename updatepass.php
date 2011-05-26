@@ -46,7 +46,7 @@ $remail=$_POST["cemail"];
 $nickname=$_POST["nickname"];
 $eng_nickname=$_POST["eng_nickname"];
 
-$user = new User($_SESSION["reg_id"]);
+$user = User::fromId($_SESSION["reg_id"]);
 
 try {
     $user->setThaiNickname($nickname);

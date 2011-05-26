@@ -3,7 +3,7 @@ require("bootstrap.php");
 require_admin_login();
 
 try {
-    $user = new User($_GET["id"], '*');
+    $user = User::fromId($_GET["id"], '*');
 }
 catch (InvalidUserIdException $e) {
     $user = null;

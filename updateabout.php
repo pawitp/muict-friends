@@ -3,7 +3,7 @@ require("bootstrap.php");
 require_login();
 
 $id = $_SESSION['id'];
-$user = new User($id, "about, bd");
+$user = User::fromId($id, "about, bd");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

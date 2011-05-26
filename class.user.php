@@ -31,12 +31,17 @@ class ValidationException extends Exception {
 class User {
     private $dirty = array();
     private $values = array();
-    
-    public function __construct($id, $preload = 'id') {
-        $this->values["id"] = intval($id);
-        $this->loadProperties($preload);
+
+    private function __construct() { }
+
+    public static function fromId($id, $preload = 'id') {
+        $user = new User();
+        $user->values["id"] = intval($id);
+        $user->loadProperties($preload);
+
+        return $user;
     }
-    
+
     public function __destruct() {
         if (!empty($this->dirty)) {
             $list = implode(", ", array_keys($this->dirty));

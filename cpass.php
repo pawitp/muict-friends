@@ -6,7 +6,7 @@ $code=$_GET["code"];
 $npass=$_POST["npass"];
 
 try {
-    $user = new User($id, 'email, password_recovery_code');
+    $user = User::fromId($id, 'email, password_recovery_code');
 }
 catch (InvalidUserIdException $e) {
     $message = "ไม่พบรหัสนักศึกษานี้ กรุณาติดต่อแอดมินเพื่อขอความช่วยเหลือ";

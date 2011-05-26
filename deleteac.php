@@ -46,7 +46,7 @@ a:active {
 <form id="form1" name="form1" method="post" action="">
 <?php
 if ($passcheck != "") {
-	$user = new User($_SESSION['id']);
+	$user = User::fromId($_SESSION['id']);
 
 	if ($user->verifyPassword($passcheck)) {
         $user->deleteAccount();

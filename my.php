@@ -3,7 +3,7 @@
 require("bootstrap.php");
 require_login();
 
-$user = new User($_SESSION["id"], '*');
+$user = User::fromId($_SESSION["id"], '*');
 
 $useabout = 1;
 if ($user->getAbout() == "" and $useabout == 1) {

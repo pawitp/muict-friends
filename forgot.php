@@ -12,7 +12,7 @@ if ($_POST["button"]) {
     }
 
     try {
-        $user = new User($id, 'email, idstatus');
+        $user = User::fromId($id, 'email, idstatus');
     }
     catch (InvalidUserIdException $e) {
         $notfound = true;

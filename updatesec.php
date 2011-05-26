@@ -5,7 +5,7 @@ require_login();
 if (isset($_POST["sec"])) {
     try {
         $sec = intval($_POST["sec"]);
-        $user = new User($_SESSION["id"]);
+        $user = User::fromId($_SESSION["id"]);
         $user->setSec($sec);
         $user->save();
         redirect("my.php");

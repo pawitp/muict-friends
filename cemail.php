@@ -52,7 +52,7 @@ else {
 }
 
 try {
-    $user = new User($id, 'email');
+    $user = User::fromId($id, 'email');
 }
 catch (InvalidUserIdException $e) {
     l("InvalidUserId", $e->__toString(), $id);

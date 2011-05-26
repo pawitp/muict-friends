@@ -43,7 +43,7 @@ if (empty($id)) {
     die();
 }
 
-$user = new User($id, 'email, activation_code');
+$user = User::fromId($id, 'email, activation_code');
 
 $dbcode=$row['activation_code'];
 $emailcode=$dbcode;

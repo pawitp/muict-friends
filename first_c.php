@@ -54,7 +54,7 @@ $sname = $_POST["sname"];
 $round = intval($_POST["round"]);
 
 try {
-    $user = new User($id, 'type, name, sname, round, idstatus');
+    $user = User::fromId($id, 'type, name, sname, round, idstatus');
 
     if ($user->getNamePrefix() == $type && $user->getThaiFirstName() == $name && $user->getThaiLastName() == $sname && $user->getRound() == $round) {
         if ($user->getIdStatus() > 0) {

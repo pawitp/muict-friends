@@ -14,7 +14,7 @@ include 'class.upload.php' ;
 //  ถ้าหากหน้านี้ถูกเรียก เพราะการ submit form  
 //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-    $user = new User($id);
+    $user = User::fromId($id);
 
     // Delete old image
     $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");

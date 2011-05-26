@@ -14,7 +14,7 @@ elseif ($_POST["button"]) {
     $id = intval($_POST["id"]);
     
     try {
-        $user = new User($id, 'password, idstatus, admin');
+        $user = User::fromId($id, 'password, idstatus, admin');
     } catch (InvalidUserIdException $e) {
         $invalidid = true;
     }

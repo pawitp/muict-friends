@@ -5,7 +5,7 @@ $id=intval($_GET["id"]);
 $pass=$_GET["code"];
 
 try {
-    $user = new User($id, 'idstatus, activation_code');
+    $user = User::fromId($id, 'idstatus, activation_code');
     if ($user->getIdStatus() == 1 && $user->verifyActivationCode($pass)) {
         $user->setIdStatus(2);
         $user->save();

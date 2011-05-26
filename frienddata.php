@@ -2,10 +2,10 @@
 require("bootstrap.php");
 require_login();
 
-$self_user = new User($_SESSION["id"], '*');
+$self_user = User::fromId($_SESSION["id"], '*');
 
 try {
-    $user = new User($_GET["id"]);
+    $user = User::fromId($_GET["id"]);
 }
 catch (InvalidUserIdException $e) {
     redirect("friend.php");

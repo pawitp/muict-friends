@@ -66,7 +66,7 @@ a:active {
     $userfb = json_decode(fetch_page($graph_url));
     
 	if ($userfb->link != "") {
-        $user = new User($_SESSION["id"]);
+        $user = User::fromId($_SESSION["id"]);
         $user->setFacebookName($userfb->name);
         $user->setFacebookUrl($userfb->link);
         $user->setFacebookEmail($userfb->email);

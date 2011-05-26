@@ -2,7 +2,7 @@
 require("bootstrap.php");
 require_login();
 
-$user = new User($_SESSION["id"]);
+$user = User::fromId($_SESSION["id"]);
 
 if (!$_POST['button']) {
     $nickname = $user->getThaiNickname();
