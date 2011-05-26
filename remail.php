@@ -45,14 +45,14 @@ if (empty($id)) {
 
 $user = User::fromId($id, 'email, activation_code');
 
-$dbcode=$row['activation_code'];
+$dbcode=$user->getActivationCode();
 $emailcode=$dbcode;
 $emailcode.="&id=";
-$emailcode.=$_SESSION['id'];
+$emailcode.=$id;
 //echo $row['activation_code'];
-$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?code=";
+$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://staging.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
-$data.="'>http://friends.muict9.net/emailadd.php?code=";
+$data.="'>http://staging.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
 $data.="</a> <br>หากกดลิ้งค์ไม่ได้โปรด Copy ไปวางในแถบ address ของท่าน<br><br>หากE-mail นี้ถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดแจ้งที่ boy25.pskpnza@gmail.com";
 //echo $data;

@@ -26,7 +26,7 @@ if ($_POST["button"]) {
         $code = $user->generatePasswordRecoveryCode();
         $user->save();
         
-        $data="<a href=http://friends.muict9.net/cpass.php?id=".$id."&code=".$code.">http://friends.muict9.net/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
+        $data="<a href=http://staging.muict9.net/cpass.php?id=".$id."&code=".$code.">http://staging.muict9.net/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
         
         $MailTo = $email ;
         $MailFrom = "no-reply@muict9.net" ;
