@@ -51,10 +51,14 @@ else {
     redirect("login.php");
 }
 
-$result = mysql_query_log("SELECT * FROM muict WHERE id='$id'");
-$row = mysql_fetch_array($result);
+try {
+    $user = new User($id, 'email');
+}
+catch (InvalidUserIdException $e) {
+    l("InvalidUserId", $e->__toString(), $id);
+}
 
-$email = $row[email];
+$email = $user->getEmail();
 
 //echo $row['activation_code'];
 
@@ -63,13 +67,13 @@ $newemail=$_POST["email"];
 if (!verify_email($newemail)) {
     $error = true;
 }
-$newemail = mysql_real_escape_string($newemail);
    
-if($newemail!="" and $error!=true and $newemail!=$row['email']){
+if($newemail!="" and $error!=true and $newemail!=$email){
 
-$emailcode = generate_code();
-
-mysql_query_log("UPDATE muict SET idstatus=1 ,email='$newemail', activation_code='$emailcode' WHERE id = '$id'");
+$emailcode = $user->generateActivationCode();
+$user->setEmail($newemail);
+$user->setIdStatus(1);
+$user->save();
 $emailcode.="&id=".$id;
 
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?email=";
@@ -116,7 +120,7 @@ $succ=1;
 <?php
 
 
-if($newemail==$row['email'] and $newemail!=""){
+if($newemail==$email and $newemail!=""){
 redirect("my.php");
 }
 

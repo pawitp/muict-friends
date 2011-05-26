@@ -3,29 +3,36 @@ require("bootstrap.php");
 
 $id=intval($_GET["id"]);
 $code=$_GET["code"];
-$npass=mysql_real_escape_string($_POST["npass"]);
+$npass=$_POST["npass"];
 
-$result = mysql_query_log("SELECT password_recovery_code FROM muict WHERE id=$id");
-$row = mysql_fetch_array($result);
-$scodemd = $row[password_recovery_code];
-
-if ($scodemd != $code || empty($scodemd)) {
-    $_SESSION["log_id"] = $id;
-    l("PasswordChangeCodeInvalid", "Input: $code", "DB: $scodemd");
-    $message = "Code เปลี่ยนรหัสผ่านไม่ถูกต้อง <a href='forgot.php'>กรุณาลองส่งอีเมลใหม่อีกครั้ง</a>";
-    $color = "red";
-    $quit = true;
+try {
+    $user = new User($id, 'email, password_recovery_code');
 }
-elseif ($_POST["button"]) {
-    if ($npass == "") {
-        $message = "คุณต้องใส่รหัสผ่าน";
+catch (InvalidUserIdException $e) {
+    $message = "ไม่พบรหัสนักศึกษานี้ กรุณาติดต่อแอดมินเพื่อขอความช่วยเหลือ";
+}
+
+if (!isset($message)) {
+    if (!$user->verifyPasswordRecoveryCode($code)) {
+        $_SESSION["log_id"] = $id;
+        l("PasswordChangeCodeInvalid", "Input: $code", "DB: " . $user->getPasswordRecoveryCode());
+        $message = "Code เปลี่ยนรหัสผ่านไม่ถูกต้อง <a href='forgot.php'>กรุณาลองส่งอีเมลใหม่อีกครั้ง</a>";
         $color = "red";
+        $quit = true;
     }
-    else {
-        mysql_query_log("UPDATE muict SET password = sha1('$npass'), password_recovery_code = NULL WHERE id = '$id'");
-        $message = "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a>";
-        $color = "green";
-        $quit = true;   
+    elseif ($_POST["button"]) {
+        if ($npass == "") {
+            $message = "คุณต้องใส่รหัสผ่าน";
+            $color = "red";
+        }
+        else {
+            $user->setPassword($npass);
+            $user->clearPasswordRecoveryCode();
+            $user->save();
+            $message = "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a>";
+            $color = "green";
+            $quit = true;
+        }
     }
 }
 

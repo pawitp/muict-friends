@@ -3,23 +3,28 @@ require("bootstrap.php");
 
 $check = $_POST["name"];
 $id = intval($_POST["id"]);
-$email = mysql_real_escape_string($_POST["email"]);
-$result = mysql_query_log("SELECT idstatus, password FROM muict WHERE id=$id and email='$email'");
-$row = mysql_fetch_array($result);
+$email = $_POST["email"];
 
 if ($_POST["button"]) {
     if ($check != ""){
         // bot
         return;
     }
+
+    try {
+        $user = new User($id, 'email, idstatus');
+    }
+    catch (InvalidUserIdException $e) {
+        $notfound = true;
+    }
     
-    if (mysql_num_rows($result) == 0 || $row["idstatus"] == 0) {
-        l("ForgotLoginFailed", "Id: $id", "Idstatus: $row[idstatus]");
+    if ($notfound || $user->getIdStatus() <= 0) {
+        l("ForgotLoginFailed", "Id: $id", "Idstatus: " . $user->getIdStatus());
         $error = "ข้อมูลที่กรอกไม่ถูกต้อง หากจำข้อมูลได้ไม่ครบ ติดต่อผู้ดูแลระบบได้ผ่าน<a href=help.php>ติดต่อผู้ดูแลระบบ </a>";
     }
-    elseif ($row[password] != "") {
-        $code = generate_code();
-        mysql_query_log("UPDATE muict SET password_recovery_code='$code' WHERE id = $id");
+    else {
+        $code = $user->generatePasswordRecoveryCode();
+        $user->save();
         
         $data="<a href=http://friends.muict9.net/cpass.php?id=".$id."&code=".$code.">http://friends.muict9.net/cpass.php?id=".$id."&code=".$code."</a><br><br>หาก E-mail ดังกล่าวถูกส่งโดยไม่ใช่ความต้องการของท่าน โปรดติดต่อ boy25.pskpnza@gmail.com เพื่อดำเนินการป้องกันต่อไป ขออภัยมา ณ ที่นี้";
         

@@ -2,24 +2,7 @@
 require("bootstrap.php");
 require_login();
 
-$passcheck=$_POST["passwordc"];
-if($passcheck!=""){
-	$id=$_SESSION['id'];
-	$sql="SELECT * FROM muict WHERE id=$id";
-	$result = mysql_query_log($sql);
-	$row = mysql_fetch_array($result);
-	if($row[password]==substr(sha1($passcheck), 0, 20)){
-		$sql="UPDATE muict SET email=null , password=null , idstatus=-1 WHERE id = '$id'";
-		mysql_query_log($sql);
-		echo "บัญชีของคุณถูกยกเลิกเรียบร้อยแล้ว<hr>";
-		l("DeleteAc", '', '');
-		session_destroy();
-		return;
-		
-	}else{
-	echo "รหัสผ่านไม่ถูกต้อง <hr>";
-	}
-}
+$passcheck = $_POST["passwordc"];
 
 ?>
 
@@ -61,6 +44,23 @@ a:active {
 
 <body>
 <form id="form1" name="form1" method="post" action="">
+<?php
+if ($passcheck != "") {
+	$user = new User($_SESSION['id']);
+
+	if ($user->verifyPassword($passcheck)) {
+        $user->deleteAccount();
+        $user->save();
+		echo "บัญชีของคุณถูกยกเลิกเรียบร้อยแล้ว<hr>";
+		l("DeleteAc", '', '');
+		session_destroy();
+		return;
+
+	} else {
+	    echo "รหัสผ่านไม่ถูกต้อง <hr>";
+	}
+}
+?>
   <div align="center"><strong><br />
     ใส่รหัสผ่านเพื่อยืนยันการปิดการแชร์ข้อมูลส่วนตัวของคุณ  </strong><br />
     <label>

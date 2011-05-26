@@ -33,7 +33,7 @@ class User {
     private $values = array();
     
     public function __construct($id, $preload = '') {
-        $this->values["id"] = $id;
+        $this->values["id"] = intval($id);
         $this->loadProperties(empty($preload) ? "id" : $preload);
     }
     
@@ -48,6 +48,32 @@ class User {
     public function getId() {
         // This value is always available
         return $this->values["id"];
+    }
+    
+    // 1 = นาย, 2 = นางสาว
+    public function setNamePrefix($value) {
+        if ($value == 1 || $value == 2) {
+            $this->setProperty("type", $value);
+        }
+        else {
+            throw new ValidationException("คำนำหน้าชื่อ", "type", $value);
+        }
+    }
+    
+    public function getThaiNamePrefix() {
+        return ($this->getProperty("type") == 1) ? "นาย" : "นางสาว";
+    }
+    
+    public function getThaiFirstName() {
+        return $this->getProperty("name");
+    }
+    
+    public function getThaiLastName() {
+        return $this->getProperty("sname");
+    }
+    
+    public function getThaiFullName() {
+        return $this->getThaiNamePrefix() . " " . $this->getThaiFirstName() . " " . $this->getThaiLastName();
     }
     
     public function getThaiNickname() {
@@ -264,6 +290,10 @@ class User {
         }
     }
     
+    public function getBirthday() {
+        return $this->getProperty("BD");
+    }
+    
     public function verifyPassword($password) {
         $encpass = substr(sha1($password), 0, 20);
         return $encpass == $this->getProperty("password");
@@ -279,24 +309,37 @@ class User {
     }
     
     public function verifyActivationCode($code) {
-        $this->verifyCode("activation_code", $code);
+        return $this->verifyCode("activation_code", $code, true);
     }
-    
+
+    public function getActivationCode() {
+        return $this->getProperty("activation_code");
+    }
+
     public function generateActivationCode() {
         return $this->generateCode("activation_code");
     }
     
     public function verifyPasswordRecoveryCode($code) {
-        $this->verifyCode("password_recovery_code", $code);
+        return $this->verifyCode("password_recovery_code", $code);
     }
-    
+
+    public function getPasswordRecoveryCode() {
+        return $this->getProperty("password_recovery_code");
+    }
+
     public function generatePasswordRecoveryCode() {
         return $this->generateCode("password_recovery_code");
     }
-    
-    public function verifyCode($prop, $code) {
-        $ret = $code == $this->getProperty($prop);
-        if ($ret) {
+
+    public function clearPasswordRecoveryCode() {
+        $this->setProperty("password_recovery_code", null);
+    }
+
+    public function verifyCode($prop, $code, $delete = false) {
+        $dbcode = $this->getProperty($prop);
+        $ret = ($code == $dbcode && $dbcode != "");
+        if ($ret && $delete) {
             $this->setProperty($prop, null);
         }
         return $ret;
@@ -307,7 +350,13 @@ class User {
         $this->setProperty($prop, $code);
         return $code;
     }
-    
+
+    public function deleteAccount() {
+        $this->setProperty("email", null);
+        $this->setProperty("password", null);
+        $this->setProperty("idstatus", -1);
+    }
+
     public function save() {
         if (empty($this->dirty)) {
             return;

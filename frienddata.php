@@ -2,7 +2,14 @@
 require("bootstrap.php");
 require_login();
 
-$ids=intval($_GET["id"]);
+$self_user = new User($_SESSION["id"], '*');
+
+try {
+    $user = new User($_GET["id"]);
+}
+catch (InvalidUserIdException $e) {
+    redirect("friend.php");
+}
 $isadmin=$_SESSION['admin'];
 
 ?>
@@ -45,21 +52,16 @@ a:active {
 
 <body><center><?php
 
-$result = mysql_query_log("SELECT idstatus FROM muict WHERE id=$ids");
-$row = mysql_fetch_array($result);
-
-if ($row[idstatus] != 3){
+if ($self_user->getIdStatus() != 3){
     echo"<b><font color=red>ERROR! เฉพาะ ID ที่ผ่านการตรวจสอบแล้วเท่านั้นที่ดูข้อมูลเชิงลึกได้ </font></b><br> เพื่อเพิ่มความสะดวกในการตรวจสอบ โปรดให้ข้อมูลให้มากที่สุด เช่น Facebook หรือ อัพโหลดรูปภาพของท่าน<hr>";
     return;
 }
 
-$result = mysql_query_log("SELECT * FROM muict WHERE id='$ids'");
-$row = mysql_fetch_array($result);
 $img2="<img src='http://image.friends.muict9.net/fail.png' width='27' height='27' />";
 
-
-if($row[idstatus] == 0 or $row[idstatus] == 1){
-    l("ViewUnverifiedUser", "", "");
+$idstatus = $user->getIdStatus();
+if ($idstatus < 2){
+    l("ViewUnregisteredUser", "", "");
     echo "แหะๆ รู้นะ คิดอะไรอยูู่ อิอิอิอิ ;P ";
     return;
 }
@@ -72,118 +74,95 @@ if($row[idstatus] == 0 or $row[idstatus] == 1){
         <table width="100%" border="0" align="center">
           <tr>
             <td width="50%"><div align="center"><img src=<? 
-	  if($row[img]==""){
-	  $prmg="no_image.jpg.png";
-	  }else{
-	  $prmg="$row[img]";
-	  }
-	  
-	  echo"upload_images/$prmg"; ?> width="90%" /></div></td>
-            <td width="50%"><div align="center"><img src='<? if($row[fbpic]!=""){ echo $row[fbpic]; }else{ echo"upload_images/no_image.jpg.png"; } ?>' width="90%" hspace="5" vspace="5" /></div></td>
-          </tr>
-          <tr>
-            <td><div align="center"><strong>USER UPLOAD</strong></div></td>
-            <td><div align="center"><strong>FACEBOOK</strong></div></td>
-          </tr>
-        </table>
-        <br />
-          <span class="style2"><strong>NAME :</strong>&nbsp;
-          <?php
-          if($row[type]==1){
-		  echo "นาย";
-		  }else{
-		  echo "นางสาว";
-		  }
-		  
-		  ?>
-          &nbsp;
-          <?php
-          
-		  echo "$row[name]";
-		  ?>
-          &nbsp;
-          <?php
-          
-		  echo "$row[sname]";
-		  ?>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>NICKNAME : 
-          <?php
-          
-		  echo "$row[nickname]";
-		  ?>
-          </strong>&nbsp;&nbsp;&nbsp;&nbsp; <strong>SEC : 
-          <?php
-          
-		  echo "$row[sec]";
-		  ?>
-          </strong></span><br />
-      </div></td>
-    </tr>
-    <tr>
-      <td><table width="100%" border="0">
-        <tr>
-          <td width="24%"><strong>MSN</strong></td>
-          <td width="76%"><div align="left">
-            <?php   $thiss=$row[msn]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+           $imgurl = $user->getImageUrl();
+            if($user->getImageUrl() == ""){
+                $prmg="no_image.jpg.png";
+            }else{
+                $prmg="$imgurl";
+            }
+
+    	  echo"upload_images/$prmg"; ?> width="90%" /></div></td>
+                <td width="50%"><div align="center"><img src='<? if($user->getFacebookImageUrl() != ""){ echo $user->getFacebookImageUrl(); }else{ echo"upload_images/no_image.jpg.png"; } ?>' width="90%" hspace="5" vspace="5" /></div></td>
+              </tr>
+              <tr>
+                <td><div align="center"><strong>USER UPLOAD</strong></div></td>
+                <td><div align="center"><strong>FACEBOOK</strong></div></td>
+              </tr>
+            </table><br />
+              <span class="style3"><strong>NAME :</strong>&nbsp;
+              <?php echo $user->getThaiFullName();?>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>NICKNAME : 
+              <?php echo $user->getThaiNickname(); ?>
+              </strong>&nbsp;&nbsp;&nbsp;&nbsp; <strong>SEC : 
+              <?php echo $user->getSec(); ?>
+              </strong></span><br />
           </div></td>
         </tr>
         <tr>
-          <td><strong>GTALK</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[gtalk]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td><strong>BB PIN</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[BB]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td><strong>TWITTER</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[twitter]; if($thiss==""){ echo $img2; } else { echo "<a href='http://www.twitter.com/$thiss' target=_blank'>$thiss</a>";  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td><strong>FACEBOOK</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[fbname]; if($thiss==""){ echo $img2; } else { echo "<a href='$row[fburl]' target=_blank>$thiss</a>";  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td><strong>SKYPE</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[skype]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td><strong>MOBILE</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[mobile]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?></div></td>
-        </tr>
-        <tr>
-          <td><strong>Whatsapp</strong></td>
-          <td><div align="left">
-            <?php   $thiss=$row[whatsapp]; if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
-          </div></td>
-        </tr>
-        <tr>
-          <td height="21"><strong>About me</strong></td>
-          <td bgcolor="#FFFFFF"> <span class="style4">x</span><br />            &nbsp;&nbsp; <?php
-		  $data=str_replace( "<br>","&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;", $row["about"] );
-          echo "$data";
-		  
-		  if($row[BD]!="0000-00-00"){
-		  list($year,$month,$day) = split("-",trim($row["BD"]));
-		  $year+=543;
-		  $day+=1;
-		  $day-=1;
-		  $month+=1;
-		  $month-=1;
-		  echo "<br><br>&nbsp;&nbsp;&nbsp;<b>วันเกิด : </b> $day / $month / $year";
-		  }
-		  ?>
+          <td><table width="100%" border="0">
+            <tr>
+              <td width="24%"><strong>MSN</strong></td>
+              <td width="76%"><div align="left">
+                <?php   $thiss=$user->getMSN(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>GTALK</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getGTalk(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>BB PIN</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getBBM(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>TWITTER</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getTwitter(); if($thiss==""){ echo $img2; } else { echo "<a href='http://www.twitter.com/$thiss' target=_blank'>$thiss</a>";  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>FACEBOOK</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getFacebookName(); if($thiss==""){ echo $img2; } else { echo "<a href='" . $user->getFacebookUrl() . "' target=_blank>$thiss</a>";  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>SKYPE</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getSkype(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+              </div></td>
+            </tr>
+            <tr>
+              <td><strong>MOBILE</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getMobile(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?></div></td>
+            </tr>
+            <tr>
+              <td><strong>Whatsapp</strong></td>
+              <td><div align="left">
+                <?php   $thiss=$user->getWhatsApp(); if($thiss==""){ echo $img2; } else { echo $thiss;  }		  ?>
+              </div></td>
+            </tr>
+                    <tr>
+              <td height="21"><strong>About me</strong></td>
+              <td bgcolor="#FFFFFF"> <span class="style4">x</span><br />            
+                &nbsp;&nbsp; <?php
+    		  $data=str_replace( "<br>","&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;", $user->getAbout());
+              echo "$data";
+
+    		  $bd = $user->getBirthday();
+    		  if($bd != "0000-00-00"){
+    		  list($year,$month,$day) = split("-",trim($bd));
+    		  $year += 543;
+    		  $day = intval($day); // remove prepending "0"
+    		  $month = intval($month);
+    		  echo "<br><br>&nbsp;&nbsp;&nbsp;<b>วันเกิด : </b> $day / $month / $year";
+    		  }
+    		  ?>
             <br />
             <span class="style4">a</span><br /></td>
         </tr>
@@ -197,11 +176,10 @@ if($row[idstatus] == 0 or $row[idstatus] == 1){
 </html><?php
 mysql_close($con);
 
-if($isadmin!=1){
-
-return;
+if ($isadmin != 1) {
+    return;
 }
 
 ?>
 
-<meta http-equiv="refresh" content="2;url=http://friends.muict9.net/a_frienddata.php?id=<? echo $ids; ?>/"> 
+<meta http-equiv="refresh" content="2;a_frienddata.php?id=<? echo $user->getId(); ?>/"> 
