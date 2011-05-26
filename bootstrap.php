@@ -39,6 +39,6 @@ unset($user);
 unset($passwordsql);
 unset($dbname);
 
-if (!$disable_logging) {
+if (!isset($disable_logging)) {
     l("PageView", "", "");
 }

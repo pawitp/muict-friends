@@ -8,12 +8,12 @@ $result = mysql_query_log("SELECT * FROM muict WHERE id=$id");
 $row = mysql_fetch_array($result);
 
 $useabout = 1;
-if ($row[about]=="" and $useabout == 1) {
+if ($row['about']=="" and $useabout == 1) {
     redirect('updateabout.php');
 }
 
 // For late registrant who did not enter an English nickname
-if ($row[eng_nickname] == "") {
+if ($row['eng_nickname'] == "") {
     redirect("updatenickname.php");
 }
 
@@ -75,7 +75,7 @@ a:active {
           <td><div align="right">
             <table width="100%" border="0">
               <tr>
-                <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <? echo $_SESSION['nickname'];   ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
+                <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <? echo $row['nickname'];   ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
                 <?
                 
                 if($row['sec']==0){
@@ -85,7 +85,7 @@ a:active {
 				echo $row['sec'];
 				}
 				
-                if($row[admin]==1){
+                if($row['admin']==1){
                 echo "&nbsp;&nbsp; <a href='a_list.php' target=_blank><b>ADMIN CP</b></a>";
                 } 
                 ?> 
