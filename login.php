@@ -12,14 +12,15 @@ elseif ($_POST["button"]) {
     
     // Process login
     $id = intval($_POST["id"]);
-    $result = mysql_query_log("SELECT id, password, idstatus, admin FROM muict WHERE id=$id");
-    $row = mysql_fetch_array($result);
-    $db_pass = $row['password'];
-    $enc_db_pass = sha1($_SESSION['secret'] . $db_pass);
-    $user_pass = substr(sha1($_POST['pass']), 0, 20);
     
-    if (($enc_db_pass == $_POST['enc_pass'] || $db_pass == $user_pass) && $row['idstatus'] > 0) {
-        if ($row['idstatus'] == 1) {
+    try {
+        $user = new User($id, 'password, idstatus, admin');
+    } catch (InvalidUserIdException $e) {
+        $invalidid = true;
+    }
+    
+    if (!$invalidid && ($user->verifyEncodedPassword($_POST['enc_pass'], $_SESSION['secret']) || $user->verifyPassword($_POST['pass'])) && $user->getIdStatus() > 0) {
+        if ($user->getIdStatus() == 1) {
             $_SESSION['remail_id'] = $id;
             $error = "<img src=image/onebit_49.png  align=‘middle’ />
 
@@ -34,8 +35,8 @@ elseif ($_POST["button"]) {
     
     if (!$error) {
         // Finally, we're in
-        $_SESSION["id"] = $row["id"];
-        $_SESSION["admin"] = $row["admin"];
+        $_SESSION["id"] = $user->getId();
+        $_SESSION["admin"] = $user->isAdmin();
         
         if (empty($_SESSION["redirect"])) {
             $redirect = "my.php";

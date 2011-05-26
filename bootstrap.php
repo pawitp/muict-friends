@@ -3,6 +3,7 @@ session_start();
 ob_start();
 
 require("functions.php");
+require("class.user.php");
 
 // Reverse magic quote
 if (get_magic_quotes_gpc()) {
