@@ -67,7 +67,7 @@ function get_any_id() {
         return $_SESSION["log_id"];
     }
     else {
-        return;
+        return 0;
     }
 }
 
@@ -90,7 +90,7 @@ function l($tag, $data1, $data2) {
     $tag = mysql_real_escape_string($tag);
     $data1 = mysql_real_escape_string($data1);
     $data2 = mysql_real_escape_string($data2);
-    mysql_query("INSERT INTO muict_log (time, ip, user_agent, path, id, tag, data1, data2) VALUES (CURRENT_TIMESTAMP(), '$ip', '$user_agent', '$path', $id, '$tag', '$data1', '$data2')");
+    mysql_query_log("INSERT INTO muict_log (time, ip, user_agent, path, id, tag, data1, data2) VALUES (CURRENT_TIMESTAMP(), '$ip', '$user_agent', '$path', $id, '$tag', '$data1', '$data2')");
 }
 
 function fetch_page($url) {
