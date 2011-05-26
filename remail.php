@@ -49,7 +49,6 @@ $dbcode=$user->getActivationCode();
 $emailcode=$dbcode;
 $emailcode.="&id=";
 $emailcode.=$id;
-//echo $row['activation_code'];
 $data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://staging.muict9.net/emailadd.php?code=";
 $data.=$emailcode;
 $data.="'>http://staging.muict9.net/emailadd.php?code=";

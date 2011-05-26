@@ -14,17 +14,16 @@ include 'class.upload.php' ;
 //  ถ้าหากหน้านี้ถูกเรียก เพราะการ submit form  
 //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-    $user = User::fromId($id);
+    $user = User::fromId($id, 'img');
 
     // Delete old image
-    $result = mysql_query_log("SELECT img FROM muict WHERE id = $id");
-    $row = mysql_fetch_array($result);
-    if (!empty($row['img'])) {
-        if (!unlink('upload_images/' . $row['img'])) {
-            l("UnlinkedFailed", $row['img'], "");
+    $img = $user->getImageUrl();
+    if ($img != "") {
+        if (!unlink('upload_images/' . $img)) {
+            l("UnlinkedFailed", $img, "");
         }
     }
- 
+
     // เริ่มต้นใช้งาน class.upload.php ด้วยการสร้าง instant จากคลาส
     $upload_image = new upload($_FILES['image_name']) ; // $_FILES['image_name'] ชื่อของช่องที่ให้เลือกไฟล์เพื่ออัปโหลด
  
