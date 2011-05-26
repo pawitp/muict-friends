@@ -29,30 +29,6 @@ function generate_code() {
     return md5(uniqid('', true));
 }
 
-function verify_email($email) {
-    $ret = filter_var($email, FILTER_VALIDATE_EMAIL);
-    if (!$ret) {
-        l("VerifyFail", $email, "email");
-    }
-    return $ret;
-}
-
-function verify_nickname($nickname) {
-    $ret = preg_match("/^[0-9ก-๙ \(\)\[\]เ]+$/", $nickname); // for some reason เ isn't included
-    if (!$ret) {
-        l("VerifyFail", $nickname, "nickname_thai");
-    }
-    return $ret;
-}
-
-function verify_engnickname($name) {
-    $ret = preg_match("/^[A-Za-z0-9 \(\)\[\]]+$/", $name);
-    if (!$ret) {
-        l("VerifyFail", $name, "nickname_eng");
-    }
-    return $ret;
-}
-
 function get_any_id() {
     if (!empty($_SESSION["id"])) {
         return $_SESSION["id"];
