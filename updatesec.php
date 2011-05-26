@@ -1,21 +1,23 @@
 <?php
 require("bootstrap.php");
 require_login();
+
+if (isset($_POST["sec"])) {
+    try {
+        $sec = intval($_POST["sec"]);
+        $user = new User($_SESSION["id"]);
+        $user->setSec($sec);
+        $user->save();
+        redirect("my.php");
+    } catch (ValidationException $e) {
+        $error = "กรุณาเลือก sec";
+    }
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<?php
-
-if ($_POST["sec"] != "") {
-$sec=intval($_POST["sec"]);
-mysql_query_log("UPDATE muict SET sec = '$sec' WHERE id = '$id'");
-redirect("my.php");
-}
-
-?>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MUICT #9 : Friend system</title>
 <style type="text/css">
@@ -62,6 +64,7 @@ a:active {
     &nbsp;&nbsp; 
     <input type="submit" name="button" id="button" value="บันทึก SEC" />
     <br />
+    <span style="color:red"><?= $error ?></span>
   </div>
   </label>
 </form>

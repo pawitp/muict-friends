@@ -3,22 +3,20 @@
 require("bootstrap.php");
 require_login();
 
-$id = $_SESSION['id'];
-$result = mysql_query_log("SELECT * FROM muict WHERE id=$id");
-$row = mysql_fetch_array($result);
+$user = new User($_SESSION["id"], '*');
 
 $useabout = 1;
-if ($row['about']=="" and $useabout == 1) {
+if ($user->getAbout() == "" and $useabout == 1) {
     redirect('updateabout.php');
 }
 
 // For late registrant who did not enter an English nickname
-if ($row['eng_nickname'] == "") {
+if ($user->getEngNickname() == "") {
     redirect("updatenickname.php");
 }
 
 $secknow = 0;  //ถ้ารู้SECกันแล้วแก้เป็น1
-if ($row['sec'] == 0 and $secknow == 1){
+if ($user->getSec() == "N/A" and $secknow == 1){
 	redirect('updatesec.php');
 }
 
@@ -75,20 +73,9 @@ a:active {
           <td><div align="right">
             <table width="100%" border="0">
               <tr>
-                <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <? echo $row['nickname'];   ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
-                <?
-                
-                if($row['sec']==0){
-				echo "N/A";
-
-				} else {
-				echo $row['sec'];
-				}
-				
-                if($row['admin']==1){
-                echo "&nbsp;&nbsp; <a href='a_list.php' target=_blank><b>ADMIN CP</b></a>";
-                } 
-                ?> 
+                <td><span class="style1"><strong>ยินดีต้อนรับ</strong> <?= $user->getThaiNickname() ?>&nbsp;&nbsp;&nbsp;<span class="style9"> SEC : 
+                <?= $user->getSec() ?>
+                <? if ($user->isAdmin()): ?>&nbsp;&nbsp; <a href='a_list.php' target=_blank><b>ADMIN CP</b></a><? endif; ?>
                &nbsp;&nbsp; </span></span><a href="friend.php" target="_blank" class="style10">ดูข้อมูลเพื่อน</a></td>
                 <td><div align="right"><a href="logout.php"><strong>ออกจากระบบ</strong></a></div></td>
               </tr>
@@ -97,7 +84,7 @@ a:active {
         </tr>
         <tr>
           <td> <table width="100%" border="0">
-<? if ($row['idstatus'] == 3): ?>
+<? if ($user->getIdStatus() == 3): ?>
     <tr>
         <td width='9%'><div align='center'><img src='http://image.friends.muict9.net/profile.png' width='48' height='48' /></div></td>
         <td width='84%'><div align='center' class='style4'><font color='green'>ผ่านการยืนยัน ID จากผู้ดูแลระบบแล้ว</font></div></td>
@@ -113,57 +100,57 @@ a:active {
 <? endif; ?>
       <tr>
         <td width="9%"><div align="center"><img src="http://image.friends.muict9.net/email.png" alt="email" width="48" height="48" /></div></td>
-        <td width="84%"><div align="left">E-Mail : <? echo $row['email']; ?> </div></td>
+        <td width="84%"><div align="left">E-Mail : <? echo $user->getEmail(); ?> </div></td>
         <td width="7%"><img src="http://image.friends.muict9.net/pass.png" width="48" height="48" /></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/msn-icon.png" alt="MSN [windows live messenger]" width="52" height="52" /></div></td>
-        <td><div align="left">MSN : <? echo $row['msn']; ?></div></td>
+        <td><div align="left">MSN : <? echo $user->getMSN(); ?></div></td>
         <td><a href="update.php?do=1"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/gtalk-icon.png" alt="" width="55" height="55" /></div></td>
-        <td><div align="left">GTalk : <? echo $row['gtalk']; ?> </div></td>
+        <td><div align="left">GTalk : <? echo $user->getGTalk(); ?> </div></td>
         <td><a href="update.php?do=2"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/big_bb_Icon-120x120.jpg" alt="" width="58" height="58" /></div></td>
-        <td><div align="left">BB PIN : <? echo $row['BB']; ?></div></td>
+        <td><div align="left">BB PIN : <? echo $user->getBBM(); ?></div></td>
         <td><a href="update.php?do=3"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/twitter.png" alt="twitter" width="60" height="60" /></div></td>
-        <td><div align="left">Twitter : <? echo $row['twitter']; ?></div></td>
+        <td><div align="left">Twitter : <? echo $user->getTwitter(); ?></div></td>
         <td><a href="update.php?do=4"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
 
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/facebook.png" alt="facebook" width="60" height="60" /></div></td>
-        <td><div align="left">Facebook : <? echo $row['fbname']; ?><br />
+        <td><div align="left">Facebook : <? echo $user->getFacebookName(); ?><br />
             <span class="style5">*ขอความร่วมมือในการให้ข้อมูล&nbsp;Facebook เพื่อง่ายต่อการตรวจสอบว่าเป็นตัวจริงไม่ได้แอบอ้างมา</span></div></td>
         <td><a href="fbget.php"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/skype-icon.png" alt="skype" width="59" height="56" /></div></td>
-        <td><div align="left">Skype : <? echo $row['skype']; ?></div></td>
+        <td><div align="left">Skype : <? echo $user->getSkype(); ?></div></td>
         <td><a href="update.php?do=5"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/call_icon_110x102.jpg" alt="mobile" width="58" height="53" /></div></td>
-        <td><div align="left">Mobile : <? echo $row['mobile']; ?></div></td>
+        <td><div align="left">Mobile : <? echo $user->getMobile(); ?></div></td>
         <td><a href="update.php?do=6"><img src="http://image.friends.muict9.net/edit.png" alt="" width="48" height="48" /></a></td>
       </tr>
       <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/com.whatsapp_icon.png" alt="whatsapp" width="58" height="58" /></div></td>
         <td><div align="left">Whatsapp : 
-          <?= $row['whatsapp'] ?>
+          <?= $user->getWhatsApp() ?>
         </div></td>
         <td><a href="update.php?do=7"><img src="http://image.friends.muict9.net/edit.png" width="48" height="48" /></a></td>
       </tr>
       <tr>
       <?php
-	  $imgurl=$row['img'];
-	  $fbiurl=$row['fbpic'];
+	  $imgurl=$user->getImageUrl();
+	  $fbiurl=$user->getFacebookImageUrl();
 	  ?>
         <td><div align="center"><img src="http://image.friends.muict9.net/camera-icon.png" width="47" height="47" /></div></td>
         <td><div align="left">รูปภาพ :&nbsp; <a href="upload_images/<?= $imgurl ?>" target="_blank"><?= $imgurl ?></a>
