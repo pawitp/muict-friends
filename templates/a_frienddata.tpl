@@ -130,6 +130,7 @@
         </table>
         <br />
 
+        {if $email_sent}ส่งอีเมลเรียบร้อยแล้ว{/if}
 
         <form id="form2" name="form2" method="post" action="">
             <p>ส่ง E-mail ถึงคนนี้ [อย่าลืมระบุวิธีติดต่อกลับ]</p>

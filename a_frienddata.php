@@ -42,21 +42,11 @@ $data=$_POST["data"];
 if (isset($_POST["submit"]) and $data != "") {
     $data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://friends.muict9.net/help.php เพื่อแก้ปัญหาได้ ";
 
-    $MailTo = $user->getEmail();
-    $MailFrom = "no-reply@muict9.net" ;
-    $MailSubject = "ข้อความจากผู้ดูแลระบบ friends.muict9.net" ;
-    $MailMessage = $data ;
-    //echo"$MailTo $MailMessage ";
-
-
-    $Headers = "MIME-Version: 1.0\r\n" ;
-    $Headers .= "Content-type: text/html; charset=utf-8\r\n" ;
-    // ส่งข้อความเป็นภาษาไทย ใช้ "windows-874"
-    $Headers .= "From: ".$MailFrom." <".$MailFrom.">\r\n" ;
-    $Headers .= "Reply-to: ".$MailFrom." <".$MailFrom.">\r\n" ;
-    $Headers .= "X-Priority: 3\r\n" ;
-    $Headers .= "X-Mailer: PHP mailer\r\n" ;
-    mail($MailTo, $MailSubject , $MailMessage, $Headers, $MailFrom);
+    $mail = new Mail();
+    $mail->setContent(str_replace("\n", "<br>", $data));
+    $mail->setSubject("ข้อความจากผู้ดูแลระบบ friends.muict9.net");
+    $mail->addRecipient($user->getEmail());
+    $mail->send();
     $smarty->assign("email_sent", true);
 }
 
