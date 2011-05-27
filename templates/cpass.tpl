@@ -1,7 +1,7 @@
 {extends "layout.tpl"}
 {block name="body"}
     {if $status == "success"}
-        <div style="color:green">เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='logout.php'>เข้าสู่ระบบ</a></div>
+        <div style="color:green">เปลี่ยนรหัสผ่านเรียบร้อยแล้ว <a href='login.php'>เข้าสู่ระบบ</a></div>
     {elseif $status == "invalid_code"}
         <div style="color:red">Code เปลี่ยนรหัสผ่านไม่ถูกต้อง <a href='forgot.php'>กรุณาลองส่งอีเมลใหม่อีกครั้ง</a></div>
     {elseif $status == "invalid_id"}
