@@ -78,12 +78,12 @@ $user->setIdStatus(1);
 $user->save();
 $emailcode.="&id=".$id;
 
-$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://staging.muict9.net/emailadd.php?email=";
+$data="โปรดกดลิ้งค์เพื่อยืนยัน E-mail ของคุณ  <a href='http://friends.muict9.net/emailadd.php?email=";
 
 $data.=$newemail;
 $data.="&code=";
 $data.=$emailcode;
-$data.="'>http://staging.muict9.net/emailadd.php?email=";
+$data.="'>http://friends.muict9.net/emailadd.php?email=";
 $data.=$newemail;
 $data.="&code=";
 $data.=$emailcode;

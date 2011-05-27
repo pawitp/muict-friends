@@ -30,7 +30,7 @@ switch ($do) {
     case 4:
         $code = $user->generatePasswordRecoveryCode();
         $user->save();
-        $ref = "RESET PASS URL IS : http://staging.muict9.net/cpass.php?id=".$user->getId()."&code=".$code;
+        $ref = "RESET PASS URL IS : http://friends.muict9.net/cpass.php?id=".$user->getId()."&code=".$code;
         break;
 }
 
@@ -229,7 +229,7 @@ $data=$_POST["data"];
 $email=$_POST["email"];
 
 
-$data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://staging.muict9.net/help.php เพื่อแก้ปัญหาได้ ";
+$data.="<hr>หากมีข้อสงสัยใน E-mail ฉบับนี้ สามารถใช้เมนูติดต่อผู้ดูแล http://friends.muict9.net/help.php เพื่อแก้ปัญหาได้ ";
 if($email!="" and $data!=""){
 echo "ส่ง E-MAIL ไปแล้ว!<hr>";
 $MailTo = $email ;
