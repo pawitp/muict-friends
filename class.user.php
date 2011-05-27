@@ -406,7 +406,7 @@ class User {
 
     public function sendPasswordRecoveryMail() {
         $smarty = get_smarty();
-        $smarty->assign("url", "http://friends.muict9.net/cpass.php?id=" . $this->getId() . "&code=" . $this->getActivationCode());
+        $smarty->assign("url", "http://friends.muict9.net/cpass.php?id=" . $this->getId() . "&code=" . $this->getPasswordRecoveryCode());
 
         $mail = new Mail();
         $mail->setSubject("Link กำหนดรหัสผ่านใหม่ friends.muict9.net");
