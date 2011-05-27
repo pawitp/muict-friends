@@ -18,7 +18,7 @@ if ($_POST["button"]) {
         $notfound = true;
     }
     
-    if ($notfound || $user->getIdStatus() <= 0) {
+    if ($notfound || $user->getIdStatus() <= 0 || $user->getEmail() != $email) {
         l("ForgotLoginFailed", "Id: $id", "Idstatus: " . $user->getIdStatus());
         $error = "ข้อมูลที่กรอกไม่ถูกต้อง หากจำข้อมูลได้ไม่ครบ ติดต่อผู้ดูแลระบบได้ผ่าน<a href=help.php>ติดต่อผู้ดูแลระบบ </a>";
     }
