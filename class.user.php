@@ -380,7 +380,18 @@ class User {
     public function generateActivationCode() {
         return $this->generateCode("activation_code");
     }
-    
+
+    public function sendActivationMail() {
+        $smarty = get_smarty();
+        $smarty->assign("url", "http://friends.muict9.net/emailadd.php?id=" . $this->getId() . "&code=" . $this->getActivationCode());
+
+        $mail = new Mail();
+        $mail->setSubject("กดลิ้งค์ใน E-mail นี้เพื่อยันยัน E-mail ของท่าน");
+        $mail->setContent($smarty->fetch("email/activate.tpl"));
+        $mail->addRecipient($this->getEmail());
+        return $mail->send();
+    }
+
     public function verifyPasswordRecoveryCode($code) {
         return $this->verifyCode("password_recovery_code", $code);
     }
@@ -391,6 +402,17 @@ class User {
 
     public function generatePasswordRecoveryCode() {
         return $this->generateCode("password_recovery_code");
+    }
+
+    public function sendPasswordRecoveryMail() {
+        $smarty = get_smarty();
+        $smarty->assign("url", "http://friends.muict9.net/cpass.php?id=" . $this->getId() . "&code=" . $this->getActivationCode());
+
+        $mail = new Mail();
+        $mail->setSubject("Link กำหนดรหัสผ่านใหม่ friends.muict9.net");
+        $mail->setContent($smarty->fetch("email/forgot.tpl"));
+        $mail->addRecipient($this->getEmail());
+        return $mail->send();
     }
 
     public function clearPasswordRecoveryCode() {

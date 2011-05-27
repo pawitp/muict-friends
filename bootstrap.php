@@ -4,6 +4,7 @@ ob_start();
 
 require("functions.php");
 require("class.user.php");
+require("class.mail.php");
 require("smarty/libs/Smarty.class.php");
 
 // Reverse magic quote
