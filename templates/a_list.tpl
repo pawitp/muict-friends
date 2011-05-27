@@ -48,10 +48,10 @@ font-weight: bold;
             <td><center>{$user->getMSN()|exists_tick}</center></td>
             <td><center>{$user->getMobile()|exists_tick}</center></td>
             <td><center>{$user->getWhatsApp()|exists_tick}</center></td>
-            <td><center>{$user->getImageUrl()|exists_tick}</center></td>
+            <td><center>{$user->getImageName()|exists_tick}</center></td>
             {if $user->getIdStatus() == 2}
                 <td bgcolor='#CC9900'><div align='center'><a href='a_frienddata.php?id={$user->getId()}'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>
-                {else}
+            {else}
                 <td bgcolor='red'><div align='center'><a href='a_frienddata.php?id={$user->getId()}' target=_blank><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' align='middle' /></a></div></td>
             {/if}
         </tr>

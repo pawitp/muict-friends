@@ -35,4 +35,3 @@ if (!$error) {
 }
 
 $smarty->display("cpass.tpl");
-?>

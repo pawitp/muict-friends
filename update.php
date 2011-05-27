@@ -4,7 +4,6 @@ require_login();
 
 $id=$_SESSION['id'];
 $do=intval($_GET["do"]);
-
 $data=$_POST["data"];
 
 $user = User::fromId($id);
@@ -45,6 +44,10 @@ $doname[7]="Whatsapp";
 $doex[7]="0809876543";
 $dofunction[7]="WhatsApp";
 
+if (!array_key_exists($do, $doimg)) {
+    redirect("my.php");
+}
+
 $func = $dofunction[$do];
 if (isset($_POST["button"])) {
     try {
@@ -67,74 +70,9 @@ if ($data == "") {
     $data = call_user_func(array($user, "get$func"));
 }
 
-mysql_close($con);
-
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MUICT #9 : Friend system</title>
-<style type="text/css">
-<!--
-body {
-	background-image: url(http://image.friends.muict9.net/bg.png);
-}
-a:link {
-	color: #000000;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-a:hover {
-	text-decoration: underline;
-	color: #000000;
-}
-a:active {
-	text-decoration: none;
-	color: #000000;
-}
-.style1 {
-	font-size: 14px;
-	font-weight: bold;
-}
-.style2 {
-	font-size: 10px;
-	color: #333333;
-}
-.style3 {font-size: 12px}
--->
-</style></head>
-
-<body>
-<table width="40%" border="0" align="center">
-  <tr>
-    <td><div align="center"><img src="http://image.friends.muict9.net/<? echo"$doimg[$do]"; ?>" width="60" height="60" /><br />
-          <span class="style1"><? echo"$doname[$do]" ?></span></div></td>
-  </tr>
-  <tr>
-    <td><div align="center">
-      <form id="form1" name="form1" method="post" action="update.php?do=<? echo $do; ?>">
-      <input name="data" type="text" id="data" value="<? echo $data; ?>"/>
-      &nbsp; 
-        <label>
-        <input type="submit" name="button" id="button" value="Submit" />
-        </label>
-        <br />
-        <input type="checkbox" name="delete" value="delete"><span class="style2">ติ๊กถ้าหากต้องการลบ<br />
-        </span><span class="style3">Ex :      <? echo"$doex[$do]" ?>
-        </span><br />
-        <?php if ($error): ?>
-        <span style="color:red">กรุณากรอกข้อมูลให้ถูกต้อง</span>
-        <?php endif; ?>
-      </form>
-      </div></td>
-  </tr>
-  <tr>
-    <td><div align="center"><a href="loginc.php"><img src="http://image.friends.muict9.net/onebit_33.png" width="48" height="48" /></a></div></td>
-  </tr>
-</table>
-</body>
-</html>
+$smarty = get_smarty();
+$smarty->assign("error", $error);
+$smarty->assign("doimg", $doimg[$do]);
+$smarty->assign("do", $do);
+$smarty->assign("data", $data);
+$smarty->display("update.tpl");

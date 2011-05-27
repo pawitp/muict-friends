@@ -2,198 +2,35 @@
 require("bootstrap.php");
 require_login();
 
-$sql=intval($_GET["query"]);
-?>
+$sql = intval($_GET["query"]);
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+if ($sql == "1") {
+    $sql = "WHERE idstatus = 2 or idstatus = 3 order by lastupdate DESC LIMIT 0 , 100";
+}
+elseif ($sql == "2") {
+    $sql = "WHERE idstatus = '3' order by lastupdate DESC LIMIT 0 , 100";
+}
+elseif ($sql == "3") {
+    $sql = "WHERE idstatus = '3' order by id asc";
+}
+elseif ($sql == "4") {
+    $sql = "WHERE idstatus = 2 or idstatus = 3 order by id asc";
+}
+elseif ($sql == "5") {
+    $sql = "WHERE (sec = 1) and (idstatus = 2 or idstatus = 3) order by id asc"; 
+}
+elseif ($sql == "6") {
+    $sql = "WHERE (sec = 2) and (idstatus = 2 or idstatus = 3) order by id asc";
+}
+elseif ($sql == "7") {
+    $sql = "WHERE (sec = 3) and (idstatus = 2 or idstatus = 3) order by id asc";
+}
+else {
+    $sql = "WHERE idstatus = 3 order by lastupdate DESC LIMIT 0 , 10";
+}
 
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MUICT #9 : Friend system</title>
-<style type="text/css">
-<!--
-body {
-	background-image: url(http://image.friends.muict9.net/bg.png);
-}
-a:link {
-	color: #000000;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-a:hover {
-	text-decoration: underline;
-	color: #000000;
-}
-a:active {
-	text-decoration: none;
-	color: #000000;
-}
-.style1 {
-	color: #000000;
-	font-weight: bold;
-}
-.style2 {font-size: 14px}
--->
-</style></head>
-
-<body>
-<div align="center"><img src="http://image.friends.muict9.net/pass.png" alt="" width="27" height="27" align="middle" />=ผ่านการตรวจสอบจากผู้ดูแลแล้ว&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://image.friends.muict9.net/onebit_36.png" alt="" width="27" height="27" align="middle" />=อยู่ระหว่างการตรวจสอบ <br />
-  <strong>(กดที่เครื่องหมายในช่อง Status เพื่อดูข้อมูลเพื่อนได้)</strong><br />
-</div>
-<p align="center" class="style2"> <strong>จัดเรียงตาม :&nbsp;</strong>&nbsp;&nbsp; <a href="friend.php?query=1">การอัพเดตล่าสุด</a>&nbsp;&nbsp; <a href="friend.php?query=2">สมาชิกที่เคลื่อนไหวล่าสุดเฉพาะสมาชิกที่ผ่านการยืนยันแล้ว</a>&nbsp; &nbsp;<a href="friend.php?query=3">สมาชิกที่ยืนยันแล้วเรียงตามรหัสนักศึกษา</a> <a href="friend.php?query=4">สมาชิกทั้งหมดที่เคยเข้าสู่ระบบตามรหัสนักศึกษา</a><br />
-  <a href="friend.php?query=5">สมาชิก SEC 1 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="friend.php?query=6">สมาชิก SEC 2 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="friend.php?query=7">สมาชิก SEC 3 ทั้งหมด</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<strong><a href="friendimg.php">IMAGE MODE HISPEED INTERNET ONLY</a>!</strong></p>
-<table width="90%" border="1" align="center">
-  <tr>
-    <td><div align="center" class="style1">ID</div></td>
-    <td><div align="center" class="style1">NAME</div></td>
-    <td><div align="center" class="style1">NICKNAME</div></td>
-    <td><div align="center" class="style1">SEC</div></td>
-    <td><div align="center" class="style1">FB</div></td>
-    <td><div align="center" class="style1">BB PIN</div></td>
-    <td><div align="center" class="style1">TWITTER</div></td>
-    <td><div align="center" class="style1">GTALK</div></td>
-    <td><div align="center" class="style1">SKYPE</div></td>
-    <td><div align="center" class="style1">MSN</div></td>
-    <td><div align="center" class="style1">MOBILE</div></td>
-    <td><div align="center" class="style1">Whatsapp</div></td>
-    <td><div align="center" class="style1">IMAGE</div></td>
-    <td bgcolor="#99FFCC"><div align="center" class="style1">Status</div></td>
-    
-  </tr>
-<?php
-$img1="<center><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' /></center>";
-$img2="<center><img src='http://image.friends.muict9.net/fail.png' width='27' height='27' /></center>";
-$count=0;
-$sql1="WHERE idstatus=2 or idstatus=3 order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด
-$sql2="WHERE idstatus='3' order by lastupdate DESC LIMIT 0 , 100"; //100อัพเดตล่าสุด ของสมาชิกที่ผ่านแล้ว
-$sql3="WHERE idstatus='3' order by id asc"; //สมาชิกที่ยืนยันแล้วเรียงตามเลข
-$sql4="WHERE idstatus=2 or idstatus=3 order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql5="WHERE (sec=1) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql6="WHERE (sec=2) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-$sql7="WHERE (sec=3) and (idstatus=2 or idstatus=3) order by id asc"; //สมาชิกทั้งหมดที่เคยเข้าระบบ
-
-if($sql==""){
-$sql="WHERE idstatus=3 order by lastupdate DESC LIMIT 0 , 10";
-}elseif($sql=="1"){
-$sql=$sql1;
-}elseif($sql=="2"){
-$sql=$sql2;
-}elseif($sql=="3"){
-$sql=$sql3;
-}elseif($sql=="4"){
-$sql=$sql4;
-}elseif($sql=="5"){
-$sql=$sql5;
-}elseif($sql=="6"){
-$sql=$sql6;
-}elseif($sql=="7"){
-$sql=$sql7;
-}
 $users = User::query($sql);
-foreach ($users as $user) {
-  echo"<tr>";
-  echo"<td><center>" . $user->getId() . "</center></td>";
-  echo"<td><center>" . $user->getThaiFullName() . "</center></td>";
-  echo"<td><center>" . $user->getThaiNickname() . "</center></td>";
-  echo"<td><center>" . $user->getSec() . "</center></td>";
-  
-   if($user->getFacebookName()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
 
-
-  if($user->getBBM()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($user->getTwitter()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-
-  if($user->getGTalk()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($user->getSkype()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($user->getMSN()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-  if($user->getMobile()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  echo"<td>$pr</td>";
-
-
-	$rwhat=$user->getWhatsApp();
-  if($rwhat!="" and $rwhat!="0" and $rwhat!=0){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-
-  echo"<td>$pr</td>";
-
-
-  if($user->getImageUrl()!=""){
-  $pr=$img1;
-  }else{
-  $pr=$img2;
-  }
-  
-  echo"<td>$pr</td>";
-  
-  
-  if($user->getIdStatus()==2){
-  echo"<td bgcolor='#CC9900'><div align='center'><a href='frienddata.php?id=" . $user->getId() . "'target=_blank><img src='http://image.friends.muict9.net/onebit_36.png' width='27' height='27' /></a></div></td>";
-  }else if($user->getIdStatus()==3){
-  echo"<td bgcolor='#003300'><div align='center'><a href='frienddata.php?id=" . $user->getId() . "' target=_blank><img src='http://image.friends.muict9.net/pass.png' width='27' height='27' align='middle' /></a></div></td>";
-  }
-  
-  echo"</tr>";
-
-
-$count++;
-}//END LOOP
-
-
-
-
-?>
-</table>
-<br />
-
-</body>
-</html>
-<?
-mysql_close($con);
-?>
+$smarty = get_smarty();
+$smarty->assign("users", $users);
+$smarty->display("friend.tpl");

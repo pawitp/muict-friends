@@ -6,18 +6,14 @@ $id = $_SESSION['id'];
 
 // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
 include 'class.upload.php' ;
- 
-// ส่วนกำหนดการเชื่อมต่อฐานข้อมูล
 
- 
- 
 //  ถ้าหากหน้านี้ถูกเรียก เพราะการ submit form  
 //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $user = User::fromId($id, 'img');
 
     // Delete old image
-    $img = $user->getImageUrl();
+    $img = $user->getImageName();
     if ($img != "") {
         if (!unlink('upload_images/' . $img)) {
             l("UnlinkedFailed", $img, "");
@@ -48,68 +44,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
 
 		//echo" $image_name ";
-            $user->setImageUrl($image_name);
+            $user->setImageName($image_name);
         }// END if ( $upload_image->processed )
  
     }//END if ( $upload_image->uploaded )
     else {
-        $user->setImageUrl(null);
+        $user->setImageName(null);
     }
 
     $user->save();
     redirect('my.php');
 }
-?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MUICT #9 : Friend system</title>
-<style type="text/css">
-<!--
-body {
-	background-image: url(http://image.friends.muict9.net/bg.png);
+else {
+    $smarty = get_smarty();
+    $smarty->display("upload.tpl");
 }
-a:link {
-	color: #000000;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-a:hover {
-	text-decoration: underline;
-	color: #000000;
-}
-a:active {
-	text-decoration: none;
-	color: #000000;
-}
-.style1 {
-	font-size: 24px;
-	font-weight: bold;
-	color: #0000FF;
-}
--->
-</style></head>
-
-<body>
-<form action="" method="post" enctype="multipart/form-data" name="form1" id="form1">
-  <p align="center"><img src="http://image.friends.muict9.net/camera-icon.png" width="172" height="172" /></p>
-  <p align="center"><span class="style1">เลือกรูปภาพที่จะอัพโหลด (สูงสุด 2MB)(กด Upload เฉยๆเพื่อลบ)</span><br />
-    <br />
-    <input name="image_name" type="file" id="image_name" size="40" />
-  </p>
-  <p align="center">
-    <input type="submit" value="Upload" />
-    <input type="hidden" name="MM_insert" value="form1" />
-    <br />
-    <br />
-    <a href="my.php"><img src="http://image.friends.muict9.net/onebit_33.png" width="48" height="48" /></a><br />
-  </p>
-</form>
-</body>
- 
-</html>

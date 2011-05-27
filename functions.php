@@ -20,7 +20,7 @@ function require_admin_login() {
     require_login();
     
     if ($_SESSION["admin"] != true) {
-        Log("UnauthorizedAdmin", "", "");
+        l("UnauthorizedAdmin", "", "");
         die("You must be admin.");
     }
 }

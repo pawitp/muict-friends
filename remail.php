@@ -1,49 +1,15 @@
 <?php
 require("bootstrap.php");
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>MUICT #9 : Friend system</title>
-<style type="text/css">
-<!--
-body {
-	background-image: url(http://image.friends.muict9.net/bg.png);
-}
-a:link {
-	color: #000000;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-a:hover {
-	text-decoration: underline;
-	color: #000000;
-}
-a:active {
-	text-decoration: none;
-	color: #000000;
-}
-.style2 {color: #000000}
-.style4 {font-size: 18px}
-.style5 {
-	color: #006600;
-	font-weight: bold;
-}
--->
-</style></head>
-<?php
 
-$id=$_SESSION['remail_id'];
+$id = $_SESSION['remail_id'];
 
 if (empty($id)) {
-    die();
+    redirect("login.php");
 }
 
 $user = User::fromId($id, 'email, activation_code');
+$smarty = get_smarty();
+$smarty->assign("user", $user);
 
 $dbcode=$user->getActivationCode();
 $emailcode=$dbcode;
@@ -71,22 +37,13 @@ $Headers .= "Reply-to: ".$MailFrom." <".$MailFrom.">\r\n" ;
 $Headers .= "X-Priority: 3\r\n" ;
 $Headers .= "X-Mailer: PHP mailer\r\n" ;
 
-if(mail($MailTo, $MailSubject , $MailMessage, $Headers, $MailFrom))
-{
-//echo "ส่งเรียบร้อยแล้ว กรุณาตรวจสอบ Inboxของท่าน" ; //ส่งเรียบร้อย
-}else{
-echo "Error โปรดลองใหม่ภายหลัง หรือ<a href='help.php'>ติดต่อผู้ดูแลระบบ</a>" ; //ไม่สามารถส่งเมล์ได้
-return;
+if (mail($MailTo, $MailSubject , $MailMessage, $Headers, $MailFrom)) {
+    $smarty->assign("status", "success");
+}
+else {
+    $smarty->assign("status", "error");
+    echo "" ; //ไม่สามารถส่งเมล์ได้
+    return;
 }
 
-?>
-<body>
-<div align="center"><span class="style4"><span class="style5">ระบบได้ส่ง E-mail ไปยัง 
-  <?   echo $user->getEmail(); ?>
-&nbsp; เรียบร้อยแล้ว</span> <br />
-  </span><br />
-  <span class="style2">หากท่านไม่ได้รับ E-mail <a href="help.php">ขอความช่วยเหลือจากผู้ดูแลระบบ
-  </a></span>
-</div>
-</body>
-</html>
+$smarty->display("remail.tpl");

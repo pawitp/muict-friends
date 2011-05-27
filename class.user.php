@@ -302,12 +302,16 @@ class User {
     public function setIdStatus($value) {
         return $this->setProperty("idstatus", $value);
     }
-    
+
     public function getImageUrl() {
+        return "upload_images/" . $this->getImageName();
+    }
+
+    public function getImageName() {
         return $this->getProperty("img");
     }
 
-    public function setImageUrl($value) {
+    public function setImageName($value) {
         $this->setProperty("img", $value);
     }
 
@@ -321,6 +325,21 @@ class User {
         }
         else {
             $this->setProperty("admin", false);
+        }
+    }
+
+    public function getDisplayBirthday() {
+        $bd = $this->getBirthday();
+        if ($bd != "0000-00-00") {
+            list($year, $month, $day) = explode("-", trim($bd));
+            $year += 543;
+            $day = intval($day); // remove prepending "0"
+            $month = intval($month);
+
+            return ("$day / $month / $year");
+        }
+        else {
+            return;
         }
     }
     
