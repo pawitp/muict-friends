@@ -333,7 +333,7 @@ class User {
     }
 
     public function getLastUpdate() {
-        return $this->getProperty("lastupdate");
+        return convert_timezone($this->getProperty("lastupdate"));
     }
 
     public function verifyPassword($password) {

@@ -80,6 +80,12 @@ function fetch_page($url) {
     return $query;
 }
 
+function get_smarty() {
+    $smarty = new Smarty();
+    $smarty->plugins_dir[] = "smarty_plugins";
+    return $smarty;
+}
+
 function convert_timezone($input, $format = "Y-m-d H:i:s") {
     $date = new DateTime($input);
     $date->setTimezone(new DateTimeZone('Asia/Bangkok'));

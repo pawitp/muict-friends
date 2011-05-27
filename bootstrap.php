@@ -4,6 +4,7 @@ ob_start();
 
 require("functions.php");
 require("class.user.php");
+require("smarty/libs/Smarty.class.php");
 
 // Reverse magic quote
 if (get_magic_quotes_gpc()) {
