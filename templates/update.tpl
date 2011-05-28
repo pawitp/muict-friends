@@ -14,7 +14,7 @@ color: #333333;
 <table width="40%" border="0" align="center">
     <tr>
         <td><div align="center"><img src="http://image.friends.muict9.net/{$doimg}" width="60" height="60" /><br />
-            <span class="style1"><? echo"$doname[$do]" ?></span></div></td>
+            <span class="style1">{$name}</span></div></td>
     </tr>
     <tr>
         <td><div align="center">
@@ -26,7 +26,7 @@ color: #333333;
                 </label>
                 <br />
                 <input type="checkbox" name="delete" value="delete"><span class="style2">ติ๊กถ้าหากต้องการลบ<br />
-        </span><span class="style3">Ex :      <? echo"$doex[$do]" ?>
+        </span><span class="style3">Ex :      {$ex}
         </span><br />
                 {if $error}
                     <span style="color:red">กรุณากรอกข้อมูลให้ถูกต้อง</span>

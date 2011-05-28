@@ -75,4 +75,6 @@ $smarty->assign("error", $error);
 $smarty->assign("doimg", $doimg[$do]);
 $smarty->assign("do", $do);
 $smarty->assign("data", $data);
+$smarty->assign("name", $doname[$do]);
+$smarty->assign("ex", $doex[$do]);
 $smarty->display("update.tpl");
