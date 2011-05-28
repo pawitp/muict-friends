@@ -505,7 +505,7 @@ class User {
     }
     
     private function validateUsername($username) {
-        return preg_match("/^[0-9A-Za-z\.\,\# _]+$/", $username);
+        return preg_match("/^[0-9A-Za-z\.\,\# _\-]+$/", $username);
     }
     
     private function throwIfFalse($bool, $display, $type, $data) {
